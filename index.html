@@ -4,20 +4,70 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>软嵌物联集</title>
-    <link rel="icon" href="image/RQWLJ.png" type="image/png"> <!-- 使用 PNG 格式的图标 -->
+    <link rel="icon" href="image/RQWLJ.png" type="image/png">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             display: flex;
+            flex-direction: column;
             height: 100vh;
+            background-color: #ffffff;
+            color: #333;
+        }
+        .small-font {
+            font-size: 0.6em;
+        }
+        .toolbar {
+            background-color: #ffffff;
+            color: #333;
+            padding: 10px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #d3d3d3;
+        }
+        .toolbar h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .toolbar img {
+            max-width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+        .button-group {
+            margin-left: 200px;
+            margin-top: 1px;
+            margin-bottom: 1px;
+            display: flex;
+            gap: 30px;
+        }
+        .toolbar .button {
+            font-size: 1.2em;
+            padding: 3px 10px;
+            background-color: #ffffff;
+            color: #000;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .toolbar .button:hover {
+            border-color: #007bff;
+        }
+        .main {
+            display: flex;
+            flex: 1;
         }
         .sidebar {
             width: 250px;
-            background-color: #f4f4f4;
+            background-color: #ffffff;
             padding: 15px;
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            overflow-y: auto; /* 使侧边栏可滚动 */
+            overflow-y: auto;
+            border-right: 1px solid #d3d3d3;
         }
         .sidebar h2 {
             margin-top: 0;
@@ -31,61 +81,158 @@
             transition: background 0.3s;
         }
         .sidebar a:hover {
-            background: #ddd;
+            background: #f0f0f0;
         }
-        .header {
-            background-color: #007BFF;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            position: relative;
+        .bold-link {
+            font-weight: bold; /* 仅将“前言”加粗 */
         }
-        .logo {
-            width: 50px; /* 根据需要调整 logo 大小 */
-            position: absolute;
-            left: 15px;
-            top: 15px;
+        .sub-menu {
+            padding-left: 15px;
+            display: none; /* 默认隐藏子菜单 */
         }
-        .content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto; /* 使内容区域可滚动 */
+        .toggle-button {
+            cursor: pointer;
+            padding: 10px;
+            text-align: left;
+            background: none;
+            border: none;
+            color: #333;
+            width: 100%;
+            text-align: left;
+            font-weight: bold; /* 加粗主目录 */
+            font-size: 1em; /* 统一大小 */
+        }
+        .toggle-icon {
+            width: 12px;
+            height: 12px;
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        .rotate {
+            transform: rotate(90deg);
+        }
+        .sub-menu a {
+            font-weight: normal; /* 子目录不加粗 */
+            font-size: 0.9em; /* 子目录统一大小 */
+            padding-left: 20px; /* 子目录缩进 */
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <h2>软嵌物联集</h2>
-        <a href="#section1">软嵌物联集概述</a>
-        <a href="#section2">应用案例</a>
-        <a href="#section3">技术资源</a>
-        <a href="#section4">相关论文</a>
-        <a href="#section5">联系我们</a>
+    <div class="toolbar">
+        <h1>
+            <img src="image/RQWLJ-white.png" alt="Logo">
+            <span class="small-font">软嵌物联集</span>
+        </h1>
+        <div class="button-group">
+            <button class="button">❤️面试集训</button>
+            <button class="button">❤️Call我们</button>
+        </div>
+    </div>
+    <div class="main">
+        <div class="sidebar">
+            <a href="#section1" class="bold-link">前言</a>
+            <button class="toggle-button" onclick="toggleSubMenu('cLangSubMenu', 'toggleIcon1')">
+                C语言面经
+                <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon1">
+            </button>
+            <div class="sub-menu" id="cLangSubMenu">
+                <a href="#section2-1">C语言高频面经(一）</a>
+                <a href="#section2-2">C语言高频面经(二）</a>
+
+                <!-- 可以在这里添加更多的C语言子目录 -->
+            </div>
+            <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
+                C++面经
+                <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon2">
+            </button>
+            <div class="sub-menu" id="cppSubMenu">
+                <a href="#section3-1">C++高频面经(一)</a>
+                <a href="#section3-2">C++高频面经(二)</a>
+                <a href="#section3-3">C++高频面经(三)内存管理</a>
+                <a href="#section3-4">C++高频面经(四)新特性</a>
+                <a href="#section3-5">C++高频面经(五)虚函数</a>
+                <a href="#section3-6">C++高频面经(六)STL容器</a>
+
+                <!-- 可以在这里添加更多的C++子目录 -->
+            </div>
+            <button class="toggle-button" onclick="toggleSubMenu('osSubMenu', 'toggleIcon3')">
+                操作系统面经
+                <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon3">
+            </button>
+            <div class="sub-menu" id="osSubMenu">
+                <a href="#section4-1">操作系统(一)线程和进程</a>
+                <a href="#section4-2">操作系统(二)线程和进程续</a>
+                <a href="#section4-3">操作系统(三)</a>
+                <a href="#section4-4">操作系统(四linux基础)</a>
+                <a href="#section4-5">操作系统(五)linux命令</a>
+                <a href="#section4-6">操作系统(六)虚拟地址/页表</a>
+
+                <!-- 可以在这里添加更多的操作系统子目录 -->
+            </div>
+            <button class="toggle-button" onclick="toggleSubMenu('networkSubMenu', 'toggleIcon4')">
+                计算机网络面经
+                <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon4">
+            </button>
+            <div class="sub-menu" id="networkSubMenu">
+                <a href="#section5-1">计算机网络基础</a>
+                <a href="#section5-2">TCP/IP</a>
+                <a href="#section5-3">UDP</a>
+                <a href="#section5-4">网络编程</a>
+                <a href="#section5-5">HTTP/HTTPS</a>
+                <a href="#section5-6">HTTP/HTTPS续</a>
+
+                <!-- 可以在这里添加更多的网络子目录 -->
+            </div>
+            <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
+                嵌入式基础知识
+                <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
+            </button>
+            <div class="sub-menu" id="embeddedSubMenu">
+                <a href="#section6-1">嵌入式基础(一)基本概念</a>
+                <a href="#section6-2">嵌入式基础(一)ARM基础</a>
+                <a href="#section6-3">嵌入式基础(一)基础外设</a>
+                <a href="#section6-4">嵌入式基础(一)Bootloader</a>
+                <a href="#section6-5">嵌入式基础(一)ARM架构</a>
+
+                <!-- 可以在这里添加更多的嵌入式子目录 -->
+            </div>
+            <button class="toggle-button" onclick="toggleSubMenu('rtosSubMenu', 'toggleIcon6')">
+                RTOS
+                <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon6">
+            </button>
+            <div class="sub-menu" id="rtosSubMenu">
+                <a href="#section7-1">RTOS一</a>
+                <!-- 可以在这里添加更多的RTOS子目录 -->
+            </div>
+            <button class="toggle-button" onclick="toggleSubMenu('dataStructureSubMenu', 'toggleIcon7')">
+                数据结构
+                <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon7">
+            </button>
+            <div class="sub-menu" id="dataStructureSubMenu">
+                <a href="#section8-1">数据结构一</a>
+                <!-- 可以在这里添加更多的数据结构子目录 -->
+            </div>
+        </div>
+        <div class="content">
+            <!-- 这里可以添加主内容 -->
+        </div>
     </div>
 
-    <div class="content">
-        <div id="section1">
-            <h2>软嵌物联集概述</h2>
-            <p>这里是关于软嵌物联集的概述内容。</p>
-        </div>
-        <div id="section2">
-            <h2>应用案例</h2>
-            <p>这里是应用案例的内容。</p>
-        </div>
-        <div id="section3">
-            <h2>技术资源</h2>
-            <p>这里是技术资源的内容。</p>
-        </div>
-        <div id="section4">
-            <h2>相关论文</h2>
-            <p>这里是相关论文的内容。</p>
-        </div>
-        <div id="section5">
-            <h2>联系我们</h2>
-            <p>这里是联系方式的内容。</p>
-        </div>
-    </div>
+    <script>
+        function toggleSubMenu(subMenuId, iconId) {
+            const subMenu = document.getElementById(subMenuId);
+            const toggleIcon = document.getElementById(iconId);
+            if (subMenu.style.display === 'block') {
+                subMenu.style.display = 'none';
+                toggleIcon.classList.remove('rotate');
+            } else {
+                subMenu.style.display = 'block';
+                toggleIcon.classList.add('rotate');
+            }
+        }
+    </script>
 
 </body>
 </html>
