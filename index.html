@@ -1,12 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My GitHub Pages</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>软嵌物联集</title>
+    <link rel="icon" href="image/RQWLJ.png" type="image/png"> <!-- 使用 PNG 格式的图标 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto; /* 使侧边栏可滚动 */
+        }
+        .sidebar h2 {
+            margin-top: 0;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .sidebar a:hover {
+            background: #ddd;
+        }
+        .header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+        .logo {
+            width: 50px; /* 根据需要调整 logo 大小 */
+            position: absolute;
+            left: 15px;
+            top: 15px;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto; /* 使内容区域可滚动 */
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>This is my first GitHub Pages site.</p>
+
+    <div class="sidebar">
+        <h2>软嵌物联集</h2>
+        <a href="#section1">软嵌物联集概述</a>
+        <a href="#section2">应用案例</a>
+        <a href="#section3">技术资源</a>
+        <a href="#section4">相关论文</a>
+        <a href="#section5">联系我们</a>
+    </div>
+
+    <div class="content">
+        <div id="section1">
+            <h2>软嵌物联集概述</h2>
+            <p>这里是关于软嵌物联集的概述内容。</p>
+        </div>
+        <div id="section2">
+            <h2>应用案例</h2>
+            <p>这里是应用案例的内容。</p>
+        </div>
+        <div id="section3">
+            <h2>技术资源</h2>
+            <p>这里是技术资源的内容。</p>
+        </div>
+        <div id="section4">
+            <h2>相关论文</h2>
+            <p>这里是相关论文的内容。</p>
+        </div>
+        <div id="section5">
+            <h2>联系我们</h2>
+            <p>这里是联系方式的内容。</p>
+        </div>
+    </div>
+
 </body>
 </html>
