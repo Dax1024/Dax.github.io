@@ -38,11 +38,9 @@
             margin-right: 10px;
         }
         .button-group {
-            margin-left: 200px;
-            margin-top: 1px;
-            margin-bottom: 1px;
+            margin-left: 200px; /* 调整按钮组的左边距 */
             display: flex;
-            gap: 30px;
+            gap: 30px; /* 调整按钮之间的间距 */
         }
         .toolbar .button {
             font-size: 1.2em;
@@ -60,6 +58,7 @@
         .main {
             display: flex;
             flex: 1;
+            overflow: hidden; /* 防止溢出 */
         }
         .sidebar {
             width: 250px;
@@ -98,7 +97,6 @@
             border: none;
             color: #333;
             width: 100%;
-            text-align: left;
             font-weight: bold; /* 加粗主目录 */
             font-size: 1em; /* 统一大小 */
         }
@@ -115,6 +113,36 @@
             font-weight: normal; /* 子目录不加粗 */
             font-size: 0.9em; /* 子目录统一大小 */
             padding-left: 20px; /* 子目录缩进 */
+        }
+
+        /* 媒体查询，针对小屏幕进行样式调整 */
+        @media (max-width: 768px) {
+            .toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .button-group {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #d3d3d3;
+                box-shadow: none; /* 移除阴影 */
+            }
+            .main {
+                flex-direction: column; /* 在小屏幕上使主内容垂直排列 */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .toolbar .button {
+                font-size: 1em; /* 减小按钮字体大小 */
+            }
+            .sidebar a {
+                padding: 8px; /* 减小链接的内边距 */
+            }
         }
     </style>
 </head>
@@ -140,8 +168,6 @@
             <div class="sub-menu" id="cLangSubMenu">
                 <a href="#section2-1">C语言高频面经(一）</a>
                 <a href="#section2-2">C语言高频面经(二）</a>
-
-                <!-- 可以在这里添加更多的C语言子目录 -->
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
                 C++面经
@@ -154,8 +180,6 @@
                 <a href="#section3-4">C++高频面经(四)新特性</a>
                 <a href="#section3-5">C++高频面经(五)虚函数</a>
                 <a href="#section3-6">C++高频面经(六)STL容器</a>
-
-                <!-- 可以在这里添加更多的C++子目录 -->
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('osSubMenu', 'toggleIcon3')">
                 操作系统面经
@@ -168,8 +192,6 @@
                 <a href="#section4-4">操作系统(四linux基础)</a>
                 <a href="#section4-5">操作系统(五)linux命令</a>
                 <a href="#section4-6">操作系统(六)虚拟地址/页表</a>
-
-                <!-- 可以在这里添加更多的操作系统子目录 -->
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('networkSubMenu', 'toggleIcon4')">
                 计算机网络面经
@@ -182,8 +204,6 @@
                 <a href="#section5-4">网络编程</a>
                 <a href="#section5-5">HTTP/HTTPS</a>
                 <a href="#section5-6">HTTP/HTTPS续</a>
-
-                <!-- 可以在这里添加更多的网络子目录 -->
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
                 嵌入式基础知识
@@ -195,8 +215,6 @@
                 <a href="#section6-3">嵌入式基础(一)基础外设</a>
                 <a href="#section6-4">嵌入式基础(一)Bootloader</a>
                 <a href="#section6-5">嵌入式基础(一)ARM架构</a>
-
-                <!-- 可以在这里添加更多的嵌入式子目录 -->
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('rtosSubMenu', 'toggleIcon6')">
                 RTOS
@@ -204,7 +222,6 @@
             </button>
             <div class="sub-menu" id="rtosSubMenu">
                 <a href="#section7-1">RTOS一</a>
-                <!-- 可以在这里添加更多的RTOS子目录 -->
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('dataStructureSubMenu', 'toggleIcon7')">
                 数据结构
@@ -212,7 +229,6 @@
             </button>
             <div class="sub-menu" id="dataStructureSubMenu">
                 <a href="#section8-1">数据结构一</a>
-                <!-- 可以在这里添加更多的数据结构子目录 -->
             </div>
         </div>
         <div class="content">
