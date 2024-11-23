@@ -38,9 +38,9 @@
             margin-right: 10px;
         }
         .button-group {
-            margin-left: 200px; /* 调整按钮组的左边距 */
+            margin-left: 200px;
             display: flex;
-            gap: 30px; /* 调整按钮之间的间距 */
+            gap: 30px;
         }
         .toolbar .button {
             font-size: 1.2em;
@@ -58,7 +58,7 @@
         .main {
             display: flex;
             flex: 1;
-            overflow: hidden; /* 防止溢出 */
+            overflow: hidden;
         }
         .sidebar {
             width: 250px;
@@ -83,11 +83,11 @@
             background: #f0f0f0;
         }
         .bold-link {
-            font-weight: bold; /* 仅将“前言”加粗 */
+            font-weight: bold;
         }
         .sub-menu {
             padding-left: 15px;
-            display: none; /* 默认隐藏子菜单 */
+            display: none;
         }
         .toggle-button {
             cursor: pointer;
@@ -97,8 +97,8 @@
             border: none;
             color: #333;
             width: 100%;
-            font-weight: bold; /* 加粗主目录 */
-            font-size: 1em; /* 统一大小 */
+            font-weight: bold;
+            font-size: 1em;
         }
         .toggle-icon {
             width: 12px;
@@ -110,12 +110,11 @@
             transform: rotate(90deg);
         }
         .sub-menu a {
-            font-weight: normal; /* 子目录不加粗 */
-            font-size: 0.9em; /* 子目录统一大小 */
-            padding-left: 20px; /* 子目录缩进 */
+            font-weight: normal;
+            font-size: 0.9em;
+            padding-left: 20px;
         }
 
-        /* 媒体查询，针对小屏幕进行样式调整 */
         @media (max-width: 768px) {
             .toolbar {
                 flex-direction: column;
@@ -129,19 +128,19 @@
                 width: 100%;
                 border-right: none;
                 border-bottom: 1px solid #d3d3d3;
-                box-shadow: none; /* 移除阴影 */
+                box-shadow: none;
             }
             .main {
-                flex-direction: column; /* 在小屏幕上使主内容垂直排列 */
+                flex-direction: column;
             }
         }
 
         @media (max-width: 480px) {
             .toolbar .button {
-                font-size: 1em; /* 减小按钮字体大小 */
+                font-size: 1em;
             }
             .sidebar a {
-                padding: 8px; /* 减小链接的内边距 */
+                padding: 8px;
             }
         }
     </style>
@@ -160,80 +159,80 @@
     </div>
     <div class="main">
         <div class="sidebar">
-            <a href="#section1" class="bold-link">前言</a>
+            <button class="toggle-button" onclick="loadContent('Source/introduction.html')">
+                前言
+            </button>
             <button class="toggle-button" onclick="toggleSubMenu('cLangSubMenu', 'toggleIcon1')">
                 C语言面经
                 <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon1">
             </button>
             <div class="sub-menu" id="cLangSubMenu">
-                <a href="#section2-1">C语言高频面经(一）</a>
-                <a href="#section2-2">C语言高频面经(二）</a>
+                <a href="javascript:void(0);" onclick="loadContent('Source/c_language.html')">C语言高频面经(一）</a>
+                <a href="javascript:void(0);" onclick="loadContent('c_language_2.html')">C语言高频面经(二）</a>
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
                 C++面经
                 <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon2">
             </button>
             <div class="sub-menu" id="cppSubMenu">
-                <a href="#section3-1">C++高频面经(一)</a>
-                <a href="#section3-2">C++高频面经(二)</a>
-                <a href="#section3-3">C++高频面经(三)内存管理</a>
-                <a href="#section3-4">C++高频面经(四)新特性</a>
-                <a href="#section3-5">C++高频面经(五)虚函数</a>
-                <a href="#section3-6">C++高频面经(六)STL容器</a>
+                <a href="javascript:void(0);" onclick="loadContent('cpp_language_1.html')">C++高频面经(一)</a>
+                <a href="javascript:void(0);" onclick="loadContent('cpp_language_2.html')">C++高频面经(二)</a>
+                <a href="javascript:void(0);" onclick="loadContent('cpp_language_3.html')">C++高频面经(三)内存管理</a>
+                <a href="javascript:void(0);" onclick="loadContent('cpp_language_4.html')">C++高频面经(四)新特性</a>
+                <a href="javascript:void(0);" onclick="loadContent('cpp_language_5.html')">C++高频面经(五)虚函数</a>
+                <a href="javascript:void(0);" onclick="loadContent('cpp_language_6.html')">C++高频面经(六)STL容器</a>
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('osSubMenu', 'toggleIcon3')">
                 操作系统面经
                 <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon3">
             </button>
             <div class="sub-menu" id="osSubMenu">
-                <a href="#section4-1">操作系统(一)线程和进程</a>
-                <a href="#section4-2">操作系统(二)线程和进程续</a>
-                <a href="#section4-3">操作系统(三)</a>
-                <a href="#section4-4">操作系统(四linux基础)</a>
-                <a href="#section4-5">操作系统(五)linux命令</a>
-                <a href="#section4-6">操作系统(六)虚拟地址/页表</a>
+                <a href="javascript:void(0);" onclick="loadContent('os_1.html')">操作系统(一)线程和进程</a>
+                <a href="javascript:void(0);" onclick="loadContent('os_2.html')">操作系统(二)线程和进程续</a>
+                <a href="javascript:void(0);" onclick="loadContent('os_3.html')">操作系统(三)</a>
+                <a href="javascript:void(0);" onclick="loadContent('os_4.html')">操作系统(四linux基础)</a>
+                <a href="javascript:void(0);" onclick="loadContent('os_5.html')">操作系统(五)linux命令</a>
+                <a href="javascript:void(0);" onclick="loadContent('os_6.html')">操作系统(六)虚拟地址/页表</a>
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('networkSubMenu', 'toggleIcon4')">
                 计算机网络面经
                 <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon4">
             </button>
             <div class="sub-menu" id="networkSubMenu">
-                <a href="#section5-1">计算机网络基础</a>
-                <a href="#section5-2">TCP/IP</a>
-                <a href="#section5-3">UDP</a>
-                <a href="#section5-4">网络编程</a>
-                <a href="#section5-5">HTTP/HTTPS</a>
-                <a href="#section5-6">HTTP/HTTPS续</a>
+                <a href="javascript:void(0);" onclick="loadContent('network_basics.html')">计算机网络基础</a>
+                <a href="javascript:void(0);" onclick="loadContent('tcp_ip.html')">TCP/IP</a>
+                <a href="javascript:void(0);" onclick="loadContent('udp.html')">UDP</a>
+                <a href="javascript:void(0);" onclick="loadContent('network_programming.html')">网络编程</a>
+                <a href="javascript:void(0);" onclick="loadContent('http_https.html')">HTTP/HTTPS</a>
+                <a href="javascript:void(0);" onclick="loadContent('http_https_continue.html')">HTTP/HTTPS续</a>
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
                 嵌入式基础知识
                 <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
             </button>
             <div class="sub-menu" id="embeddedSubMenu">
-                <a href="#section6-1">嵌入式基础(一)基本概念</a>
-                <a href="#section6-2">嵌入式基础(一)ARM基础</a>
-                <a href="#section6-3">嵌入式基础(一)基础外设</a>
-                <a href="#section6-4">嵌入式基础(一)Bootloader</a>
-                <a href="#section6-5">嵌入式基础(一)ARM架构</a>
+                <a href="javascript:void(0);" onclick="loadContent('embedded_basics_1.html')">嵌入式基础(一)基本概念</a>
+                <a href="javascript:void(0);" onclick="loadContent('embedded_basics_2.html')">嵌入式基础(一)ARM基础</a>
+                <a href="javascript:void(0);" onclick="loadContent('embedded_basics_3.html')">嵌入式基础(一)基础外设</a>
+                <a href="javascript:void(0);" onclick="loadContent('embedded_basics_4.html')">嵌入式基础(一)Bootloader</a>
+                <a href="javascript:void(0);" onclick="loadContent('embedded_basics_5.html')">嵌入式基础(一)ARM架构</a>
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('rtosSubMenu', 'toggleIcon6')">
                 RTOS
                 <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon6">
             </button>
             <div class="sub-menu" id="rtosSubMenu">
-                <a href="#section7-1">RTOS一</a>
+                <a href="javascript:void(0);" onclick="loadContent('rtos_1.html')">RTOS一</a>
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('dataStructureSubMenu', 'toggleIcon7')">
                 数据结构
                 <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon7">
             </button>
             <div class="sub-menu" id="dataStructureSubMenu">
-                <a href="#section8-1">数据结构一</a>
+                <a href="javascript:void(0);" onclick="loadContent('data_structure_1.html')">数据结构一</a>
             </div>
         </div>
-        <div class="content">
-            <!-- 这里可以添加主内容 -->
-        </div>
+        <iframe id="contentArea" style="flex: 1; border: none;" src="" frameborder="0"></iframe>
     </div>
 
     <script>
@@ -248,6 +247,15 @@
                 toggleIcon.classList.add('rotate');
             }
         }
+
+        function loadContent(file) {
+            const iframe = document.getElementById('contentArea');
+            iframe.src = file;  // 设置 iframe 的 src 属性为要加载的文件
+        }
+
+        window.onload = function() {
+            loadContent('Source/introduction.html');  // 默认加载前言内容
+        };
     </script>
 
 </body>
