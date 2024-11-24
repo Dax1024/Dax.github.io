@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C语言高频面经(一)</title>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow: auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>C语言高频面经(一)</h1>
+    
+    <h2>1. 全局变量和局部变量的区别</h2>
+    <h3>全局变量：</h3>
+    <ul>
+        <li>在函数外部声明的变量，整个程序都可以访问。</li>
+        <li>声明时会被默认初始化，可以在任何函数中使用。</li>
+        <li>生命周期长，整个程序执行期间都存在。</li>
+        <li>全局变量存储在全局数据区（data）中。</li>
+    </ul>
+    <h3>局部变量：</h3>
+    <ul>
+        <li>在函数内部或代码块内部声明的变量，只能在所属的函数或代码块中访问。</li>
+        <li>声明时没有默认初始化，需要手动赋值才能使用。</li>
+        <li>生命周期短，只在所属的函数或代码块的执行期间存在。</li>
+        <li>局部变量存储在栈区（stack）。</li>
+    </ul>
+
+    <h2>2. int main(int argc, char ** argv)函数中，参数argc和argv分别代表什么意思？</h2>
+    <p>在C语言中，主函数int main(int argc, char **argv)用来作为程序的入口，argc和argv是其参数。</p>
+    <ul>
+        <li><strong>argc</strong>是整型参数，表示命令行参数的个数。它记录了程序在运行时附带的命令行参数的数量，至少为1，因为程序自身的名称也算一个参数。</li>
+        <li><strong>argv</strong>是字符指针数组，用来存储命令行参数的字符串。每个元素指向一个以null结尾的字符串，表示一个命令行参数。</li>
+        <li><strong>argv</strong> argv[0]指向程序的名称，argv[1]指向第一个参数，以此类推，argv[argc-1]指向最后一个参数</li>
+    </ul>
+    <p>举个例子，假设我们在命令行中执行以下命令：</p>
+    <pre><code>./program arg1 arg2 arg3</code></pre>
+    <p>那么argc的值为4，argv的值如下所示：</p>
+    <ul>
+        <li>argv[0] = "./program"</li>
+        <li>argv[1] = "arg1"</li>
+        <li>argv[2] = "arg2"</li>
+        <li>argv[3] = "arg3"</li>
+        <li>argv[4] = NULL</li>
+    </ul>
+
+    <h2>3. static关键字</h2>
+    <p>声明静态变量，使其生命周期延长或作用域限定在当前文件内。</p>
+    <p>声明静态函数，使其作用域限定在当前文件内。</p>
+    <p>声明静态成员变量，使其属于类本身而不是对象，多个对象共享同一份内存。</p>
+    <p>使用静态限定符，控制变量的初始化和生命周期。</p>
+    <h3>举例：</h3>
+    <h4>1.在函数内部使用 static：</h4>
+    <pre><code>#include &lt;stdio.h&gt;
+
+void increment() {
+    static int count = 0;
+    count++;
+    printf("调用次数：%d\n", count);
+}
+
+int main() {
+    for (int i = 0; i &lt; 5; i++) {
+        increment();
+    }
+    return 0;
+}
+</code></pre>
+    <p>在每次调用 increment 函数时，count 的值会持续增加，而不会被重置。这是因为 count 被声明为 static，其生命周期跨越了函数调用。</p>
+    <h4>2.在文件作用域使用 static：</h4>
+    <pre><code>// File1.c
+static int globalVar = 10; //变量只可在file1.c里使用
+
+// File2.c
+extern int globalVar;
+int main() {
+    printf("globalVar 的值：%d\n", globalVar);
+    return 0;
+}
+</code></pre>
+    <p>在 File1.c 文件中，我们声明了一个具有文件作用域的静态全局变量 globalVar。在file2里是extern不到。</p>
+
+    <h2>4. const关键字</h2>
+    <ul>
+        <li>值不可修改：一旦常量被赋值后，其值将保持不变，不能再对其进行修改。</li>
+        <li>作用域限制：常量的作用域通常被限制在声明时所在的作用域内部。</li>
+        <li>编译时确定：常量的值在编译时就已确定，并在运行时保持不变。</li>
+    </ul>
+    <h3>举例：</h3>
+    <h4>1. 使用 const 声明常量变量：</h4>
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    const int PI = 3.14;
+    const char GREETING[] = "Hello, world!";
+    return 0;
+}
+</code></pre>
+    <h4>2. 使用 const 参数声明函数：</h4>
+    <pre><code>#include &lt;stdio.h&gt;
+
+int sum(const int a, const int b) {
+    return a + b;
+}
+
+int main() {
+    int num1 = 5, num2 = 10;
+    int result = sum(num1, num2);
+    printf("两数之和：%d\n", result);
+    return 0;
+}
+</code></pre>
+    <h4>3. 使用 const 修饰函数返回值：</h4>
+    <pre><code>#include &lt;stdio.h&gt;
+
+const char* getMessage() {
+    return "Hello, world!";
+}
+
+int main() {
+    const char* message = getMessage();
+    printf("消息：%s\n", message);
+    return 0;
+}
+</code></pre>
+
+    <h2>5. const 和 #define的区别</h2>
+    <ul>
+        <li>const是一种编译器关键字，而#define是预处理器指令。const在编译阶段进行处理，而#define在预处理阶段进行处理。</li>
+        <li>const定义的常量具有类型，而#define没有。const在声明时需要指定常量的类型，编译器会进行类型检查。而#define只是简单的文本替换，没有类型检查。</li>
+        <li>const定义的常量有作用域限制，可以根据声明位置的不同而有不同的作用域。而#define定义的常量没有作用域限制，整个程序中都有效。</li>
+        <li>const生成符号表中的一个符号，有明确的名字和类型，可以进行调试和符号查找。而#define没有生成符号表，不会产生对应的符号。</li>
+    </ul>
+
+    <h2>6. extern关键字</h2>
+    <li>声明一个在其他文件中定义的外部变量或函数。</li>
+    <li>告诉编译器在链接过程中需要找到对应的定义。</li>
+        <li>允许在当前文件中使用这些外部变量或函数而不需要重新定义。</li>
+    <h3>举例：</h3>
+    <pre><code>// File1.c
+extern int globalVar = 10;
+
+// File2.c
+#include &lt;stdio.h&gt;
+
+extern int globalVar;
+
+int main() {
+    printf("globalVar 的值：%d\n", globalVar);
+    return 0;
+}
+</code></pre>
+    <p>在 File1.c 中，我们使用 extern 关键字来定义一个全局变量 globalVar，并初始化为 10。在 File2.c 中，我们使用 extern 关键字来声明同名的全局变量 globalVar，以表示它是在其他源文件中定义的。然后，在 main 函数中，我们可以访问并打印 globalVar 的值。</p>
+
+    <h2>7. #include<> 和 #include""的区别</h2>
+    <h3>使用 #include<>：</h3>
+    <ul>
+        <li>用于包含系统提供的标准库头文件。</li>
+        <li>在编译器的搜索路径中寻找头文件。</li>
+        <li>编译器会先在系统的标准头文件目录中查找，如果找不到则报错。</li>
+    </ul>
+    <h3>使用 #include""：</h3>
+    <ul>
+        <li>用于包含用户自定义的头文件或项目中使用的其他非系统头文件。</li>
+        <li>在当前源文件的相对路径或指定的绝对路径中寻找头文件。</li>
+        <li>编译器会首先在当前源文件所在目录中查找，如果找不到再根据指定的路径查找。</li>
+    </ul>
+
+    <h2>8. C语言的基本类型（32位系统）</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>类型</th>
+                <th>占用字节空间</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>char</td>
+                <td>1字节</td>
+            </tr>
+            <tr>
+                <td>short int</td>
+                <td>2字节</td>
+            </tr>
+            <tr>
+                <td>int / long int</td>
+                <td>4字节</td>
+            </tr>
+            <tr>
+                <td>char * / int * / 任何的指针</td>
+                <td>4字节</td>
+            </tr>
+            <tr>
+                <td>float</td>
+                <td>4字节</td>
+            </tr>
+            <tr>
+                <td>double</td>
+                <td>8字节</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>9. 头文件#ifndef/#define/#endif的作用</h2>
+    <ul>
+        <li><strong>#ifndef</strong>：用于判断当前头文件是否已经被包含。如果该宏之前没有被定义过，则继续编译下面的代码。如果该宏之前已被定义过，则跳过下面的代码，直接到 #endif。</li>
+        <li><strong>#define</strong>：用于定义一个宏。通过定义一个特定的宏名称，例如MY_HEADER_H表示头文件已被包含。</li>
+        <li><strong>#endif</strong>：用于结束 #ifndef / #define / #endif 块。标记了头文件的结束位置。</li>
+    </ul>
+    <p>通过使用这种组合，可以防止同一个头文件被多次包含，以避免重复定义和编译错误。</p>
+    <h3>举例：</h3>
+    <pre><code>#ifndef MYHEADER_H     // 如果 MYHEADER_H 还没有被定义
+#define MYHEADER_H     // 定义 MYHEADER_H
+
+void sayHello();       // 函数声明
+
+const int MAX_VALUE = 100;  // 常量定义
+
+#endif               // 结束条件编译
+</code></pre>
+    <p>上述是一般的使用模板。</p>
+
+    <h2>10. volatile声明的作用</h2>
+    <p>volatile声明的变量是指可能会被意想不到地改变的变量，这样编译器就不会轻易优化该变量。它主要用于多线程编程中，用来保证共享变量的内存可见性。（注：指针也可用volatile）</p>
+    <h3>三个常见场景：</h3>
+    <ul>
+        <li>多线程中的共享变量</li>
+        <li>中断程序中访问到的非自动变量</li>
+        <li>并行设备的硬件寄存器</li>
+    </ul>
+
+    <h2>11. strcpy与memcpy的区别</h2>
+    <h3>strcpy：</h3>
+    <ul>
+        <li>用于字符串拷贝。</li>
+        <li>源字符串中的内容会被复制到目标字符串中，直到遇到字符串结束符 ‘\0’。</li>
+        <li>目标字符串必须有足够的空间来存储被复制的内容，否则可能导致缓冲区溢出。</li>
+    </ul>
+    <h3>memcpy：</h3>
+    <ul>
+        <li>用于字节级别的内存拷贝。</li>
+        <li>可以拷贝任意类型的内存块，不仅限于字符串。</li>
+        <li>不会检查字符串结束符，通过指定要拷贝的字节数进行拷贝。</li>
+        <li>可以用于拷贝部分或完整的数组、结构体等。</li>
+    </ul>
+    <h3>安全性：</h3>
+    <ul>
+        <li>strcpy函数不进行源字符串长度的检查，如果源字符串太长，可能会导致目标字符串缓冲区溢出。</li>
+        <li>memcpy函数本身没有长度限制，应确保源和目标内存区域不会发生重叠，否则可能会导致数据损坏。</li>
+        <li>为了提高安全性，可以使用像strcpy_s、strncpy_s这样提供了长度限制的函数。</li>
+
+    </ul>
+    <h3>总结：</h3>
+    <ul>
+        <li>strcpy适用于字符串拷贝，可以自动识别字符串结束符。</li>
+        <li>memcpy适用于字节级别的内存拷贝，适用于任意类型的数据。</li>
+    </ul>
+
+    <h2>12. 一个变量既可以是const还可以是volatile类型吗</h2>
+    <p>可以，一个变量可以同时具有const和volatile。const表示变量的值不能被改变，而volatile属性表示变量的值可能会被外部程序改变。</p>
+
+    <h2>13. sizeof与strlen的区别</h2>
+    <h3>sizeof：</h3>
+    <ul>
+        <li>用于获取数据类型或变量的字节大小。</li>
+        <li>可以接受多种参数，包括数据类型、变量名、数组名等。</li>
+        <li>返回的是整个数据类型或变量占用的内存空间大小。</li>
+    </ul>
+    <h3>strlen：</h3>
+    <ul>
+        <li>用于获取以’\0’结尾的字符串的实际长度。</li>
+        <li>在运行时计算，需要遍历字符串的内容来确定长度。</li>
+        <li>返回的是字符串中的字符个数，不包括字符串结束符’\0’。</li>
+    </ul>
+    <h3>举例：</h3>
+    <pre><code>char str[] = "Hello";
+size_t size_str = sizeof(str);
+size_t length_str = strlen(str);
+// size_str 的值为 6，因为包括字符串 "Hello" 的 5 个字符和结尾的 '\0'，共 6 个字节
+// length_str 的值为 5，因为字符串 "Hello" 有 5 个字符，不包括结尾的 '\0'
+</code></pre>
+    <h3>注意事项：</h3>
+    <ul>
+        <li>sizeof返回的是静态的大小，而strlen返回的是实际的字符串长度。</li>
+        <li>在使用strlen时要确保操作的对象是以’\0’结尾的字符串，否则可能出现不确定的结果。</li>
+        <li>sizeof可以用于任何数据类型或变量，而strlen只适用于字符串。</li>
+    </ul>
+
+    <h2>14. 常见的变量定义</h2>
+    <ul>
+        <li>int a;：定义了一个变量 a，它的类型是 int。</li>
+        <li>int *a;：定义了一个指针 a，它指向 int 类型的变量。</li>
+        <li>int **a;：定义了一个指针 a，它指向一个指向 int 类型的指针。</li>
+        <li>int a[10];：定义了一个数组 a，该数组有 10 个元素，每个元素是 int 类型。</li>
+        <li>int *a[10];：定义了一个数组 a，该数组有 10 个元素，每个元素是 int 类型的指针。</li>
+        <li>int (*a)[10];：定义了一个指针 a，该指针指向一个数组，该数组有 10 个元素，每个元素是 int 类型。</li>
+        <li>int (*a)(int);：定义了一个指针 a，该指针指向一个参数是 int，返回值是 int 的函数。</li>
+        <li>int (*a[10])(int);：定义了一个数组 a，该数组的元素是一个指向参数是 int，返回值是 int 的函数指针。</li>
+    </ul>
+
+    <h2>15. 数组名与指针的区别</h2>
+    <h3>数组名：</h3>
+    <ul>
+        <li>是一个常量指针，指向数组的首元素。</li>
+        <li>大小固定为整个数组的大小。</li>
+        <li>无法被改变或重新赋值。</li>
+        <li>无法进行指针运算。</li>
+    </ul>
+    <h3>指针：</h3>
+    <ul>
+        <li>是一个变量，存储一个内存地址。</li>
+        <li>大小固定为指针类型的大小。</li>
+        <li>可以指向任意类型的对象。</li>
+        <li>可以被改变或重新赋值。</li>
+        <li>可以进行指针运算，如加法、减法等。</li>
+    </ul>
+</body>
+</html>

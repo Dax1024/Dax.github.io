@@ -131,6 +131,7 @@
                 box-shadow: none;
             }
             .main {
+                background-color: #ffffff; /* 确保这里是白色 */
                 flex-direction: column;
             }
         }
@@ -162,13 +163,16 @@
             <button class="toggle-button" onclick="loadContent('Source/introduction.html')">
                 前言
             </button>
+            <button class="toggle-button" onclick="loadContent('Source/Interview_Guide.html')">
+                面经大纲
+            </button>
             <button class="toggle-button" onclick="toggleSubMenu('cLangSubMenu', 'toggleIcon1')">
                 C语言面经
                 <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon1">
             </button>
             <div class="sub-menu" id="cLangSubMenu">
-                <a href="javascript:void(0);" onclick="loadContent('Source/c_language.html')">C语言高频面经(一）</a>
-                <a href="javascript:void(0);" onclick="loadContent('c_language_2.html')">C语言高频面经(二）</a>
+                <a href="javascript:void(0);" onclick="loadContent('Source/C_1.html')">C语言高频面经(一）</a>
+                <a href="javascript:void(0);" onclick="loadContent('Source/c_2.html')">C语言高频面经(二）</a>
             </div>
             <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
                 C++面经
