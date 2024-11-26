@@ -168,24 +168,10 @@
         iframe.src = file;  // 设置 iframe 的 src 属性为要加载的文件
 
         iframe.onload = function() {
-            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
             console.log('iframe loaded'); // 添加调试信息
-
-            // 确保 iframe 的文档已加载并添加样式
-            const style = iframeDocument.createElement('style');
-            style.textContent = `
-                body {
-                    font-size: 16px; /* 设置字体大小 */
-                    line-height: 1.5; /* 设置行高 */
-                    margin: 20px; /* 设置外边距 */
-                    color: #333; /* 设置字体颜色 */
-                    border-left: 0px;
-                    padding-left: 0px; /* 设置内容与body边缘的内边距为0 */
-                }
-            `;
-            iframeDocument.head.appendChild(style); // 将样式添加到 iframe 的头部
+            // 这里不再动态加载样式
         };
-        }
+    }
 
         function loadTrainingContent() {
             const sidebar = document.getElementById('sidebar');
