@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>软嵌物联集</title>
+    <link rel="icon" href="image/RQWLJ.jpg" type="image/png">
+    <script>
+        // 根据屏幕宽度重定向到不同的 HTML 文件
+        function redirectBasedOnScreenSize() {
+            if (window.innerWidth <= 768) {
+                window.location.href = 'Source/androidhtml.html'; // 针对 iOS 设备
+            } else {
+                window.location.href = 'Source/PCindex.html'; // 针对 PC 设备
+            }
+        }
+
+        window.onload = function() {
+            redirectBasedOnScreenSize();  // 根据屏幕宽度重定向
+        };
+    </script>
+</head>
+<body>
+    <!-- 这里可以添加一些通用内容，比如加载动画 -->
+    <h1>正在加载...</h1>
+</body>
+</html>
