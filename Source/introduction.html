@@ -10,94 +10,34 @@
             line-height: 1.6;
             margin: 0; /* 去掉外边距 */
             background-color: #ffffff;
+            padding: 20px; /* 增加内边距 */
         }
 
-        /* 手机端样式 */
-        @media (max-width: 768px) {
-            body {
-                font-size: 16px; /* 调整手机端字体大小 */
-                line-height: 1.5; /* 调整行间距 */
-            }
-            .container {
-                padding: 15px; /* 减少内边距 */
-            }
-            .code-block {
-                max-width: 100%; /* 使代码块宽度适应屏幕 */
-                margin-left: 0; /* 去掉左边距 */
-            }
-            img {
-                max-width: 100%; /* 图片自适应屏幕 */
-                height: auto; /* 保持比例 */
-            }
-            p {
-                line-height: 1.6; /* 调整段落行间距 */
-                font-size: 16px; /* 设置字体大小 */
-            }
-            .quote {
-                color: rgb(14, 2, 2);
-                margin: 0; /* 去掉段落外边距 */
-                max-width: 100%; /* 设置段落最大宽度为100% */
-                font-size: 16px; /* 设置字体大小 */
-                line-height: 1.6; /* 行间距 */
-                text-align: left;
-            }
-            /* 调整符号的样式 */
-            .bullet {
-                font-size: 16px; /* 设置符号的字体大小 */
-                vertical-align: middle; /* 使符号与文本垂直居中对齐 */
-            }
+        h1 {
+            color: #007bff;
         }
 
-        h1, h2 {
+        h2 {
             color: #333;
-            margin: 0; /* 去掉外边距 */
         }
 
         p {
             color: #555;
-            margin: 0; /* 去掉段落外边距 */
-            max-width: 100%; /* 设置段落最大宽度为100% */
+            margin: 0 0 10px; /* 段落底部间距 */
             font-size: 18px; /* 设置字体大小 */
-            line-height: 1.8; /* 行间距 */
         }
 
-        .container {
-            background: white;
-            box-shadow: none; /* 去掉阴影 */
-            padding: 20px;
-            border-radius: 5px;
-            position: relative; /* 添加这一行 */
-            max-width: 800px; /* 设置最大宽度 */
-            margin: auto; /* 居中对齐 */
+        ul {
+            margin: 0 0 10px; /* 列表底部间距 */
+            padding-left: 20px; /* 列表左侧内边距 */
         }
 
         .code-block {
-            max-width: 800px; /* 设置最大宽度 */
-            margin: 0 auto; /* 居中对齐 */
-            background-color: #f9f9f9; /* 设置背景色 */
-            margin-top: 0; /* 设置与上方内容的间距 */
-            padding: 10px; /* 增加内边距 */
-            font-family: monospace; /* 设置字体为等宽字体 */
-            border-left: 10px solid #ADD8E6; /* 浅蓝色左边框 */
-            color: #333; /* 设置字体颜色 */
-            border-radius: 5px; /* 可选：添加圆角 */
-        }
-
-        cite {
-            display: block;
-            margin-top: 10px;
-            font-style: normal;
-            font-weight: bold;
-            color: #ccc; /* 设置引用来源的颜色 */
-        }
-
-        .quote {
-            color: rgb(14, 2, 2);
-            margin: 0; /* 去掉段落外边距 */
-            max-width: 100%; /* 设置段落最大宽度为100% */
-            font-size: 18px; /* 设置字体大小 */
-            line-height: 1.8; /* 行间距 */
-            text-align: left;
+            background-color: #f4f4f4; /* 代码块背景色 */
+            padding: 10px; /* 内边距 */
+            border: 1px solid #ccc; /* 边框 */
+            overflow: auto; /* 超出部分滚动 */
+            margin: 10px 0; /* 上下间距 */
         }
 
         a {
@@ -105,51 +45,46 @@
             text-decoration: none; /* 去掉下划线 */
         }
 
-        /* 调整符号的样式 */
-        .bullet {
-            font-size: 18px; /* 设置符号的字体大小 */
-            vertical-align: middle; /* 使符号与文本垂直居中对齐 */
-        }
-
         .update-time {
-            position: absolute; /* 绝对定位 */
-            bottom: 10px; /* 距离底部10px */
-            right: 10px; /* 距离右边10px */
             font-size: 14px; /* 字体大小 */
             color: #999; /* 字体颜色 */
+            margin-top: 20px; /* 顶部间距 */
+        }
+
+        img {
+            max-width: 100%; /* 确保图片自适应屏幕 */
+            height: auto; /* 保持比例 */
+            margin: 20px 0; /* 图片上下间距 */
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div style="text-align: left;">
-            <img src="../image/introduction-image.png" style="max-width: 100%; height: auto;">
-            <p><strong>大家好，这里是软嵌物联集！</strong></p>
-            <p><strong>随着嵌软行业的热潮，越来越多的小伙伴关注嵌入式这个行业</strong></p>
-            <p><strong>我呢也是第一次做网页分享自己的知识成果，要是有不足之处还请大家见谅</strong></p>
-            <p><strong>所以我在这里想建立一个嵌软的知识网页，祝愿每一个爱学习的同学都有好的offer！！</strong></p>
-            <p><strong>我的初衷就是让每个带着问题来的小伙伴都能得到答案。共勉！！！！！！！</strong></p>
-            <h1>软嵌物联集介绍</h1>
-        </div>
-        <div class="code-block">
-            <span class="quote">
-                <strong><span class="bullet">●</span> 介绍:</strong>本站是软嵌面经合集和知识分享,愿大家都能够成为offer收割机<br>
-                <strong><span class="bullet">●</span> 题目:</strong>《软嵌物联集》<br>
-                <strong><span class="bullet">●</span> PDF版本:</strong>《软嵌物联集》<br>
-                <strong><span class="bullet">●</span> 牛客:</strong><a href="https://www.nowcoder.com/users/235444410" target="_blank">《Hello_WordN 主页》</a><br>
-                <strong><span class="bullet">●</span> 微信公众号:</strong>请关注<strong>软嵌物联集</strong>获取更多的知识<br>
-                <span class="bullet">●</span> 项目和其他内容请点击❤️面试集训<br>
-            </span>
-            <cite>—— 软嵌物联集</cite>
-        </div>
-        <div style="text-align: left;">
-            <h2>作者简介</h2>
-            <p>大家好我是软嵌物联集的作者，我是Dax，现在在外企工作，bg本硕双9</p>
-            <p>有什么其他问题可以添加我的微信，添加备注添加来源:网页</p>
-            <img src="../image/wx.jpg" style="max-width: 20%; height: auto;">
-            <!-- 更新时间 -->
-            <div class="update-time">更新时间：2024年11月24日</div>
-        </div>
+    <!-- 添加图片 -->
+    <img src="../image/introduction-image.png" alt="介绍图片">    
+    <p><strong>大家好，这里是软嵌物联集！</strong></p>
+    <p><strong>随着嵌软行业的热潮，越来越多的小伙伴关注嵌入式这个行业。</strong></p>
+    <p><strong>我呢也是第一次做网页分享自己的知识成果，要是有不足之处还请大家见谅。</strong></p>
+    <p><strong>所以我在这里想建立一个嵌软的知识网页，祝愿每一个爱学习的同学都有好的offer！！</strong></p>
+    <p><strong>我的初衷就是让每个带着问题来的小伙伴都能得到答案。共勉！！！！！！！</strong></p>
+
+    <h2>软嵌物联集介绍</h2>
+    <div class="code-block">
+        <p>
+            <strong>介绍:</strong>本站是软嵌面经合集和知识分享,愿大家都能够成为offer收割机<br>
+            <strong>题目:</strong>《软嵌物联集》<br>
+            <strong>PDF版本:</strong>《软嵌物联集》<br>
+            <strong>牛客:</strong><a href="https://www.nowcoder.com/users/235444410" target="_blank">《Hello_WordN 主页》</a><br>
+            <strong>微信公众号:</strong>请关注<strong>软嵌物联集</strong>获取更多的知识<br>
+            <span>项目和其他内容请点击❤️面试集训</span><br>
+        </p>
     </div>
+
+    <h2>作者简介</h2>
+    <p>大家好我是软嵌物联集的作者，我是Dax，现在在外企工作，bg本硕双9。</p>
+    <p>有什么其他问题可以添加我的微信，添加备注添加来源:网页。</p>
+    <img src="../image/wx.jpg" alt="微信二维码" style="max-width: 20%; height: auto;">
+    
+    <!-- 更新时间 -->
+    <div class="update-time">更新时间：2024年11月24日</div>
 </body>
 </html>
