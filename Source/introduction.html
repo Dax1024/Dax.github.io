@@ -52,9 +52,18 @@
             margin-top: 20px; /* 顶部间距 */
         }
 
+        @media (min-width: 769px) {
         img {
-            max-width: 100%; /* 确保图片自适应屏幕 */
+            max-width: 250px; /* 确保图片自适应屏幕 */
             height: auto; /* 保持比例 */
+        }
+    }
+         /* 手机端样式 */
+         @media (max-width: 768px) {
+            img {
+            max-width: 150px; /* 确保图片自适应屏幕 */
+            height: auto; /* 保持比例 */
+        } 
         }
     </style>
 </head>
@@ -81,7 +90,7 @@
     <h2>作者简介</h2>
     <p>大家好我是软嵌物联集的作者，我是Dax，现在在外企工作，bg本硕双9。</p>
     <p>有什么其他问题可以添加我的微信，添加备注添加来源:网页。</p>
-    <img src="../image/wx.jpg" alt="微信二维码" style="max-width: 250px; height: auto;">
+    <img src="../image/wx.jpg" alt="微信二维码">
     
     <!-- 更新时间 -->
     <div class="update-time">更新时间：2024年11月24日</div>
