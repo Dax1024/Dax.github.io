@@ -5,23 +5,553 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>软嵌物联集</title>
     <link rel="icon" href="image/RQWLJ.jpg" type="image/png">
+    <style>
+
+        /* PC端样式 */
+        @media (min-width: 769px) {
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #ffffff;
+            color: #333;
+        }
+        .small-font {
+            font-size: 0.6em;
+        }
+        .toolbar {
+            background-color: #ffffff;
+            color: #333;
+            padding: 10px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #d3d3d3;
+        }
+        .toolbar h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .toolbar img {
+            max-width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+        .button-group {
+            margin-left: 200px;
+            display: flex;
+            gap: 30px;
+        }
+        .toolbar .button {
+            font-size: 1.2em;
+            padding: 3px 10px;
+            background-color: #ffffff;
+            color: #000;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .toolbar .button:hover {
+            border-color: #007bff;
+        }
+        .main {
+            display: flex;
+            flex: 1;
+            margin: 0px;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ffffff;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            border-right: 1px solid #d3d3d3;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .sidebar a:hover {
+            background: #f0f0f0;
+        }
+        .bold-link {
+            font-weight: bold;
+        }
+        .sub-menu {
+            padding-left: 15px;
+            display: none;
+        }
+        .toggle-button {
+            cursor: pointer;
+            padding: 10px;
+            text-align: left;
+            background: none;
+            border: none;
+            color: #333;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1em;
+        }
+        .toggle-icon {
+            width: 12px;
+            height: 12px;
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        .rotate {
+            transform: rotate(90deg);
+        }
+        .sub-menu a {
+            font-weight: normal;
+            font-size: 0.9em;
+            padding-left: 20px;
+        }
+
+        }
+
+        /* 手机端样式 */
+        @media (max-width: 768px) {
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .toolbar {
+            background-color: #ffffff;
+            color: #333;
+            padding: 10px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            height: 40px;
+            align-items: center;
+            border-bottom: 1px solid #d3d3d3;
+        }
+
+        .toolbar h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .toolbar img {
+            max-width: 40px;
+            height: auto;
+            margin-right: 10px;
+            border-bottom: 0px;
+        }
+
+        .main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative; /* 使主内容区域相对定位 */
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #ffffff;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            border-right: 1px solid #d3d3d3;
+            position: absolute; /* 绝对定位 */
+            top: 0px; /* 调整位置以适应工具栏 */
+            left: 0;
+            z-index: 1000; /* 确保侧边栏在主内容之上 */
+            height: calc(100vh - 40px); /* 高度为视口高度减去工具栏高度 */
+            display: none; /* 默认隐藏 */
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #f0f0f0;
+        }
+
+        .bold-link {
+            font-weight: bold;
+        }
+
+        .sub-menu {
+            padding-left: 15px;
+            display: none;
+        }
+
+        .toggle-button {
+            cursor: pointer;
+            padding: 10px;
+            text-align: left;
+            background: none;
+            border: none;
+            color: #333;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .toggle-icon {
+            width: 12px;
+            height: 12px;
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+
+        .rotate {
+            transform: rotate(90deg);
+        }
+
+        .sub-menu a {
+            font-weight: normal;
+            font-size: 0.9em;
+            padding-left: 20px;
+        }
+
+        .divider {
+            height: 1px; /* 分割线的高度 */
+            background-color: #d3d3d3; /* 分割线的颜色 */
+            margin: 0; /* 去掉上下边距 */
+        }
+        }
+
+    
+    </style>
+</head>
+
+<body>
+    <div id="toolbar"></div> <!-- 添加这个元素 -->
+    <div class="main" id="main">
+        <div class="sidebar" id="sidebar">
+            <!-- 默认加载内容 -->
+        </div>
+        <iframe id="contentArea" style="flex: 1; border: none; margin-top: 0px;" src="" frameborder="0"></iframe>
+    </div>
     <script>
+        let sidebarVisible = true; // 侧边栏初始为可见状态
+        let PCStatus = true; // 默认是true pc
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebarVisible = !sidebarVisible; // 切换状态
+            sidebar.style.display = sidebarVisible ? 'block' : 'none'; // 显示或隐藏侧边栏
+        }
+
+        function toggleSubMenu(subMenuId, iconId) {
+            const subMenu = document.getElementById(subMenuId);
+            const toggleIcon = document.getElementById(iconId);
+            if (subMenu.style.display === 'block') {
+                subMenu.style.display = 'none';
+                toggleIcon.classList.remove('rotate');
+            } else {
+                subMenu.style.display = 'block';
+                toggleIcon.classList.add('rotate');
+            }
+        }
+
+        function loadContent(file) {
+            const iframe = document.getElementById('contentArea');
+            iframe.src = file;  // 设置 iframe 的 src 属性为要加载的文件
+        }
+
+        function loadToolbarmain()
+        {
+            if(PCStatus)
+            {
+                const toolbar = document.getElementById('toolbar');
+                toolbar.innerHTML = `
+                    <div class="toolbar">
+                        <h1>
+                            <img src="image/RQWLJ-white.jpg" alt="Logo">
+                            <span class="small-font">软嵌物联集</span>
+                        </h1>
+                        <div class="button-group">
+                            <button class="button" onclick="loadTrainingContent()">
+                                ❤️面试集训
+                            </button>
+                            <button class="button" onclick="loadSoftEmbeddedContent()">
+                                ❤️软嵌物联集
+                            </button>
+                        </div>
+                    </div>
+                `;  
+            }
+            else
+            {
+                const toolbar = document.getElementById('toolbar');
+                toolbar.innerHTML = `
+                <div class="toolbar">
+                    <h1>
+                        <button class="toggle-button" onclick="toggleSidebar()">
+                            <img src="image/Android.png" alt="Android" style="max-width: 20px; vertical-align: middle; margin-right: 5px;">
+                        </button>
+                        <img src="image/RQWLJ-white.jpg" alt="Logo" >
+                    </h1>
+                </div>
+                `;   
+
+            }
+        }
+//Android 布局
+            function loadTrainingContentAd() {
+            const sidebar = document.getElementById('sidebar');
+            // 清空侧边栏内容并加载面试集训的内容
+            sidebar.innerHTML = `
+            <div class="toggle-button">
+                <button class="toggle-button" onclick="loadTrainingContentAd()">
+                ❤️面试集训
+                </button>
+                <button class="toggle-button" onclick="loadSoftEmbeddedContentAd()">
+                ❤️软嵌物联集
+                </button>
+            </div>
+            <div class="divider"></div> <!-- 添加分割线 -->
+
+                <button class="toggle-button" onclick="loadContent('Source/zsxq.html')">
+                    知识星球概述
+                </button>
+            `;
+            loadContent('Source/zsxq.html'); // 加载面试集训的内容
+        }
+
+        function loadSoftEmbeddedContentAd() {
+            const sidebar = document.getElementById('sidebar');
+            // 清空侧边栏内容并加载软嵌物联集的内容
+            sidebar.innerHTML = `
+                    <div class="toggle-button">
+                <button class="toggle-button" onclick="loadTrainingContentAd()">
+                    ❤️面试集训
+                </button>
+                <button class="toggle-button" onclick="loadSoftEmbeddedContentAd()">
+                    ❤️软嵌物联集
+                </button>
+            </div>
+            <div class="divider"></div> <!-- 添加分割线 -->
+
+                <button class="toggle-button" onclick="loadContent('Source/introduction.html')">
+                    前言
+                </button>
+                <button class="toggle-button" onclick="loadContent('Source/Interview_Guide.html')">
+                    面经大纲
+                </button>
+                <button class="toggle-button" onclick="toggleSubMenu('cLangSubMenu', 'toggleIcon1')">
+                    C语言面经
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon1">
+                </button>
+                <div class="sub-menu" id="cLangSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C_1.html')">C语言高频面经(一）</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/c_2.html')">C语言高频面经(二）</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
+                    C++面经
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon2">
+                </button>
+                <div class="sub-menu" id="cppSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_1.html')">C++高频面经(一)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_2.html')">C++高频面经(二)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_3.html')">C++高频面经(三)内存管理</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_4.html')">C++高频面经(四)新特性</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_5.html')">C++高频面经(五)虚函数</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_6.html')">C++高频面经(六)STL容器</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('osSubMenu', 'toggleIcon3')">
+                    操作系统面经
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon3">
+                </button>
+                <div class="sub-menu" id="osSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('os_1.html')">操作系统(一)线程和进程</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_2.html')">操作系统(二)线程和进程续</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_3.html')">操作系统(三)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_4.html')">操作系统(四linux基础)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_5.html')">操作系统(五)linux命令</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_6.html')">操作系统(六)虚拟地址/页表</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('networkSubMenu', 'toggleIcon4')">
+                    计算机网络面经
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon4">
+                </button>
+                <div class="sub-menu" id="networkSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('network_basics.html')">计算机网络基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('tcp_ip.html')">TCP/IP</a>
+                    <a href="javascript:void(0);" onclick="loadContent('udp.html')">UDP</a>
+                    <a href="javascript:void(0);" onclick="loadContent('network_programming.html')">网络编程</a>
+                    <a href="javascript:void(0);" onclick="loadContent('http_https.html')">HTTP/HTTPS</a>
+                    <a href="javascript:void(0);" onclick="loadContent('http_https_continue.html')">HTTP/HTTPS续</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
+                    嵌入式基础知识
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
+                </button>
+                <div class="sub-menu" id="embeddedSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_1.html')">嵌入式基础(一)基本概念</a>
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_2.html')">嵌入式基础(一)ARM基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_3.html')">嵌入式基础(一)基础外设</a>
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_4.html')">嵌入式基础(一)Bootloader</a>
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_5.html')">嵌入式基础(一)ARM架构</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('rtosSubMenu', 'toggleIcon6')">
+                    RTOS
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon6">
+                </button>
+                <div class="sub-menu" id="rtosSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('rtos_1.html')">RTOS一</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('dataStructureSubMenu', 'toggleIcon7')">
+                    数据结构
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon7">
+                </button>
+                <div class="sub-menu" id="dataStructureSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('data_structure_1.html')">数据结构一</a>
+                </div>
+            `;
+            loadContent('Source/introduction.html'); // 加载软嵌物联集的内容
+        }
+        // =====================PC布局
+
+        function loadTrainingContent() {
+            const sidebar = document.getElementById('sidebar');
+            // 清空侧边栏内容并加载面试集训的内容
+            sidebar.innerHTML = `
+                <button class="toggle-button" onclick="loadContent('Source/zsxq.html')">
+                    知识星球概述
+                </button>
+            `;
+            loadContent('Source/zsxq.html'); // 加载面试集训的内容
+        }
+
+        function loadSoftEmbeddedContent() {
+            const sidebar = document.getElementById('sidebar');
+            // 清空侧边栏内容并加载软嵌物联集的内容
+            sidebar.innerHTML = `
+                <button class="toggle-button" onclick="loadContent('Source/introduction.html')">
+                    前言
+                </button>
+                <button class="toggle-button" onclick="loadContent('Source/Interview_Guide.html')">
+                    面经大纲
+                </button>
+                <button class="toggle-button" onclick="toggleSubMenu('cLangSubMenu', 'toggleIcon1')">
+                    C语言面经
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon1">
+                </button>
+                <div class="sub-menu" id="cLangSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C_1.html')">C语言高频面经(一）</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/c_2.html')">C语言高频面经(二）</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
+                    C++面经
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon2">
+                </button>
+                <div class="sub-menu" id="cppSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_1.html')">C++高频面经(一)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_2.html')">C++高频面经(二)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_3.html')">C++高频面经(三)内存管理</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_4.html')">C++高频面经(四)新特性</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_5.html')">C++高频面经(五)虚函数</a>
+                    <a href="javascript:void(0);" onclick="loadContent('cpp_language_6.html')">C++高频面经(六)STL容器</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('osSubMenu', 'toggleIcon3')">
+                    操作系统面经
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon3">
+                </button>
+                <div class="sub-menu" id="osSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('os_1.html')">操作系统(一)线程和进程</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_2.html')">操作系统(二)线程和进程续</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_3.html')">操作系统(三)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_4.html')">操作系统(四linux基础)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_5.html')">操作系统(五)linux命令</a>
+                    <a href="javascript:void(0);" onclick="loadContent('os_6.html')">操作系统(六)虚拟地址/页表</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('networkSubMenu', 'toggleIcon4')">
+                    计算机网络面经
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon4">
+                </button>
+                <div class="sub-menu" id="networkSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('network_basics.html')">计算机网络基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('tcp_ip.html')">TCP/IP</a>
+                    <a href="javascript:void(0);" onclick="loadContent('udp.html')">UDP</a>
+                    <a href="javascript:void(0);" onclick="loadContent('network_programming.html')">网络编程</a>
+                    <a href="javascript:void(0);" onclick="loadContent('http_https.html')">HTTP/HTTPS</a>
+                    <a href="javascript:void(0);" onclick="loadContent('http_https_continue.html')">HTTP/HTTPS续</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
+                    嵌入式基础知识
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
+                </button>
+                <div class="sub-menu" id="embeddedSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_1.html')">嵌入式基础(一)基本概念</a>
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_2.html')">嵌入式基础(一)ARM基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_3.html')">嵌入式基础(一)基础外设</a>
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_4.html')">嵌入式基础(一)Bootloader</a>
+                    <a href="javascript:void(0);" onclick="loadContent('embedded_basics_5.html')">嵌入式基础(一)ARM架构</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('rtosSubMenu', 'toggleIcon6')">
+                    RTOS
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon6">
+                </button>
+                <div class="sub-menu" id="rtosSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('rtos_1.html')">RTOS一</a>
+                </div>
+                <button class="toggle-button" onclick="toggleSubMenu('dataStructureSubMenu', 'toggleIcon7')">
+                    数据结构
+                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon7">
+                </button>
+                <div class="sub-menu" id="dataStructureSubMenu">
+                    <a href="javascript:void(0);" onclick="loadContent('data_structure_1.html')">数据结构一</a>
+                </div>
+            `;
+            loadContent('Source/introduction.html'); // 加载软嵌物联集的内容
+        }
+
         // 根据屏幕宽度重定向到不同的 HTML 文件
         function redirectBasedOnScreenSize() {
             if (window.innerWidth <= 768) {
-                window.location.href = 'Source/androidhtml.html'; // 针对 iOS 设备
+                PCStatus = !PCStatus;
             } else {
-                window.location.href = 'Source/PCindex.html'; // 针对 PC 设备
+                PCStatus = true; // 针对 PC 设备
             }
         }
 
         window.onload = function() {
             redirectBasedOnScreenSize();  // 根据屏幕宽度重定向
+            loadToolbarmain();//显示布局
+            if(PCStatus)
+            {
+                loadSoftEmbeddedContent();  // 默认加载软嵌物联集的内容
+            }
+            else
+            {
+                loadSoftEmbeddedContentAd();//安卓布局
+                const sidebar = document.getElementById('sidebar');
+                sidebar.style.display = 'block'; // 确保侧边栏在加载时可见
+            }
         };
     </script>
-</head>
-<body>
-    <!-- 这里可以添加一些通用内容，比如加载动画 -->
-    <h1>正在加载...</h1>
 </body>
+
 </html>
