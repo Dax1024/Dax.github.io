@@ -30,23 +30,19 @@
         .container {
             background: white;
             box-shadow: none; /* 去掉阴影 */
-            padding: 20px;
+            padding: 10px;
             border-radius: 5px;
         }
         .code-block {
-            max-width: 800px; /* 设置最大宽度 */
-            margin-left: 1%; /* 设置左边距 */
-            background-color: #f9f9f9; /* 设置背景色 */
-            margin-top: 0px; /* 设置与上方内容的间距 */
-            padding: 0px; /* 设置内边距 */
-            font-family: monospace; /* 设置字体为等宽字体 */
-            border-left: 10px solid #ADD8E6; /* 浅蓝色左边框 */
-            color: #333; /* 设置字体颜色 */
-            border-radius: 5px; /* 可选：添加圆角 */
+            background-color: #f4f4f4; /* 代码块背景色 */
+            padding: 10px; /* 内边距 */
+            border: 1px solid #ccc; /* 边框 */
+            overflow: auto; /* 超出部分滚动 */
+            margin: 10px 0; /* 上下间距 */
+            font-size: 16px; /* 设置字体大小 */
         }
         cite {
             display: block;
-            margin-top: 10px;
             font-style: normal;
             font-weight: bold;
             color: #ccc; /* 设置引用来源的颜色 */
@@ -76,6 +72,13 @@
             font-size: 14px; /* 字体大小 */
             color: #999; /* 字体颜色 */
         }
+        h2, h4 {
+            margin: 0; /* 去掉标题的默认边距 */
+            margin-left: 10px;
+        }
+        ul {
+            margin: 0; /* 去掉列表的默认边距 */
+        }
     </style>
 </head>
 <body>
@@ -84,10 +87,24 @@
             <h1 style="color: #555; margin-left:0;margin-bottom: 0;">软嵌物联集知识星球</h1>
         </div>
         <div class="container" style="text-align: left;margin-bottom: 0; margin-bottom: 0; "> <!-- 将 text-align 改为 left -->
+            <h2 style="color: #555; margin-left: 0; margin-bottom: 0; margin-top: 0px;">作者背景:</h2> <!-- margin-right 调整为 0 -->
+            <div class="code-block">
+                        <strong>BG:</strong> 山东大学(985）硕士研究生（1%保研）<br>
+                        <strong>在校:</strong>国家奖学金、省优秀研究生称号获得者<br>
+                        <strong>工作履历:</strong> 华为、紫光、Intel<br>
+            </div>
             <h2 style="color: #555; margin-left: 0; margin-bottom: 0; margin-top: 0px;">星球现状:</h2> <!-- margin-right 调整为 0 -->
             <p>
-                大家好我是软嵌物联集的作者，我是Dax,现在星球处于试运营阶段，大家可以免费加入，后期可能会设置门槛，希望大家多多支持
+                大家好我是软嵌物联集的作者，我是Dax,现在星球处于试运营阶段，大家可以免费加入，后期可能会设置门槛，早加早享受，希望大家多多支持
             </p>
+        
+            <h2 style="color: #555; margin-left: 0; margin-bottom: 0; margin-top: 0px;">星球意义</h2>
+            <h4>扫清盲点</h4>
+            <ul>
+                <li>作者5年时间面试过上百家公司，方向包括：电力/安全/芯片/AI/物联网/Camera/Windows驱动/汽车等等多个行业，面试经验丰富</li>
+                <li>为每个人解答自己的学习路线和学习方向</li>
+            </ul>
+
             <h2 style="color: #555; margin-left: 0; margin-bottom: 0; margin-top: 0px;">星球期望:持续更新中....</h2> <!-- margin-right 调整为 0 -->
             <p>
                 <li>星球开设专栏，主要从以下几个模块来补充基础知识</li>
@@ -105,10 +122,11 @@
                 <li>开设内推/公司避雷 给找工作的同学们保驾护航</li>
                 <li>每日学习打卡:这个就是利用大家的反馈机制，促进学习动力。</li>
                 <li>星球反馈箱:每天的星球的功能和内容反馈</li>
-                <img src="../image/zsxq2.png" style="max-width: 20%; height: auto;">
+                <img src="../image/zsxq2.png" style="max-width: 100%; height: auto;">
             </p>
             <p>
-                扫描下边的qq群免费加入星球！！！！
+                大家想加入星球可以加群:922657508
+                或者扫码加群，前50人免费加入星球！！！！
             </p>
             <img src="../image/zsxq4.jpg" style="max-width: 20%; height: auto;">
         </div>
