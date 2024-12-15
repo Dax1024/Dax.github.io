@@ -6,15 +6,38 @@
     <title>C++面试高频（一）</title>
     <style>
         pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border: 1px solid #ccc;
-            overflow: auto;
-        }
-        h1 {
-            color: #007bff;
-        }
-    </style>
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+</style> 
 </head>
 <body>
     <h1>C++高频面经（一）</h1>
@@ -57,7 +80,7 @@ int main() {
 }
 </code></pre>
 
-    <h2>2. struct和class的区别⭐</h2>
+    <h2>2. struct和class的区别⭐⭐</h2>
     <ul>
         <li>默认访问权限：struct中的成员默认为公共(public)，而class中的成员默认为私有(private)。</li>
         <li>默认继承方式：struct中的继承方式默认为公共(public)，class中的继承方式默认为私有(private)。</li>
@@ -67,7 +90,7 @@ int main() {
         <li>默认的构造函数和析构函数：class中会自动生成默认的构造函数和析构函数，而struct中不会。</li>
     </ul>
 
-    <h2>3. char和int之间的转换</h2>
+    <h2>3. char和int之间的转换⭐⭐</h2>
     <ul>
         <li>将char转换为int：可以直接将char类型的变量赋值给int类型的变量，将字符对应的ASCII码值赋给int变量。
             <pre><code>char c = 'A';
@@ -82,7 +105,7 @@ char c = static_cast&lt;char&gt;(i);  // 将整数65转换为对应的字符'A'
     </ul>
     <p>需要注意的是，对于转换为char的int值，如果超出了char类型的范围(-128至127)，将会发生溢出，只保留最低位字节的值。</p>
 
-    <h2>4. 什么是野指针和悬挂指针⭐</h2>
+    <h2>4. 什么是野指针和悬挂指针⭐⭐⭐⭐</h2>
     <h3>野指针（Dangling Pointer）：</h3>
     <p>指的是没有初始化过的指针，它指向的地址是未知的、不确定的、随机的。产生野指针的原因主要是指针未初始化，防止的措施就是指针初始化（包括及时初始化或置空）。</p>
     <pre><code>int main() {
@@ -113,14 +136,14 @@ int main() {
 }
 </code></pre>
 
-    <h2>5. NULL和nullptr区别⭐</h2>
+    <h2>5. NULL和nullptr区别⭐⭐</h2>
     <ul>
         <li>类型不同：NULL是宏定义或整数值0，而nullptr是C++11引入的关键字，表示空指针。</li>
         <li>安全性不同：NULL可能导致函数调用二义性问题，nullptr更安全，不会被错误解释为整型。</li>
         <li>上下文匹配不同：NULL可以用于整型类型的上下文，nullptr只能用于指针类型的上下文。</li>
     </ul>
 
-    <h2>6. 指针常量和常量指针有何区别⭐</h2>
+    <h2>6. 指针常量和常量指针有何区别⭐⭐⭐</h2>
     <h3>指针常量（Pointer to a constant）：</h3>
     <p>指针常量是指指针本身是不可更改的，即指针变量自身的值不能被修改，但指向的值可以修改。</p>
     <pre><code>int* const ptr;  // ptr 是指向常量的指针
@@ -138,7 +161,7 @@ const int * ptr = &x;  // ptr 是常量指针
         <li>常量指针表示指针指向的地址不能修改，但可以通过指针修改指向地址的值。</li>
     </ul>
 
-    <h2>7. 虚拟内存和物理内存的区别⭐</h2>
+    <h2>7. 虚拟内存和物理内存的区别⭐⭐⭐⭐⭐</h2>
     <p>虚拟内存（Virtual Memory）和物理内存（Physical Memory）是计算机系统中存储和管理数据的两个概念：</p>
     <ul>
         <li>物理内存是计算机中的实际硬件内存，由RAM芯片组成。</li>
@@ -154,7 +177,7 @@ const int * ptr = &x;  // ptr 是常量指针
     </ul>
     <p>总之，虚拟内存扩展了物理内存的容量，并提供了更灵活的内存管理机制，但付出的代价是访问速度较慢。</p>
 
-    <h2>8. 重载、重写和隐藏的区别⭐</h2>
+    <h2>8. 重载、重写和隐藏的区别⭐⭐</h2>
     <h3>重载（Overloading）：</h3>
     <ul>
         <li>重载是在同一个作用域内定义多个相同名称但参数列表不同的函数或方法。</li>
@@ -247,7 +270,7 @@ int main() {
 }
 </code></pre>
 
-    <h2>9. 简述面向对象的三大特性</h2>
+    <h2>9. 简述面向对象的三大特性⭐⭐⭐⭐⭐</h2>
     <p>面向对象编程（OOP）的三大特性是封装、继承和多态。下面对每个特性进行简要说明：</p>
     <h3>封装（Encapsulation）：</h3>
     <ul>
@@ -273,7 +296,7 @@ int main() {
         <li>多态提高了代码的灵活性和可扩展性，使得程序更具有可读性和可维护性。</li>
     </ul>
 
-    <h2>10. 什么是多态？</h2>
+    <h2>10. 什么是多态？⭐⭐⭐⭐</h2>
     <p>利用虚函数，基类指针指向基类对象时就使用基类的成员（包括成员函数和成员变量），指向派生类对象时就使用派生类的成员。基类指针可以按照基类的方式来做事，也可以按照派生类的方式来做事，它有多种形态，或者说有多种表现方式，我们将这种现象称为多态（Polymorphism）。</p>
     <h4>代码举例：</h4>
     <pre><code>#include &lt;iostream&gt;

@@ -5,23 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C语言面试高频（内存管理）</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1 {
-            color: #007bff;
-        }
-
-        ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-        p {
-            margin: 5px 0;
-        }
-    </style>
+        pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+</style> 
 </head>
 <body>
     <h1>C语言面试高频（内存管理）</h1>
@@ -54,7 +70,7 @@
         </li>
     </ul>
 
-    <h2>2. 在函数中申请堆内存需要注意什么⭐</h2>
+    <h2>2. 在函数中申请堆内存需要注意什么⭐⭐</h2>
     <ul>
         <li>确保不要错误地返回指向栈内存的指针，因为栈内存会在函数结束时自动释放。</li>
         <li>避免在函数内部申请临时数组，因为函数执行完成后，该数组会消失。</li>
@@ -68,7 +84,7 @@
         <li>使用指针函数来解决问题，即返回通过malloc函数申请的堆内存的地址，这样可以在函数外部使用free函数释放该内存。</li>
     </ul>
 
-    <h2>3. 请你说说内存碎片⭐</h2>
+    <h2>3. 请你说说内存碎片⭐⭐</h2>
     <p>内存碎片是指在内存管理过程中产生的未被有效利用的零散、不连续的内存空间。主要分为两种类型：内部碎片和外部碎片。</p>
     <ul>
         <li><strong>内部碎片：</strong>是由于固定大小的内存分配方式或对齐要求等原因导致的未被利用的小空间。当分配给进程的内存块大于所需的大小时，其中的剩余空间就成为了内部碎片。</li>
@@ -80,7 +96,7 @@
         <li><strong>使用内存池：</strong>通过分配一定数量的内存块，由内存池来管理分配和回收，减少频繁的内存分配和释放，从而减少碎片化。</li>
     </ul>
 
-    <h2>4. 什么是内存池⭐</h2>
+    <h2>4. 什么是内存池⭐⭐⭐</h2>
     <p>内存池（Memory Pool）是一种动态内存分配与管理技术。通常情况下习惯使用new/delete/malloc/free等API申请分配和释放内存，这样导致的后果是：当程序长时间运行时，由于所申请的内存块大小不定，频繁使用时会造成大量的内存碎片从而降低程序和操作系统的性能。</p>
     <p><strong>内存池则是在真正使用内存之前，先申请分配一大块内存(内存池)留作备用，当我们申请内存时，从池中取出一块动态分配的内存，释放内存时，再将我们使用的内存释放到我们申请的内存池内，再次申请内存池也可以再取出来使用。并且，尽量与周边的内存块合并。若内存池不够时，则自动扩大内存池，从操作系统中申请更大的内存池。</strong></p>
 

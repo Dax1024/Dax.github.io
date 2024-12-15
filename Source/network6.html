@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算机网络(六)HTTP和HTTPS续</title>
+    <style>
+             pre {
+          background-color: #f4f4f4;
+          padding: 10px;
+          border: 1px solid #ccc;
+          overflow: auto;
+      }
+      h1 {
+          color: #007bff;
+      }
+      table {
+          width: 60%; /* 表格宽度 */
+          border-collapse: collapse; /* 合并边框 */
+          font-family: Arial, sans-serif; /* 字体 */
+      }
+      th, td {
+          border: 1px solid #ddd; /* 边框颜色 */
+          padding: 10px; /* 内边距 */
+          text-align: center; /* 文字居中 */
+      }
+      th {
+          background-color: #4CAF50; /* 表头背景颜色 */
+          color: white; /* 表头文字颜色 */
+      }
+      tr:nth-child(even) {
+          background-color: #f2f2f2; /* 偶数行背景颜色 */
+      }
+      tr:hover {
+          background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+      }
+      li {
+        margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+    </style>  
+</head>
+<body>
+    <h1>计算机网络(六)HTTP和HTTPS续</h1>
+    <h2>1. HTTPS的加密原理⭐⭐⭐⭐</h2>
+    <strong><p>客户端和服务器端使用握手协议来建立安全连接。具体流程如下：</p></strong>
+    <ol>
+        <li>客户端发送一个连接请求，表示希望与服务器建立安全连接。</li>
+        <li>服务器将自己的数字证书发送给客户端。</li>
+        <li>客户端验证服务器的证书，包括确认证书的合法性和验证证书颁发机构的信任。</li>
+        <li>客户端生成一个随机的对称密钥，此对称密钥将用于后续的通信加密。</li>
+        <li>客户端使用服务器的公钥加密该对称密钥，并将加密后的密钥发送给服务器。</li>
+        <li>服务器使用自己的私钥解密客户端发来的对称密钥。</li>
+    </ol>
+    <img src="../image/network6.png"  style="max-width: 70%; height: auto;">
+
+    <h2>2. HTTP的工作原理⭐⭐</h2>
+    <ol>
+        <li><strong>客户端发起请求：</strong>Web浏览器作为HTTP的客户端，向Web服务器发送请求，包括一个URL和请求方法。</li>
+        <li><strong>服务器响应请求：</strong>Web服务器处理请求并生成HTTP响应。</li>
+        <li><strong>建立连接：</strong>客户端和服务器需要建立一个TCP/IP连接，称为三次握手。</li>
+        <li><strong>发送请求报文：</strong>客户端将请求包装成HTTP请求报文，并通过TCP/IP连接发送给服务器。</li>
+        <li><strong>服务器处理请求：</strong>服务器根据请求行和头部信息处理请求。</li>
+        <li><strong>发送响应报文：</strong>服务器将响应信息打包成HTTP响应报文，并发送给客户端。</li>
+        <li><strong>关闭连接：</strong>请求和响应完成后，客户端和服务器可以选择关闭连接。</li>
+    </ol>
+    <img src="../image/network6.1.png"  style="max-width: 70%; height: auto;">
+
+    
+    <h2>3. HTTP的无连接是什么意思？⭐⭐⭐</h2>
+    <p>HTTP的无连接（Connectionless）指的是每次HTTP请求都是独立的，没有持久连接状态。具体表现为：</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>特性</th>
+                <th>解释</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>短暂会话</td>
+                <td>每个HTTP请求-响应交互都是短暂的。</td>
+            </tr>
+            <tr>
+                <td>无状态</td>
+                <td>HTTP不跟踪客户端的状态信息。</td>
+            </tr>
+            <tr>
+                <td>资源消耗较少</td>
+                <td>减少服务器的负载和资源占用。</td>
+            </tr>
+            <tr>
+                <td>完全解耦</td>
+                <td>客户端和服务器之间的通信灵活。</td>
+            </tr>
+            <tr>
+                <td>可扩展性和灵活性</td>
+                <td>每次请求都是独立的，方便扩展。</td>
+            </tr>
+            <tr>
+                <td>适应低可靠性网络环境</td>
+                <td>适合在低可靠性网络下进行通信。</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>4. HTTP的无状态是什么意思？⭐⭐</h2>
+<strong><p>HTTP的无状态（Stateless）指的是服务器在处理客户端请求时，不保存关于客户端的任何状态信息。每个HTTP请求都是独立的，服务器不能从之前的请求中推断出客户端的上下文或状态。</p></strong>
+<p>具体来说，无状态意味着以下几点：</p>
+<ol>
+    <li>每个请求都是独立的：服务器不能确定两个请求是否来自同一个客户端，因为它没有保存关于客户端的状态信息。</li>
+    <li>服务器不存储客户端状态：服务器不会保存客户端的任何状态信息，如登录状态、会话数据等。每个请求都需要提供足够的信息来完成处理。</li>
+    <li>无法跟踪客户端会话：由于服务器不存储客户端状态，它无法跟踪客户端的会话，也无法确保在多个请求之间保持用户身份验证状态。</li>
+</ol>
+
+    
+    <h2>5. 在浏览器地址栏键入URL，按下回车之后会经历哪些流程？⭐⭐⭐⭐</h2>
+    <ol>
+        <li><strong>URL解析：</strong>浏览器解析URL，提取出域名。</li>
+        <li><strong>DNS解析：</strong>向DNS服务器发送请求，将域名解析为IP地址。</li>
+        <li><strong>建立TCP连接：</strong>使用IP地址和默认HTTP端口建立TCP连接。</li>
+        <li><strong>发起HTTP请求：</strong>发送HTTP请求，包括请求方法、路径、查询参数等。</li>
+        <li><strong>服务器响应：</strong>目标服务器处理请求并生成HTTP响应。</li>
+        <li><strong>接收响应：</strong>浏览器解析响应头和响应体。</li>
+        <li><strong>渲染页面：</strong>解析HTML、加载CSS和JavaScript，渲染页面。</li>
+        <li><strong>关闭连接：</strong>请求和响应完成后，关闭TCP连接。</li>
+    </ol>
+    
+    <h2>6. Cookie和Session对于HTTP有什么用？⭐⭐⭐⭐</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>Cookie</th>
+                <th>Session</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>定义</td>
+                <td>存储在客户端的小型文本数据</td>
+                <td>存储在服务器端的会话状态信息</td>
+            </tr>
+            <tr>
+                <td>存储位置</td>
+                <td>客户端的浏览器中</td>
+                <td>服务器端的内存或持久化存储</td>
+            </tr>
+            <tr>
+                <td>传递方式</td>
+                <td>通过HTTP请求头的Cookie字段传递</td>
+                <td>通过Cookie存储的Session ID传递</td>
+            </tr>
+            <tr>
+                <td>功能</td>
+                <td>会话管理、用户认证、偏好设置、跟踪分析等</td>
+                <td>会话管理、用户认证、存储会话状态信息等</td>
+            </tr>
+            <tr>
+                <td>安全性</td>
+                <td>可以设置HTTPOnly属性保护</td>
+                <td>Session ID只在Cookie中传递，减少信息暴露风险</td>
+            </tr>
+            <tr>
+                <td>存储容量</td>
+                <td>进行大小限制，一般为几KB</td>
+                <td>能够存储更大的数据，不受浏览器限制</td>
+            </tr>
+            <tr>
+                <td>生命周期</td>
+                <td>可以设置指定的过期时间</td>
+                <td>生命周期与会话相关，一般在会话结束时销毁</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>7. HTTP1.0、HTTP1.1的区别⭐⭐</h2>
+<table>
+    <thead>
+        <tr>
+            <th>特性</th>
+            <th>HTTP 1.0</th>
+            <th>HTTP 1.1</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>持久连接</td>
+            <td>默认情况下，每个请求/响应都需要建立和关闭一个单独的连接</td>
+            <td>引入了持久连接，允许多个请求/响应复用同一个连接</td>
+        </tr>
+        <tr>
+            <td>流水线化</td>
+            <td>不支持</td>
+            <td>支持通过同时发送多个请求来提高效率</td>
+        </tr>
+        <tr>
+            <td>响应方式</td>
+            <td>响应无序，无法确定响应与请求的对应关系</td>
+            <td>引入了序号，以确保每个响应与其对应的请求一一对应</td>
+        </tr>
+        <tr>
+            <td>压缩</td>
+            <td>不支持</td>
+            <td>引入了gzip等压缩算法，以减少传输的数据量</td>
+        </tr>
+        <tr>
+            <td>缓存</td>
+            <td>有限的支持，靠Expires和Last-Modified字段来进行缓存控制</td>
+            <td>引入了更强大的缓存处理机制，包括Cache-Control和ETag字段等</td>
+        </tr>
+        <tr>
+            <td>Host字段</td>
+            <td>不支持</td>
+            <td>引入了Host字段，支持一台服务器上的多个虚拟主机</td>
+        </tr>
+        <tr>
+            <td>错误处理</td>
+            <td>错误处理机制简单，主要通过响应状态码进行处理</td>
+            <td>引入了更多的状态码和错误处理机制，包括重定向、范围请求、条件请求等</td>
+        </tr>
+        <tr>
+            <td>安全性</td>
+            <td>不支持</td>
+            <td>引入了更强的安全机制，如基本认证、摘要认证、SSL/TLS等</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>8. 什么是对称加密？什么是非对称加密？两者区别？⭐⭐⭐⭐</h2>
+<p><strong>公钥加密（非对称加密）：</strong></p>
+<ol>
+    <li>服务器端生成一对密钥：公钥和私钥。</li>
+    <li>服务器将公钥放在数字证书中并发送给客户端。</li>
+    <li>客户端接收到服务器发来的数字证书后，验证证书的合法性，包括证书是否由可信机构签发、证书是否过期等。</li>
+    <li>客户端从证书中获取服务器的公钥，用于后续的加密操作。</li>
+    <li>客户端使用服务器的公钥对一个随机生成的对称密钥进行加密，并将加密后的密钥发送给服务器。</li>
+    <li>服务器使用私钥对加密后的对称密钥进行解密，获取对称密钥。</li>
+</ol>
+<img src="../image/network6.2.png"  style="max-width: 70%; height: auto;">
+
+<p><strong>对称密钥加密：</strong></p>
+<ol>
+    <li>客户端和服务器通过握手过程协商一个对称密钥，该对称密钥只在本次通信过程中使用。</li>
+    <li>客户端和服务器使用对称密钥对通信的数据进行加密和解密。</li>
+</ol>
+<img src="../image/network6.3.png"  style="max-width: 40%; height: auto;">
+
+<h2>9. 数字证书用来干嘛的？⭐⭐</h2>
+<p>服务器会给客户端发出数字证书来证明自己的身份。客户端在接受到服务端发来的SSL证书时，会对证书的真伪进行校验。这样我们通过数字证书，就可以安全交换对称秘钥了。</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>类别</th>
+            <th>内容</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>用途</td>
+            <td>验证网络实体身份和建立安全通信</td>
+        </tr>
+        <tr>
+            <td>内容</td>
+            <td>证书持有者的信息（如名称、组织、电子邮件等）</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>证书颁发机构（CA）的信息</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>证书持有者的公钥</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>数字签名</td>
+        </tr>
+        <tr>
+            <td>作用</td>
+            <td>身份验证：确认服务器、个人的身份</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>数据加密：使用公钥加密数据</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>安全通信：建立安全加密通信通道</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>可信性和信任链建立</td>
+        </tr>
+        <tr>
+            <td>颁发机构</td>
+            <td>由受信任的证书颁发机构（CA）签发和管理</td>
+        </tr>
+        <tr>
+            <td>安全性</td>
+            <td>私钥的保护：证书持有者需要妥善保护私钥</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>CA信任链的建立和验证</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>防止伪造和篡改：通过数字签名来验证证书的完整性和真实性</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<h2>10. HTTPS为什么比HTTP更安全⭐⭐⭐⭐</h2>
+<p><strong>关键点：</strong></p>
+<ol>
+    <li>数据加密：HTTPS使用SSL/TLS协议对通信进行加密，而HTTP不对通信进行加密，数据传输是明文的。</li>
+    <li>身份验证：HTTPS使用数字证书对服务器进行身份验证，确保客户端连接到真实的服务器。HTTP没有身份验证机制，容易被中间人攻击。</li>
+    <li>数据完整性：HTTPS使用消息摘要算法和数字签名来确保数据的完整性，防止数据在传输过程中被篡改。HTTP没有数据完整性保护，数据容易被篡改。</li>
+    <li>默认端口号：HTTPS使用默认的安全端口443，而HTTP使用端口80。</li>
+    <li>排名和SEO影响：搜索引擎更倾向于将采用HTTPS的网站排名更高，HTTP网站可能在搜索结果中排名较低。</li>
+</ol>
+
+<p><strong>下面是关于HTTPS和HTTP的比较表格：</strong></p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>类别</th>
+            <th>HTTP</th>
+            <th>HTTPS</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>安全性</td>
+            <td>通信数据明文传输，容易被窃听和篡改</td>
+            <td>通信数据加密，保护隐私和数据安全</td>
+        </tr>
+        <tr>
+            <td>身份验证</td>
+            <td>没有身份验证机制，容易受到中间人攻击</td>
+            <td>使用数字证书对服务器进行身份验证</td>
+        </tr>
+        <tr>
+            <td>数据完整性</td>
+            <td>没有数据完整性保护，数据容易被篡改</td>
+            <td>使用消息摘要和数字签名保证数据完整性</td>
+        </tr>
+        <tr>
+            <td>端口号</td>
+            <td>默认使用非安全端口80</td>
+            <td>默认使用安全端口443</td>
+        </tr>
+        <tr>
+            <td>排名效果</td>
+            <td>HTTP网站可能在搜索引擎结果中排名较低</td>
+            <td>HTTPS网站可能在搜索引擎结果中更高排名</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h2>11. HTTP2.0有哪些改动？⭐⭐⭐</h2>
+<p>下面是HTTP/2.0和HTTP/1.1的对比表格：</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>特性</th>
+            <th>HTTP/2.0</th>
+            <th>HTTP/1.1</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>多路复用</td>
+            <td>允许同时发送多个请求和响应</td>
+            <td>每个请求需要使用独立的连接</td>
+        </tr>
+        <tr>
+            <td>二进制传输</td>
+            <td>使用二进制格式传输数据</td>
+            <td>使用文本格式传输数据</td>
+        </tr>
+        <tr>
+            <td>Header压缩</td>
+            <td>提供有效的头部压缩机制，减少重复的头部传输</td>
+            <td>头部数据无压缩，重复传输</td>
+        </tr>
+        <tr>
+            <td>服务器推送</td>
+            <td>具备服务器推送功能，主动推送相关资源</td>
+            <td>无法主动推送资源，需要额外的请求获取资源</td>
+        </tr>
+        <tr>
+            <td>流量控制</td>
+            <td>支持流量控制机制，管理和控制发送和接收的数据流量</td>
+            <td>没有流量控制机制，可能导致网络拥塞和延迟</td>
+        </tr>
+        <tr>
+            <td>请求优先级</td>
+            <td>支持客户端指定请求的优先级，保证重要资源和请求的优先处理</td>
+            <td>所有请求平等处理，没有请求优先级的概念</td>
+        </tr>
+    </tbody>
+</table>
+
+
+</body>

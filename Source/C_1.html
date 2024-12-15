@@ -6,20 +6,43 @@
     <title>C语言高频面经(一)</title>
     <style>
         pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border: 1px solid #ccc;
-            overflow: auto;
-        }
-        h1 {
-            color: #007bff;
-        }
-    </style>
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+</style> 
 </head>
 <body>
     <h1>C语言高频面经(一)</h1>
     
-    <h2>1. 全局变量和局部变量的区别</h2>
+    <h2>1. 全局变量和局部变量的区别⭐⭐⭐</h2>
     <h3>全局变量：</h3>
     <ul>
         <li>在函数外部声明的变量，整个程序都可以访问。</li>
@@ -35,7 +58,7 @@
         <li>局部变量存储在栈区（stack）。</li>
     </ul>
 
-    <h2>2. int main(int argc, char ** argv)函数中，参数argc和argv分别代表什么意思？</h2>
+    <h2>2. int main(int argc, char ** argv)函数中，参数argc和argv分别代表什么意思？⭐⭐⭐</h2>
     <p>在C语言中，主函数int main(int argc, char **argv)用来作为程序的入口，argc和argv是其参数。</p>
     <ul>
         <li><strong>argc</strong>是整型参数，表示命令行参数的个数。它记录了程序在运行时附带的命令行参数的数量，至少为1，因为程序自身的名称也算一个参数。</li>
@@ -53,7 +76,7 @@
         <li>argv[4] = NULL</li>
     </ul>
 
-    <h2>3. static关键字</h2>
+    <h2>3. static关键字⭐⭐⭐</h2>
     <p>声明静态变量，使其生命周期延长或作用域限定在当前文件内。</p>
     <p>声明静态函数，使其作用域限定在当前文件内。</p>
     <p>声明静态成员变量，使其属于类本身而不是对象，多个对象共享同一份内存。</p>
@@ -161,7 +184,7 @@ int main() {
 </code></pre>
     <p>在 File1.c 中，我们使用 extern 关键字来定义一个全局变量 globalVar，并初始化为 10。在 File2.c 中，我们使用 extern 关键字来声明同名的全局变量 globalVar，以表示它是在其他源文件中定义的。然后，在 main 函数中，我们可以访问并打印 globalVar 的值。</p>
 
-    <h2>7. #include<> 和 #include""的区别</h2>
+    <h2>7. #include<> 和 #include""的区别⭐⭐</h2>
     <h3>使用 #include<>：</h3>
     <ul>
         <li>用于包含系统提供的标准库头文件。</li>
@@ -175,7 +198,7 @@ int main() {
         <li>编译器会首先在当前源文件所在目录中查找，如果找不到再根据指定的路径查找。</li>
     </ul>
 
-    <h2>8. C语言的基本类型（32位系统）</h2>
+    <h2>8. C语言的基本类型（32位系统）⭐⭐⭐⭐⭐</h2>
     <table border="1">
         <thead>
             <tr>
@@ -211,7 +234,7 @@ int main() {
         </tbody>
     </table>
 
-    <h2>9. 头文件#ifndef/#define/#endif的作用</h2>
+    <h2>9. 头文件#ifndef/#define/#endif的作用⭐⭐⭐</h2>
     <ul>
         <li><strong>#ifndef</strong>：用于判断当前头文件是否已经被包含。如果该宏之前没有被定义过，则继续编译下面的代码。如果该宏之前已被定义过，则跳过下面的代码，直接到 #endif。</li>
         <li><strong>#define</strong>：用于定义一个宏。通过定义一个特定的宏名称，例如MY_HEADER_H表示头文件已被包含。</li>
@@ -230,7 +253,7 @@ const int MAX_VALUE = 100;  // 常量定义
 </code></pre>
     <p>上述是一般的使用模板。</p>
 
-    <h2>10. volatile声明的作用</h2>
+    <h2>10. volatile声明的作用⭐⭐⭐</h2>
     <p>volatile声明的变量是指可能会被意想不到地改变的变量，这样编译器就不会轻易优化该变量。它主要用于多线程编程中，用来保证共享变量的内存可见性。（注：指针也可用volatile）</p>
     <h3>三个常见场景：</h3>
     <ul>
@@ -239,7 +262,7 @@ const int MAX_VALUE = 100;  // 常量定义
         <li>并行设备的硬件寄存器</li>
     </ul>
 
-    <h2>11. strcpy与memcpy的区别</h2>
+    <h2>11. strcpy与memcpy的区别⭐⭐⭐⭐⭐</h2>
     <h3>strcpy：</h3>
     <ul>
         <li>用于字符串拷贝。</li>
@@ -266,10 +289,10 @@ const int MAX_VALUE = 100;  // 常量定义
         <li>memcpy适用于字节级别的内存拷贝，适用于任意类型的数据。</li>
     </ul>
 
-    <h2>12. 一个变量既可以是const还可以是volatile类型吗</h2>
+    <h2>12. 一个变量既可以是const还可以是volatile类型吗⭐⭐</h2>
     <p>可以，一个变量可以同时具有const和volatile。const表示变量的值不能被改变，而volatile属性表示变量的值可能会被外部程序改变。</p>
 
-    <h2>13. sizeof与strlen的区别</h2>
+    <h2>13. sizeof与strlen的区别⭐⭐⭐⭐⭐</h2>
     <h3>sizeof：</h3>
     <ul>
         <li>用于获取数据类型或变量的字节大小。</li>
@@ -296,7 +319,7 @@ size_t length_str = strlen(str);
         <li>sizeof可以用于任何数据类型或变量，而strlen只适用于字符串。</li>
     </ul>
 
-    <h2>14. 常见的变量定义</h2>
+    <h2>14. 常见的变量定义⭐⭐⭐</h2>
     <ul>
         <li>int a;：定义了一个变量 a，它的类型是 int。</li>
         <li>int *a;：定义了一个指针 a，它指向 int 类型的变量。</li>
@@ -308,7 +331,7 @@ size_t length_str = strlen(str);
         <li>int (*a[10])(int);：定义了一个数组 a，该数组的元素是一个指向参数是 int，返回值是 int 的函数指针。</li>
     </ul>
 
-    <h2>15. 数组名与指针的区别</h2>
+    <h2>15. 数组名与指针的区别⭐⭐⭐</h2>
     <h3>数组名：</h3>
     <ul>
         <li>是一个常量指针，指向数组的首元素。</li>

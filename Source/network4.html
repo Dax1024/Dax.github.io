@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算机网络(四)网络编程</title>
+    <style>
+        pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+</style>  
+    
+    
+    
+</head>
+<body>
+    <h1>计算机网络(四)网络编程</h1>
+    <h2>1. 请说说socket网络编程的步骤。⭐⭐⭐</h2>
+    <img src="../image/network4.png"  style="max-width: 70%; height: auto;">
+    <h4>UDP的网络编程：</h4>
+    <p><strong>客户端的基本流程如下：</strong></p>
+    <ol>
+        <li>创建UDP套接字（socket）：使用socket库的socket()函数创建一个UDP套接字。</li>
+        <li>可选地绑定本地地址和端口：使用bind()函数将套接字绑定到一个本地地址和端口。</li>
+        <li>发送数据包给服务端：使用sendto()函数将数据包发送给服务端，需要指定目标地址和端口。</li>
+        <li>等待接收来自服务端的响应数据包（可选）：使用recvfrom()函数从服务端接收数据包，这是一个阻塞操作，直到接收到数据或超时。</li>
+        <li>关闭套接字：使用close()函数关闭客户端的套接字。</li>
+    </ol>
+    
+    <p><strong>服务端的基本流程如下：</strong></p>
+    <ol>
+        <li>创建UDP套接字（socket）：使用socket库的socket()函数创建一个UDP套接字。</li>
+        <li>将套接字绑定到一个本地地址和端口：使用bind()函数将套接字绑定到一个本地地址和端口，使其可以接收来自客户端的数据包。</li>
+        <li>开始监听来自客户端的数据包：使用recvfrom()函数从客户端接收数据包，这是一个阻塞操作，直到接收到数据或超时。</li>
+        <li>接收客户端发送的数据包：使用recvfrom()函数接收客户端发送的数据包，并获取客户端的地址和端口。</li>
+        <li>可选地处理接收到的数据包并给客户端发送响应数据包：对接收到的数据包进行处理，并使用sendto()函数将响应数据包发送给客户端。</li>
+        <li>可选地继续监听并处理其他客户端的请求：使用一个循环来持续监听和处理多个客户端的请求。</li>
+        <li>关闭套接字：使用close()函数关闭服务端的套接字。</li>
+    </ol>
+    
+    <h4>TCP的网络编程：</h4>
+    <p><strong>服务端流程：</strong></p>
+    <ol>
+        <li>创建服务端的TCP套接字：使用socket()函数，指定地址类型（IPv4或IPv6）、socket类型（如SOCK_STREAM）和协议（如IPPROTO_TCP）。</li>
+        <li>绑定套接字到指定的IP地址和端口号：使用bind()函数，传入套接字、本地地址和端口号。</li>
+        <li>开始监听连接请求：使用listen()函数，传入套接字和等待连接的最大数量。</li>
+        <li>接受来自客户端的连接请求：使用accept()函数，在一个循环中等待客户端连接，并创建新的套接字来与客户端通信。</li>
+        <li>与客户端通信：使用新的套接字进行数据传输，如使用read()函数接收客户端发送的数据并使用write()函数发送响应数据给客户端。</li>
+        <li>当通信结束时，关闭与客户端的套接字：使用close()函数，传入套接字。</li>
+    </ol>
+    
+    <p><strong>客户端流程：</strong></p>
+    <ol>
+        <li>创建客户端的TCP套接字：使用socket()函数，指定地址类型（IPv4或IPv6）、socket类型（如SOCK_STREAM）和协议（如IPPROTO_TCP）。</li>
+        <li>连接到服务端的IP地址和端口号：使用connect()函数，传入套接字、服务端地址和端口号。</li>
+        <li>向服务端发送请求或数据：使用write函数向服务端发送请求或数据。</li>
+        <li>等待接收服务端返回的响应数据：使用read()函数接收服务端发送的响应数据。</li>
+        <li>处理服务端的响应数据。</li>
+        <li>当通信结束时，关闭客户端的套接字：使用close()函数，传入套接字。</li>
+    </ol>
+    
+    <h2>2. 请说说socket网络编程的接口。⭐⭐</h2>
+    <ol>
+        <li><strong>创建套接字：</strong>socket()函数。</li>
+        <li><strong>绑定套接字：</strong>bind()函数。</li>
+        <li><strong>监听连接：</strong>listen()函数。</li>
+        <li><strong>接受连接：</strong>accept()函数。在接受连接后，会返回一个新的套接字用于与客户端通信。</li>
+        <li><strong>连接服务器：</strong>connect()函数。</li>
+        <li><strong>发送数据：</strong>使用write()函数，将数据从套接字发送给目标主机。写入的字节数可以通过返回值进行检查。</li>
+        <li><strong>接收数据：</strong>使用read()函数，从套接字读取数据。读取的字节数可以通过返回值进行检查。</li>
+        <li><strong>关闭套接字：</strong>close()函数。</li>
+    </ol>
+    
+    <h2>3. 什么是Socket?⭐</h2>
+    <strong><p>Socket（套接字）是一种在计算机网络中进行通信的抽象概念。它提供了一种机制，使得不同计算机之间能够建立连接并进行数据交换。</p>
+    <p>在网络通信中，Socket可以被视为一个端点，它通过网络连接与其他应用程序进行通信。Socket可以分为两种类型：服务器端套接字（Server Socket）和客户端套接字（Client Socket）。</p>
+    </strong>
+    <h2>4. Socket属于网络的那个层面?⭐⭐</h2>
+    <strong><p>Socket属于传输层。</p></strong>
+    <ol>
+        <li><p>Socket是应用程序和网络传输层之间的接口，它提供了一套编程接口，允许应用程序通过传输协议（如TCP或UDP）进行网络通信。通过Socket，应用程序可以创建连接、发送和接收数据。</p></li>    
+        <li><p>具体来说，当应用程序使用TCP协议时，它可以使用Socket接口来建立一个TCP连接，并通过Socket发送和接收可靠的字节流数据。当应用程序使用UDP协议时，它可以使用Socket接口来发送和接收不可靠的数据报。</p></li>  
+        <li><p>由于Socket直接与传输协议交互，并提供了对传输层功能的访问，因此它被认为属于传输层。它将应用程序和网络层之间进行了解耦，使得应用程序可以方便地进行网络通信操作，无需关注底层的网络细节。</p></li>
+    </ol>
+    <h2>5. Socket的常用类⭐⭐</h2>
+    <p>Socket的常用类包括以下几个：</p>
+    <ol>
+        <li><strong>Socket：</strong>Socket类是Java中最基本的Socket类，用于客户端与服务器之间的通信。它提供了一套方法，可以用于建立连接、发送和接收数据。</li>
+        <li><strong>ServerSocket：</strong>ServerSocket类用于在服务器端监听指定的端口，接受客户端的连接请求。一旦有客户端连接上来，ServerSocket会返回一个对应的Socket实例，用于与该客户端进行通信。</li>
+        <li><strong>InetAddress：</strong>InetAddress类表示IP地址，可以用于解析域名、获取主机名等。它提供了一系列静态方法，用于获取本地主机地址、远程主机地址等。</li>
+        <li><strong>DatagramSocket：</strong>DatagramSocket类用于支持UDP协议的网络通信。它提供了一套方法，可以用于发送和接收UDP数据报。</li>
+        <li><strong>MulticastSocket：</strong>MulticastSocket类继承自DatagramSocket，专用于支持多播（Multicast）通信。它提供了一套方法，用于加入和离开多播组、发送和接收多播数据报。</li>
+    </ol>
+    
+    <h2>6. 什么是长链接、短连接?⭐⭐⭐</h2>
+    <p><strong>长连接（Keep-Alive连接）：</strong></p>
+
+    <ol>
+        <li>长连接指在一次连接中可以进行多次数据传输的连接方式。在建立连接后，客户端和服务器保持该连接，可以连续发送和接收数据。</li>
+        <li>长连接通常使用TCP协议，因为TCP是一种可靠的、面向连接的协议，适合长时间的持续通信。</li>
+        <li>长连接可以减少连接的建立和关闭的开销，提高通信效率，适用于实时性较高、频繁通信的场景，如聊天应用、实时数据传输等。</li>
+    </ol>    
+    
+    <p><strong>短连接：</strong></p>
+
+    <ol>
+        <li>短连接是一次性的、即时的连接。在完成一次数据传输后，连接会被立即关闭。</li>
+        <li>短连接可以使用TCP或UDP协议，但更常见的是使用UDP协议，因为UDP是一种无连接的协议，不需要保持持久连接。</li>
+        <li>短连接适用于数据传输较少的场景，如发送一次请求获取某个资源，数据传输完成后连接即可关闭。</li>
+    </ol>
+    
+    
+    <h2>7. 如何应对短连接、高并发的场景？⭐⭐</h2>
+    <ol>
+        <li><strong>优化主机系统设置：</strong>降低SYN timeout时间，以便尽快释放占用的半连接。使用SYN cookie设置，为每个连接请求的IP地址分配一个Cookie，当连续收到一个IP地址的重复SYN报文时，认为可能受到攻击，并拒绝来自该IP地址的后续包。</li>
+        <li><strong>使用长连接：</strong>在使用长连接的情况下，客户端和服务器之间的TCP连接在一个网页打开后不会立即关闭，而是保持连接状态，如果客户端再次访问服务器上的网页，可以继续使用已经建立的连接，避免频繁建立和关闭连接的开销。</li>
+    </ol>
+    <p><strong>对于服务器高并发的场景，可以使用以下处理手段:</strong></p>
+    <ol>
+        <li><strong>采用多IO复用模型：</strong>使用select、epoll等多路复用技术处理多个连接的读写操作。这样可以在一个线程或进程内同时处理多个连接，提高系统的并发能力。</li>
+        <li><strong>使用队列进行削峰和缓存：</strong>引入消息队列，将请求加入队列中，然后使用多个消费者进行处理。这种方式可以平滑处理峰值请求，并提高系统的可伸缩性和容错性。</li>
+        <li><strong>采用多服务器负载均衡：</strong>使用负载均衡技术将请求分发到多个服务器上，确保每个服务器都能均衡处理请求，提高系统的吞吐量和可靠性。</li>
+        <li><strong>使用缓存：</strong>使用缓存系统如Redis来缓存经常访问的数据，减少对后端系统的访问，提高系统的响应速度和并发处理能力。</li>
+    </ol>
+    
+    <h2>8. 什么是负载均衡？⭐⭐</h2>
+    <p>当一台服务器的单位时间内的访问量越大时，服务器压力就越大，直至超过其自身的承载能力，这可能导致服务器崩溃。为了避免这种情况发生，并提供更好的用户体验，我们可以利用负载均衡来分担服务器的压力。</p>
+    <strong><p>负载均衡是一种通过建立服务器集群来分担服务器压力的技术。具体过程是，当用户访问网站时，先访问一个位于前端的负载均衡器（也称为调度器），然后负载均衡器会根据配置的算法（如轮询、权重轮询、IP-Hash等）选择一个压力较小的后端服务器，并将该访问请求引导到被选中的服务器上进行处理。</p></strong>
+    <p><strong>负载均衡算法：</strong></p>
+    <ol>
+        <li><strong>轮询（Round Robin）：</strong>将请求依次轮流分配给每个应用服务器，分配策略比较简单。但可能会出现某些服务器接受的请求较重，负载压力重的问题。</li>
+        <li><strong>权重轮询（Weighted Round Robin）：</strong>给每个服务器分配一个权重值，权重越高的服务器被选中的几率越大。通过调整权重值，可以根据实际情况对服务器进行负载均衡。</li>
+        <li><strong>IP-Hash：</strong>使用客户端的IP地址进行哈希计算，将同一个IP的请求分发到同一台服务器。</li>
+        <li><strong>Fair：</strong>根据服务器处理请求的速度进行负载均衡分配，处理请求最早结束的服务器会获得下一个请求。</li>
+        <li><strong>URL-Hash：</strong>根据请求的URL进行哈希计算，使得同一个URL的请求总是发送到同一台服务器。</li>
+    </ol>
+    
+    <h2>9. 什么是洪泛攻击？⭐⭐⭐</h2>
+    <strong><p>洪泛攻击（Flood Attack）是一种旨在压倒目标系统的网络攻击形式。在洪泛攻击中，攻击者发送大量的请求或数据包到目标系统，使其资源（如带宽、处理能力、存储空间等）被消耗殆尽，导致服务无法正常响应合法用户的请求。</p></strong>
+    <p>洪泛攻击通常通过大量的恶意流量或请求来使目标系统过载。攻击者可能利用多台计算机组成一个攻击网络（也称为僵尸网络或僵尸军团），从而可以同时进行大规模的洪泛攻击。这种攻击方式的目的是耗尽目标系统的网络带宽、计算资源、内存等，导致系统服务变得不稳定甚至崩溃。</p>
+    <p><strong>洪泛攻击可以采用多种方式进行，如：</strong></p>
+    <ol>
+        <li>TCP SYN Flood：攻击者发送大量的TCP连接请求（SYN包）到目标系统上，但不完整建立连接，从而消耗系统资源。</li>
+        <li>UDP Flood：攻击者发送大量的UDP数据包到目标系统上，由于UDP是无连接协议，目标系统会试图处理这些数据包，导致资源耗尽。</li>
+        <li>ICMP Flood：攻击者发送大量的ICMP请求（Ping）到目标系统上，使其消耗大量的带宽和处理能力。</li>
+    </ol>    
+    <p><strong>怎么预防洪泛攻击？</strong></p>
+    <ol>
+        <li>降低SYN timeout时间：将主机系统的SYN timeout时间设置为较短的值，可以使主机更快地释放占用的半连接资源。</li>
+        <li>使用SYN cookie：采用SYN cookie技术可以有效抵御SYN洪泛攻击。</li>
+        <li>使用防火墙和DDoS防护设备：设置防火墙规则和使用专门的DDoS防护设备。</li>
+        <li>使用长连接：在通信协议中采用长连接的方式可以减少连接建立和释放的开销。</li>
+    </ol>
+    
+    <h2>10. 简述一下Nagle算法⭐⭐⭐</h2>
+    <strong><p>Nagle算法是一种改善TCP传输效率的流量控制算法。它的目标是减少带宽的浪费，提高网络传输效率。Nagle算法在发送端对数据进行缓冲和合并，在一定条件下将多个小数据包合并成一个较大的数据包进行发送。</p></strong>    
+    <p>Nagle算法的工作原理如下：</p>
+    <ol>
+        <li><strong>数据缓冲：</strong>当应用程序发送了一个小数据包时，TCP协议栈会将数据先放入发送缓冲区而不是立即发送。</li>
+        <li><strong>数据合并：</strong>在缓冲区中积累了一定量的数据之后，TCP协议栈会检查是否可以发送数据。</li>
+        <li><strong>发送数据：</strong>当合并的数据包满足发送条件时，TCP协议栈将缓冲区中的数据一次性发送出去。</li>
+    </ol>
+    <strong><p>Nagle算法通过缓冲和合并数据，减少小数据包的发送次数，提高带宽利用率。但在特定场景下，需要权衡实时性和传输效率，选择是否启用或禁用Nagle算法。</p></strong>    
+
+    
+
+</body>

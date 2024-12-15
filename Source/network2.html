@@ -5,36 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>计算机网络(二)TCP/IP</title>
     <style>
-             pre {
-          background-color: #f4f4f4;
-          padding: 10px;
-          border: 1px solid #ccc;
-          overflow: auto;
-      }
-      h1 {
-          color: #007bff;
-      }
-      table {
-          width: 60%; /* 表格宽度 */
-          border-collapse: collapse; /* 合并边框 */
-          font-family: Arial, sans-serif; /* 字体 */
-      }
-      th, td {
-          border: 1px solid #ddd; /* 边框颜色 */
-          padding: 10px; /* 内边距 */
-          text-align: center; /* 文字居中 */
-      }
-      th {
-          background-color: #4CAF50; /* 表头背景颜色 */
-          color: white; /* 表头文字颜色 */
-      }
-      tr:nth-child(even) {
-          background-color: #f2f2f2; /* 偶数行背景颜色 */
-      }
-      tr:hover {
-          background-color: #ddd; /* 鼠标悬停行的背景颜色 */
-      }
-    </style>  
+        pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+</style>  
 </head>
 <body>
     <h1>计算机网络(二)TCP/IP</h1>
@@ -180,7 +183,7 @@
 <h2>10. 请说说TCP的ACK机制，有什么好处？⭐⭐⭐</h2>
 <p>TCP的ACK（确认）机制是指在TCP连接中，接收方通过发送ACK报文来确认已成功接收到发送方的数据。ACK机制的主要作用是保证数据的可靠传输和实现流量控制。</p>
 
-<h3>好处如下：</h3>
+<h3>原理如下</h3>
 <ol>
     <li><strong>可靠性确认：</strong>接收方通过发送ACK报文来确认已成功接收到发送方的数据。发送方收到ACK报文后，可以确认数据已经正确传输到接收方，如果没有收到ACK报文，发送方会认为数据丢失，会进行重传，保证数据可靠性。</li>
     <li><strong>流量控制：</strong>ACK机制可以帮助控制数据发送的速率。在接收方的ACK报文中，会包含一个窗口字段（接收窗口），表示接收方所能接收的数据量。发送方根据接收窗口的大小来调整发送数据的速率，以避免发送方持续发送过多的数据，导致接收方无法及时处理和接收，从而实现流量控制，避免网络拥塞和数据丢失。</li>

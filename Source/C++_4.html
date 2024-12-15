@@ -5,33 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C++高频面经（四）之C++11新特性</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1 {
-            color: #007bff;
-        }
-        ul, ol {
-            margin: 0;
-            padding-left: 20px;
-        }
-        p {
-            margin: 5px 0;
-        }
         pre {
-            background-color: #f8f8f8;
-            padding: 10px;
-            border: 1px solid #ddd;
-            overflow-x: auto;
-        }
-    </style>
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+</style> 
 </head>
 <body>
     <h1>C++面试高频（四）之C++11新特性</h1>
 
-    <h2>1. 简述C++11有什么新特性？</h2>
+    <h2>1. 简述C++11有什么新特性？⭐⭐⭐</h2>
     <ul>
         <li><strong>自动类型推导（Type Inference）：</strong>引入了 <code>auto</code> 关键字，允许编译器根据初始化表达式的类型自动推导变量的类型。</li>
         <li><strong>统一的初始化语法（Uniform Initialization Syntax）：</strong>引入了用花括号 <code>{}</code> 进行初始化的统一语法，可以用于初始化各种类型的对象，包括基本类型、数组、结构体、类等。</li>
@@ -44,7 +55,7 @@
         <li><strong>新的标准库组件：</strong>包括了正则表达式库、基于范围的循环、哈希表（<code>std::unordered_map</code>、<code>std::unordered_set</code>）、随机数库、异步任务库（<code>std::async</code>）、类型特征工具。</li>
     </ul>
 
-    <h2>2. auto关键字</h2>
+    <h2>2. auto关键字⭐⭐⭐⭐</h2>
     <p>auto是 C++ 中的关键字，用于自动推导变量的类型。它可以让编译器根据初始化表达式的类型自动推导变量的类型，从而简化类型的声明和定义过程。</p>
     <h3>优点：</h3>
     <ul>
@@ -276,7 +287,7 @@ int main() {
 </code></pre>
 <p>在上面的示例中，process 函数是一个模板，并使用转发引用将参数 arg 转发给 otherFunction 函数。由于完美转发的存在，模板类型推导保持了参数的原始值类别，通过重载解析选取对应的函数版本进行调用。</p>
 
-<h2>8. 请你说说函数模板与模板函数？⭐</h2>
+<h2>8. 请你说说函数模板与模板函数？⭐⭐⭐</h2>
 <strong><p>函数模板是一种通用的函数模板声明，其中函数的参数和返回类型可以使用通用的模板参数来表示。函数模板的定义通常以 <code>template&lt;typename T&gt;</code> 或 <code>template&lt;class T&gt;</code> 开始，后跟函数的声明或定义。</p></strong>
 <p>下面是一个简单的函数模板的示例：</p>
 <pre><code>template&lt;typename T&gt;
