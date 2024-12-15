@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嵌入式基础(二)RAM基础</title>
+    <style>
+        pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+</style> 
+</head>
+
+<body>
+    <h1>嵌入式基础(二)ARM基础</h1>
+    <h2>1.精简指令集和复杂指令集的区别⭐⭐⭐</h2>
+    <h3>精简指令集 (RISC)</h3>
+    <ul>
+        <li>精简指令集 (Reduced Instruction Set Computing) 具有简洁、精简的指令集，每条指令执行的操作都很基础，使得处理器设计更简单。</li>
+        <li>RISC 处理器通常需要更多的指令来完成复杂的操作，但每条指令执行的时间相对较短。</li>
+        <li>采用固定长度的指令格式，简化了指令译码的工作，提高了流水线执行效率。</li>
+        <li>RISC 处理器倾向于通过增加寄存器数量来加速运算，以减少内存访问的频率。</li>
+    </ul>
+    
+    <h3>复杂指令集 (CISC)</h3>
+    <ul>
+        <li>复杂指令集 (Complex Instruction Set Computing) 包含大量复杂的指令，每条指令可以完成更多的工作，包括访存、运算等。</li>
+        <li>CISC 处理器的指令通常更多样化，能够在一条指令内完成复杂的操作，因此每次执行的指令数较少。</li>
+        <li>具有可变长度的指令格式，使得指令译码较为复杂，执行速度可能会受到影响。</li>
+        <li>CISC 处理器在设计上倾向于通过多种复杂的指令来减少内存访问次数，以提高程序的执行效率。</li>
+    </ul>
+    
+    <h3>精简指令集和复杂指令集对比：</h3>
+    <table border="1">
+      <tr>
+        <th>指令数量</th>
+        <td>较多</td>
+        <td>较少</td>
+      </tr>
+      <tr>
+        <th>指令复杂度</th>
+        <td>简单</td>
+        <td>复杂</td>
+      </tr>
+      <tr>
+        <th>指令执行时间</th>
+        <td>短</td>
+        <td>长</td>
+      </tr>
+      <tr>
+        <th>指令格式</th>
+        <td>固定长度</td>
+        <td>可变长度</td>
+      </tr>
+      <tr>
+        <th>寄存器的作用</th>
+        <td>重要，减少内存访问</td>
+        <td>相对不太重要</td>
+      </tr>
+    </table>
+    
+    <h2>2.什么是DMA⭐⭐⭐⭐⭐</h2>
+    <h3>什么是DMA</h3>
+    <strong><p>DMA(Direct Memory Access，直接存储器访问) 提供在外设与内存、存储器和存储器、外设 与外设之间的高速数据传输使用。它允许不同速度的硬件装置来沟通，而不需要依赖于 CPU，在这个时间中，CPU对于内存的工作来说就无法使用。简单来说就是一个数据搬运工。</p></strong>
+    <h3>DMA的意义主要体现在以下几个方面：</h3>
+    <ol>
+      <li><strong>代替CPU搬运数据，为CPU减负：</strong>数据搬运是一个耗时的任务，如果由CPU来执行数据传输操作，会占据CPU的大量时间和计算资源。通过利用DMA机制，外部设备可以直接与内存进行数据传输，无需CPU的参与，从而减轻了CPU的负担，使其能够专注于执行其他更重要的任务。</li>
+      <li><strong>数据搬运工作时效要求高：</strong>某些场景下，数据的及时传输非常重要，例如实时流媒体、快速数据采集等应用。DMA能够以高效率和高速度进行数据传输，满足对数据及时性的要求。</li>
+      <li><strong>数据搬运任务缺乏技术含量：</strong>相比于其他计算任务，数据搬运任务相对简单，缺乏复杂的计算和逻辑操作。通过将数据搬运任务交给DMA执行，CPU可以节省出宝贵的时间和资源，用于执行更具技术含量的计算和处理任务。</li>
+    </ol>
+    
+    <h3>DMA搬运数据</h3>
+    <p><strong>1.搬运什么数据</strong></p>
+    <ul>
+      <li>搬运存储器、外设的数据：外设指的是spi、usart、iic、adc 等基于APB1 、APB2或AHB时钟的外设。</li>
+      <li>存储器包括自身的闪存(flash)或者内存(SRAM)以及外设的存储设备都可以作为访问地源或者目的。</li>
+    </ul>
+    
+    <p><strong>2.从哪里搬到哪里</strong></p>
+    <ol>
+      <li>存储器→存储器（例如：复制某特别大的数据buf）</li>
+      <li>存储器→外设 （例如：将某数据buf写入串口TDR寄存器）</li>
+      <li>外设→存储器 （例如：将串口RDR寄存器写入某数据buf）</li>
+    </ol>
+    
+    <h2>3.说说你了解有哪些存储器类型⭐⭐</h2>
+    <table border="1">
+      <tr>
+        <th>存储器类型</th>
+        <th>描述</th>
+      </tr>
+      <tr>
+        <td>内存 (RAM)</td>
+        <td>临时存储数据和程序的主要存储器类型。包括DRAM和SRAM。</td>
+      </tr>
+      <tr>
+        <td>只读存储器(ROM)</td>
+        <td>存储固定数据，如固件和BIOS。</td>
+      </tr>
+      <tr>
+        <td>快闪存储器(Flash Memory)</td>
+        <td>在断电的情况下可以存储数据。常用于SSD和便携设备。</td>
+      </tr>
+      <tr>
+        <td>磁盘存储器(Disk Storage)</td>
+        <td>长期数据存储，包括硬盘驱动器(HDD)和固态硬盘(SSD)。</td>
+      </tr>
+      <tr>
+        <td>Cache 存储器</td>
+        <td>加速访问主存储器中的数据的存储器，包括CPU缓存和磁盘缓存等。</td>
+      </tr>
+      <tr>
+        <td>存储介质</td>
+        <td>长期数据备份和存档，包括磁带、光盘等。</td>
+      </tr>
+    </table>
+    
+    <h2>4.FreeRTOS、uCOS的区别⭐⭐</h2>
+    <p>FreeRTOS和uC/OS是两种实时操作系统(RTOS)，用于嵌入式系统开发。它们有一些显著的区别，包括以下方面：</p>
+
+    <strong><p>FreeRTOS：</p></strong>
+    <ul>
+      <li><strong>免费开源：</strong>FreeRTOS具有免费开源的版本，可自由使用和定制。</li>
+      <li><strong>任务调度：</strong>FreeRTOS使用基于优先级的抢占式调度策略，具有较低的上下文切换开销。</li>
+      <li><strong>内核对象：</strong>FreeRTOS提供一些基本的内核对象，如任务、队列和定时器等，具有相对简单的功能。</li>
+      <li><strong>内存管理：</strong>可以选择静态内存分配或动态内存分配，可根据需求进行配置。</li>
+      <li><strong>社区支持：</strong>具有活跃的社区支持，频繁进行更新和改进。</li>
+    </ul>
+    <strong><p>uC/OS：</p></strong>
+    <ul>
+      <li><strong>免费和商业版本：</strong>提供免费和商业版本，商业版本提供额外的功能和支持。</li>
+      <li><strong>任务调度：</strong>可配置为抢占式或协作式调度，灵活适应不同应用需求。</li>
+      <li><strong>内核对象：</strong>提供丰富的内核对象，例如任务、信号量、邮箱、互斥锁等，功能更为全面。</li>
+      <li><strong>内存管理：</strong>需要使用外部内存管理功能，用户可以根据需求选择适当的内存管理机制。</li>
+      <li><strong>社区支持：</strong>社区相对稳定，更新相对较慢，具有较长时间的经验积累。</li>
+    </ul>
+
+    <p>下面是FreeRTOS和uC/OS之间主要区别的表格罗列：</p>
+    <table border="1">
+      <tr>
+        <th>特征</th>
+        <th>FreeRTOS</th>
+        <th>uC/OS</th>
+      </tr>
+      <tr>
+        <td>许可</td>
+        <td>开源免费，灵活自由</td>
+        <td>免费和商业版本，商业支持</td>
+      </tr>
+      <tr>
+        <td>任务调度</td>
+        <td>基于优先级的抢占式</td>
+        <td>可配置为抢占式和协作式</td>
+      </tr>
+      <tr>
+        <td>内核对象</td>
+        <td>基本功能较为简单</td>
+        <td>提供丰富的内核对象</td>
+      </tr>
+      <tr>
+        <td>内存管理</td>
+        <td>静态或动态内存分配可选</td>
+        <td>需要使用外部内存管理功能</td>
+      </tr>
+      <tr>
+        <td>社区支持</td>
+        <td>活跃的社区支持，频繁更新</td>
+        <td>较为稳定，更新较慢</td>
+      </tr>
+    </table>
+    
+    <h2>5.CPU 内存 虚拟内存 磁盘/硬盘 的关系⭐⭐</h2>
+    <ol>
+        <li><strong>CPU</strong>（Central Processing Unit，中央处理器）是计算机的大脑，负责执行指令和处理数据。它从内存中读取指令和数据，并对其进行处理。<strong>CPU</strong> 的运行速度和性能对系统的整体运行效率有着重要影响。</li>
+        <li><strong>内存</strong>（Random-access memory，随机存取存储器）是计算机用来临时存储数据和程序的地方，其数据可以快速被 <strong>CPU</strong> 访问。内存的容量和速度直接影响着系统的运行速度和多任务处理能力。</li>
+        <li><strong>虚拟内存</strong> 是一种技术，通过它，计算机可以使用磁盘空间来扩展内存的容量。当物理内存不足时，系统会将一部分不常用的数据和程序存储到磁盘上，从而腾出内存空间给其他应用程序使用。这样，虚拟内存为系统提供了更大的地址空间和灵活的内存管理方式。</li>
+        <li><strong>磁盘/硬盘</strong> 是用来长期存储数据和程序的设备，通常包括机械硬盘（HDD）和固态硬盘（SSD）。磁盘上存储着操作系统、应用程序、用户数据等内容。计算机在启动时会从磁盘加载操作系统到内存中，并且在运行过程中会不断地向磁盘读写数据。</li>
+    </ol>
+    <h2>6.波特率是什么，为什么双方波特率要相同?⭐⭐⭐⭐</h2>
+    <strong><p>波特率（Baud rate）是一种衡量数据传输速率的单位，表示每秒传输的信号变化次数。在串行通信中，波特率决定了数据传输的速率。</p></strong>
+    <p><strong>为什么双方波特率要相同?</strong></p>
+    <ol>
+        <li>在串行通信中，发送方将数据位一位一位地传输给接收方。发送方和接收方需要根据一个共同的时钟来保持同步，以确保数据的正确传输和解析。</li>
+        <li>如果发送方和接收方的波特率不一致，就会导致问题。例如：
+            <ul>
+                <li>如果发送方的波特率较高，而接收方的波特率较低，接收方可能无法及时接收到发送方发送的每个比特，导致数据传输错误。</li>
+                <li>相反，如果接收方的波特率较高，而发送方的波特率较低，接收方就会在没有数据传输的时候出现等待时间。</li>
+            </ul>
+        </li>
+        <li>因此，为了确保数据能够按正确的速率传输并且保持同步，通信双方需要使用相同的波特率。这样，发送方和接收方可以按照相同的时间间隔传输和接收数据，确保数据的准确性和完整性。</li>
+    </ol>
+    <h2>7.ARM和DSP有什么区别⭐⭐</h2>
+    <table border="1">
+      <tr>
+        <th>特征</th>
+        <th>ARM处理器</th>
+        <th>DSP处理器</th>
+      </tr>
+      <tr>
+        <td>应用领域</td>
+        <td>通用处理器，用于控制和应用处理</td>
+        <td>专用于数字信号处理，如音频、视频、通信等</td>
+      </tr>
+      <tr>
+        <td>指令集</td>
+        <td>RISC架构</td>
+        <td>固定点和浮点指令集</td>
+      </tr>
+      <tr>
+        <td>主要功能</td>
+        <td>通用处理器，适合通用用途的计算和控制</td>
+        <td>专用于数字信号处理和算法加速</td>
+      </tr>
+      <tr>
+        <td>算术/逻辑单元</td>
+        <td>用于通用计算</td>
+        <td>专注于信号处理的算术逻辑单元</td>
+      </tr>
+      <tr>
+        <td>浮点运算</td>
+        <td>适中支持浮点运算</td>
+        <td>专注且高效的支持浮点运算</td>
+      </tr>
+      <tr>
+        <td>架构</td>
+        <td>适合通用用途的处理器架构</td>
+        <td>针对信号处理和并行计算优化的架构</td>
+      </tr>
+    </table>
+    
+    <h2>8.ROM RAM的概念浅析⭐⭐</h2>
+    <table border="1">
+      <tr>
+        <th>特征</th>
+        <th>ROM(只读寄存器)</th>
+        <th>RAM (随机存取存储器)</th>
+      </tr>
+      <tr>
+        <td>可读写</td>
+        <td>只读</td>
+        <td>可读写</td>
+      </tr>
+      <tr>
+        <td>数据固化</td>
+        <td>是</td>
+        <td>否</td>
+      </tr>
+      <tr>
+        <td>数据易失性</td>
+        <td>否</td>
+        <td>是</td>
+      </tr>
+      <tr>
+        <td>数据保持性</td>
+        <td>断电时数据保持不变</td>
+        <td>断电时数据丢失</td>
+      </tr>
+      <tr>
+        <td>访问方式</td>
+        <td>顺序读取</td>
+        <td>随机读取</td>
+      </tr>
+      <tr>
+        <td>用途</td>
+        <td>存储固件、引导程序、常量数据等</td>
+        <td>存储操作系统、应用程序、临时数据等</td>
+      </tr>
+      <tr>
+        <td>访问速度</td>
+        <td>相对较慢</td>
+        <td>相对较快</td>
+      </tr>
+      <tr>
+        <td>存储容量</td>
+        <td>通常较小</td>
+        <td>通常较大</td>
+      </tr>
+    </table>
+    
+    <h2>9. 上拉输入 下拉输入 推挽输出 开漏输出⭐⭐⭐⭐⭐</h2>
+    <p><strong>上拉输入（Pull-Up Input）：</strong>上拉输入是一种输入状态，该状态下，输入引脚连接一个上拉电阻，使其保持高电平状态。当没有外部信号输入时，输入引脚会被上拉电阻拉高。</p>
+    <p><strong>下拉输入（Pull-Down Input）：</strong>下拉输入是一种输入状态，该状态下，输入引脚连接一个下拉电阻，使其保持低电平状态。当没有外部信号输入时，输入引脚会被下拉电阻拉低。</p>
+    <p><strong>推挽输出（Push-Pull Output）：</strong>推挽输出是一种输出状态，该状态下，输出引脚能够提供电流流入或流出。在高电平状态下，输出引脚提供一个高电平信号，而在低电平状态下，输出引脚提供一个低电平信号。</p>
+    <p><strong>开漏输出（Open-Drain Output）：</strong>开漏输出是一种输出状态，该状态下，输出引脚可以将其连接到地（低电平状态）或离开（浮空）以实现高电平状态。它需要外部上拉电阻来将引脚拉高，因此输出引脚只能拉低或浮空，无法提供高电平。</p>
+    
+    <h2>10.请使用stm32写一个点灯⭐⭐</h2>
+    <pre style="line-height: 1.3; text-align: left;">
+        #include "stm32f4xx_hal.h"  HAL库 
+    
+        /* 使用的 GPIO 引脚 */
+        #define LED_PIN GPIO_PIN_13
+        #define LED_PORT GPIOG
+    
+        int main(void)
+        {
+            HAL_Init();  // 初始化 HAL 库
+    
+            /* 启用 GPIOG 时钟 */
+            __HAL_RCC_GPIOG_CLK_ENABLE();
+    
+            /* 配置 GPIO 引脚为输出模式 */
+            GPIO_InitTypeDef GPIO_InitStruct;
+            GPIO_InitStruct.Pin = LED_PIN;
+            GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;  // 输出模式
+            GPIO_InitStruct.Pull = GPIO_NOPULL;  // 无
+            GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;  // 低速
+            HAL_GPIO_Init(LED_PORT, &GPIO_InitStruct);  // 初始化 LED 引脚
+    
+            while (1)
+            {
+                /* 点亮 LED */
+                HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_SET);
+    
+                /* 延时一段时间 */
+                HAL_Delay(1000);  // 延时1秒
+    
+                /* 熄灭 LED */
+                HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_RESET);
+    
+                /* 延时一段时间 */
+                HAL_Delay(1000);  // 延时1秒
+            }
+        }
+    </pre>
+    
+
+</body>

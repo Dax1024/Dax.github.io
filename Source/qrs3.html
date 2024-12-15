@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嵌入式基础(三)基础外设</title>
+    <style>
+        pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+</style> 
+</head>
+<body>
+    <h1>嵌入式基础(三)基础外设</h1>
+
+
+    <h2>1. 什么是UART？与USART有什么区别⭐⭐⭐</h2>
+    <h3>(1)什么是UART</h3>
+    <p>通用异步收发传输器（Universal Asynchronous Receiver/Transmitter)，通常称作UART。是一种异步全双工串行通信协议，它将要传输的资料在串行通信与并行通信之间加以转换。作为把并行输入信号转成串行输出信号的芯片，UART通常被集成于其他通讯接口的连结上，它不是像SPI和I2C这样的通信协议，而是微控制器中独立的物理电路或独立的IC。UART工作原理是将数据的二进制位一位一位的进行传输。</p>
+    <h3>硬件连接</h3>
+    <p>硬件连接比较简单，仅需要3条线，注意连接时两个设备UART电平，如电平范围不一致请做电平转换后再连接。如下图所示：</p>
+    <img src="../image/qrs3.png"  style="max-width: 80%; height: auto;">
+
+
+    <ul><strong>
+      <li>TX：发送数据端，要接对面设备的RX。</li>
+      <li>RX：接收数据端，要接对面设备的TX。</li>
+      <li>GND：保证两设备共地，有统一的参考平面。</li>
+    </strong> </ul>
+    
+    <h3>通信协议</h3>
+    <p>UART作为异步串口通信协议的一种，工作原理是将数据的字节一位接一位地传输。协议如下：</p>
+    <img src="../image/qrs3.1.png"  style="max-width: 80%; height: auto;">
+
+   
+        <strong><p>空闲位</p></strong>
+    <ul>
+        <li>UART协议规定，当总线处于空闲状态时，信号线的状态为1，即高电平。</li>
+    </ul>
+
+    <strong><p>起始位</p></strong>
+    <ul>
+        <li>开始进行数据传输时，发送方要先发出一个低电平0来表示传输字符的开始。</li>
+        <li>因为空闲位一直是高电平，所以开始第一次通讯时，先发送一个明显区别于空闲状态的信号，即低电平。</li>
+    </ul>
+
+    <strong><p>数据位</p></strong>
+    <ul>
+        <li>起始位之后就是要传输的数据，数据可以是5、6、7、8位，构成一个字符，一般都是8位。</li>
+        <li>先发送最低位LSB，再发送最高位MSB（小端模式）。</li>
+    </ul>
+
+    <strong><p>奇偶校验位</p></strong>
+    <ul>
+        <li>数据位传送完成后，要进行奇偶校验。</li>
+        <li>校验位用于调整1的个数，串口校验有几种方式：</li>
+        <ul>
+            <li><strong>无校验（No Parity）</strong></li>
+            <li><strong>奇校验（Odd Parity）</strong>: 如果数据位中1的个数是偶数，则校验位为1才能满足1的个数为奇数；如果1的数目是奇数，校验位为0。</li>
+            <li><strong>偶校验（Even Parity）</strong>: 如果数据位中1的个数是偶数，则校验位为0；如果1的数目是奇数，校验位为1。</li>
+            <li><strong>Mark Parity</strong>: 校验位始终为1。</li>
+            <li><strong>Space Parity</strong>: 校验位始终为0。</li>
+        </ul>
+    </ul>
+
+    <strong><p>停止位</p></strong>
+    <ul>
+        <li>数据结束标志，可以是1位、1.5位或2位的高电平。</li>
+    </ul>
+
+    <strong><p>波特率</p></strong>
+    <ul>
+        <li>异步通信以一个字符为传输单位，通信中两个字符间的时间间隔是不固定的，但在同一个字符中的两个相邻位间的时间间隔是固定的。</li>
+        <li>数据传输速率使用波特率来表示，单位为bps（bits per second）。</li>
+        <li>常见的波特率有9600bps、115200bps等，其他标准波特率还包括1200、2400、4800、19200、38400、57600等。</li>
+        <li>例如，如果串口波特率设置为9600bps，那么传输一个比特需要的时间是：1 / 9600 ≈ 104.2μs。</li>
+    </ul>
+
+    
+    <h3>(2)UART和USART的区别</h3>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>特点</th>
+          <th>UART</th>
+          <th>USART</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>通信方式</td>
+          <td>只支持异步通信</td>
+          <td>可支持异步和同步通信</td>
+        </tr>
+        <tr>
+          <td>全双工通信</td>
+          <td>可以进行全双工数据传输</td>
+          <td>可以进行全双工数据传输</td>
+        </tr>
+        <tr>
+          <td>功能</td>
+          <td>通常只包括发送和接收功能</td>
+          <td>包括发送、接收、同步和异步等多种功能</td>
+        </tr>
+        <tr>
+          <td>数据线</td>
+          <td>一般只有两个数据线</td>
+          <td>在同步通信模式下需要多个数据线和时钟线</td>
+        </tr>
+        <tr>
+          <td>适用场景</td>
+          <td>适用于简单的低速异步通信应用</td>
+          <td>适用于更复杂的通信需求，包括同步和异步通信等</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <h2>2. 什么是I2C，I2C时序图⭐⭐⭐⭐</h2>
+    <h3>一、I2C协议简介</h3>
+    <strong><p>I2C（Inter-Integrated Circuit）是一种串行通信总线协议，用于在集成电路（IC）之间进行通信。它由两根线组成：串行数据线（SDA）和串行时钟线（SCL）。I2C总线采用主从结构，可以支持多个设备在同一条总线上进行通信。</p></strong>  
+    <p>I2C通信的特点包括简单、灵活和可靠，适用于连接多个低速设备。每个设备都有一个唯一的地址，主设备通过发送地址将数据传输给从设备，从设备接收并响应这些数据。</p>
+
+    <h3>二、I2C总线结构</h3>
+    <p>I2C总线在物理连接上非常简单，分别由SDA(串行数据线)和SCL(串行时钟线)及上拉电阻组成。通信原理是通过对SCL和SDA线高低电平时序的控制，来产生I2C总线协议所需要的信号进行数据的传递。在总线空闲状态时，这两根线一般被上面所接的上拉电阻拉高，保持着高电平。</p>
+        <img src="../image/qrs3.2.png"  style="max-width: 80%; height: auto;">
+
+    <h3>三、I2C时序图</h3>
+    <img src="../image/qrs3.3.png"  style="max-width: 80%; height: auto;">
+
+    <p><strong>开始条件：</strong>在时钟线保持高电平时，数据线从高电平转为低电平，即检测到一个下降沿，会形成一个开始条件；</p>
+    <p><strong>停止条件：</strong>时钟保持高电平时，数据线从低电平转为高电平形成一个停止条件。</p>
+    <p>进行数据传输前也就是紧跟开始条件后，我们要传送地址字节，前7位是从设备地址（这也是为什么一个主机理论上最多能接127个从机，2^7-1），第八位是读/写标志位。每8bit传输完成，第九位是应答位。如果是主设备发送数据，就是从设备应答，如果是主设备读取数据，就是主设备应答 </p>
+    
+    <h2>3. 总线接口USRT、I2C、USB的异同点⭐⭐⭐⭐</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>特性</th>
+      <th>USRT</th>
+      <th>I2C</th>
+      <th>USB</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>类型</td>
+      <td>串行</td>
+      <td>串行</td>
+      <td>串行</td>
+    </tr>
+    <tr>
+      <td>速度</td>
+      <td>快 - 高达几GHz</td>
+      <td>中等 - 最高可达400kHz</td>
+      <td>可变 - 低速、全速、高速、超速</td>
+    </tr>
+    <tr>
+      <td>传输协议</td>
+      <td>可使用多种协议，如UART、SPI等</td>
+      <td>特定I2C协议</td>
+      <td>特定USB协议</td>
+    </tr>
+    <tr>
+      <td>通信线数</td>
+      <td>3根或更多</td>
+      <td>2根</td>
+      <td>4根至更多</td>
+    </tr>
+    <tr>
+      <td>拓扑</td>
+      <td>点对点或多点</td>
+      <td>主从结构</td>
+      <td>主从结构</td>
+    </tr>
+    <tr>
+      <td>协议复杂性</td>
+      <td>中等</td>
+      <td>简单</td>
+      <td>复杂</td>
+    </tr>
+    <tr>
+      <td>主/从设备</td>
+      <td>可能有多个主设备和从设备</td>
+      <td>一个主设备和多个从设备</td>
+      <td>一个主设备和多个从设备</td>
+    </tr>
+    <tr>
+      <td>半双工/全双工</td>
+      <td>全双工</td>
+      <td>半双工</td>
+      <td>全双工或半双工</td>
+    </tr>
+    <tr>
+      <td>应用</td>
+      <td>通常用于远距离通信，如RS-485</td>
+      <td>适用于短距离通信，如传感器与微控制器之间</td>
+      <td>广泛应用于外设连接、存储设备等</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>4. 什么是SPI，SPI的特性⭐⭐⭐⭐</h2>
+<h3>1. 什么是SPI</h3>
+<strong><p>SPI是串行外设接口（Serial Peripheral Interface）的缩写，是一种高速的，全双工，同步的通信总线，并且在芯片的管脚上只占用四根线，节约了芯片的管脚，同时为PCB的布局上节省空间，提供方便。SPI通常应用于EEPROM，FLASH，实时时钟，AD转换器，还有数字信号处理器和数字信号解码器之间。</p></strong>
+<h3>2. SPI模式</h3>
+<p>SPI分为主、从两种模式，通信系统需要包含一个主设备（Master）和一个或多个从设备（Slave）。</p>
+<p>主设备提供时钟，接收时钟的设备为从设备。SPI接口的读写操作由主设备发起。</p>
+<p>SPI是全双工且没有速度限制，通常实现速率能达到甚至超过10 Mbps。</p>
+
+<h3>3. SPI信号线</h3>
+<p>SPI接口一般使用四条信号线通信：</p>
+
+<p><strong>SDI（数据输入），SDO（数据输出），SCK（时钟），CS（片选）</strong></p>
+<ul>
+  <li>MISO（主设备输入/从设备输出）：从设备发送数据，主设备接收数据。</li>
+  <li>MOSI（主设备输出/从设备输入）：主设备发送数据，从设备接收数据。</li>
+  <li>SCLK（串行时钟信号）：由主设备产生的时钟。</li>
+  <li>CS/SS（片选信号）：主设备控制，从设备片选信号。</li>
+</ul>
+
+<h3>4. SPI设备选择</h3>
+<p>SPI是单主设备（ single-master ）通信协议，这意味着总线中的只有一支中心设备能发起通信。</p>
+<ol>
+    <li>当SPI主设备想读/写从设备时:</li>
+    <li>首先拉低从设备对应的SS线（SS是低电平有效）。</li>
+    <li>接着开始发送工作脉冲到时钟线上，在相应的脉冲时间上，［主设备］把信号发到MOSI实现"写"，同时可对MISO采样而实现"读"</li>
+</ol>
+<img src="../image/qrs3.4.png"  style="max-width: 80%; height: auto;">
+
+<h3>5. SPI通信的四种模式</h3>
+<strong><p>简单地讲就是设置SCLK时钟信号线的那种信号为有效信号。</p></strong>
+
+<p>它们的区别是定义了在时钟脉冲的哪条边沿转换（toggles）输出信号，哪条边沿采样输入信号，还有时钟脉冲的稳定电平值（就是时钟信号无效时是高还是低）。每种模式由一对参数刻画，它们称为时钟极（clock polarity）CPOL与时钟期（clock phase）CPHA。</p>
+<ul>
+    <li>SPI通信有4种不同的操作模式，不同的从设备可能在出厂时就是配置为某种模式，这是不能改变的</li>
+    <li>但我们的通信双方必须是工作在同一模式下。</li>
+    <li>所以我们可以对我们的主设备的SPI模式进行配置，通过CPOL（时钟极性）和CPHA（时钟相位）来控制我们主设备的通信模式。</li>
+</ul>
+<p><strong>具体如下：</strong></p>
+
+<ol>
+    <li>
+        <strong>时钟极性(CPOL)</strong>定义了时钟空闲状态电平：
+        <ul>
+            <li>CPOL=0，表示当SCLK=0时处于空闲态，所以有效状态就是SCLK处于高电平时（高有效）。</li>
+            <li>CPOL=1，表示当SCLK=1时处于空闲态，所以有效状态就是SCLK处于低电平时（低有效）。</li>
+        </ul>
+    </li>
+    <li>
+        <strong>时钟相位(CPHA)</strong>定义数据的采集时间：
+        <ul>
+            <li>CPHA=0，在时钟的第1个跳变沿（上升沿或下降沿）进行数据采样。在第2个边沿发送数据（1采2发）。</li>
+            <li>CPHA=1，在时钟的第2个跳变沿（上升沿或下降沿）进行数据采样。在第1个边沿发送数据（1发2采）。</li>
+        </ul>
+    </li>
+</ol>
+
+<h3>具体模式如下：</h3>
+<ol>
+    <li><strong> Mode0：CPOL=0，CPHA=0：</strong>
+        <p>此时空闲态时，SCLK处于低电平；数据采样是在第1个边沿，也就是SCLK由低电平到高电平的跳变；所以数据采样是在上升沿，数据发送是在下降沿。</p>
+    </li>
+    <li><strong> Mode1：CPOL=0，CPHA=1：</strong>
+        <p>此时空闲态时，SCLK处于低电平；数据发送是在第1个边沿，也就是SCLK由低电平到高电平的跳变；所以数据采样是在下降沿，数据发送是在上升沿。</p>
+    </li>
+    <li><strong> Mode2：CPOL=1，CPHA=0：</strong>
+        <p>此时空闲态时，SCLK处于高电平；数据采样是在第1个边沿，也就是SCLK由高电平到低电平的跳变；所以数据采集是在下降沿，数据发送是在上升沿。</p>
+    </li>
+    <li><strong>Mode3：CPOL=1，CPHA=1：</strong>
+        <p>此时空闲态时，SCLK处于高电平；数据发送是在第1个边沿，也就是SCLK由高电平到低电平的跳变；所以数据采集是在上升沿，数据发送是在下降沿。</p>
+    </li>
+</ol>
+
+<blockquote>
+    <strong>
+    <p>注：数据采样=准备数据</p>
+    <p>CPOL=0：高有效，0到1，即上升沿是第一个边沿  </p>
+    <p>CPOL=1：低有效，1到0，即下降沿是第一个边沿</p>  </strong>
+</blockquote>
+<h2>5. 什么是GPIO⭐⭐⭐⭐</h2>
+<strong>
+    <p>GPIO（General Purpose Input/Output）是通用输入/输出的缩写，它是一种用于计算机系统与外部设备之间进行数字信号交互的接口。</p>
+    <p>每个GPIO引脚可以配置为输入或输出，并且可以通过编程进行数字信号的读取或写入。</p>
+</strong>
+<h2>6. 如何使用TIM定时器实现定时中断和PWM输出⭐⭐</h2>
+<ol>
+    <li><strong>初始化 TIM 定时器：</strong>使用适当的配置和预分频器设置来初始化 TIM 定时器。选择合适的计数模式，例如向上计数模式或向下计数模式，以及所需的计数器值。</li>
+    <li><strong>配置定时中断：</strong>使能定时器中断功能，并设置适当的中断优先级。确保定时器溢出时会触发中断。</li>
+    <li><strong>配置 PWM 输出通道：</strong>选择一个或多个输出通道来作为 PWM 输出。配置这些通道的工作模式为 PWM 模式，并设置相应的占空比（PWM 的高电平时间与周期时间的比例）。根据您的需求配置 PWM 周期和占空比的值。</li>
+    <li><strong>启动定时器：</strong>调用启动定时器的函数，开始定时器的计数。</li>
+    <li><strong>在定时中断服务函数中编写代码：</strong>在定时中断服务函数中编写处理程序，用于处理定时中断的逻辑。您可以在此函数中执行所需的操作，例如更新 PWM 的占空比、改变输出状态等。</li>
+</ol>
+<pre>
+    #include "stm32xxxx.h"  // 包含特定型号的 STM32 头文件
+    #include "stm32xxxx_hal.h"  // 包含 STM32 HAL 库头文件
+    
+    TIM_HandleTypeDef htim2;  // 定义一个 TIM_HandleTypeDef 结构体变量用于配置 TIM2
+    
+    void SystemClock_Config(void) {
+      // 在这里配置系统时钟
+    }
+    
+    void TIM2_Init(void) {
+      TIM_MasterConfigTypeDef sMasterConfig;
+      TIM_OC_InitTypeDef sConfigOC;
+      TIM_HandleTypeDef htim;
+    
+      // 启用 TIM2 时钟
+      __HAL_RCC_TIM2_CLK_ENABLE();
+    
+      // 配置 TIM2
+      htim2.Instance = TIM2;
+      htim2.Init.Prescaler = 0;
+      htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+      htim2.Init.Period = 1000;
+      htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    
+      // 初始化 TIM2
+      HAL_TIM_PWM_Init(&htim2);
+    
+      // 设置 PWM 输出
+      sConfigOC.OCMode = TIM_OCMODE_PWM1;
+      sConfigOC.Pulse = 500;  // 设置占空比，取值范围为 0 - 1000（0%-100%）
+      sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+      sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+      HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);  // 配置 TIM2 的通道 1
+    
+      // 配置 TIM2 的定时中断
+      HAL_TIM_Base_MspInit(&htim2);
+      sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+      sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+      HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
+    
+      // 启动定时器
+      HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+      HAL_TIM_Base_Start_IT(&htim2);
+    }
+    
+    void TIM2_IRQHandler(void) {
+        // 处理定时中断的逻辑
+        // ...
+        
+        HAL_TIM_IRQHandler(&htim2);
+    }
+    
+    int main(void) {
+      HAL_Init();
+      SystemClock_Config();
+      TIM2_Init();
+    
+      while (1) {
+        // 主循环中的其他任务
+      }
+    }
+</pre>
+
+<h2>7. 外部中断触发模式⭐⭐⭐⭐</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>触发模式</th>
+      <th>特点</th>
+      <th>应用场景</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>上升沿触发</td>
+      <td>信号从低电平到高电平时触发中断</td>
+      <td>检测按钮按下或传感器触发等高电平信号变化的场合</td>
+    </tr>
+    <tr>
+      <td>下降沿触发</td>
+      <td>信号从高电平到低电平时触发中断</td>
+      <td>检测按钮释放或传感器复位等低电平信号变化的场合</td>
+    </tr>
+    <tr>
+      <td>双边沿触发</td>
+      <td>信号的上升沿和下降沿均触发中断</td>
+      <td>需要同时检测上升沿和下降沿的场合，如通信协议的时钟信号</td>
+    </tr>
+    <tr>
+      <td>电平触发</td>
+      <td>信号维持相应电平期间持续触发中断</td>
+      <td>持续性信号的检测，如通信协议的数据线</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>8. 比较I2C和SPI接口⭐⭐⭐⭐</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>特点</th>
+            <th>I2C</th>
+            <th>SPI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>数据线数量</td>
+            <td>2 根（一根用于数据传输，一根用于时钟）</td>
+            <td>多根（最少 4 根，通常包括数据线、时钟线、片选线等）</td>
+        </tr>
+        <tr>
+            <td>传输速率</td>
+            <td>低速，最高速率通常在几百 kHz</td>
+            <td>高速，速率可以达到几 Mbps 或更高</td>
+        </tr>
+        <tr>
+            <td>设备连接方式</td>
+            <td>总线拓扑结构</td>
+            <td>点对点连接或主从模式</td>
+        </tr>
+        <tr>
+            <td>主从设备数量</td>
+            <td>高，支持多个主设备和从设备同时连接</td>
+            <td>通常只有一个主设备操作多个从设备</td>
+        </tr>
+        <tr>
+            <td>硬件复杂性</td>
+            <td>相对较低，只需要实现 I2C 控制器和设备</td>
+            <td>相对较高，需要实现 SPI 控制器和设备</td>
+        </tr>
+        <tr>
+            <td>适用场景</td>
+            <td>
+                - 传感器、EEPROM、温度传感器等小规模设备<br>
+                - 系统中设备数量多、通信速率要求不高的场景
+            </td>
+            <td>
+                - 存储器、FPGA、音频编解码器等需要高速数据传输的设备<br>
+                - 系统中设备数量少、通信速率要求较高的场景
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h2>9. 在STM32中如何配置和使用ADC模块⭐⭐</h2>
+<pre>
+    #include "stm32f4xx.h"
+
+    void ADC_Configuration(void) {
+        GPIO_InitTypeDef       GPIO_InitStructure;
+        ADC_InitTypeDef        ADC_InitStructure;
+    
+        // 使能 GPIO 时钟
+        RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+        // 使能 ADC1 时钟
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+    
+        // 配置 ADC 输入引脚为模拟模式
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;      // 假设使用PA0作为ADC输入引脚
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;   // 模拟输入模式
+        GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL; // 不使用上下拉电阻
+        GPIO_Init(GPIOA, &GPIO_InitStructure);
+    
+        // ADC 配置
+        ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;     // ADC 分辨率为 12 位
+        ADC_InitStructure.ADC_ScanConvMode = DISABLE;               // 非扫描模式
+        ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;         // 非连续转换模式
+        ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None; // 不使用外部触发
+        ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;      // 右对齐输出
+        ADC_InitStructure.ADC_NbrOfConversion = 1;                  // 转换的通道数为1
+        ADC_Init(ADC1, &ADC_InitStructure);
+    
+        ADC_Cmd(ADC1, ENABLE);    // 启用 ADC1
+    
+        // 配置ADC转换通道
+        ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_3Cycles);
+    
+        // 启动ADC校准
+        ADC_GetCalibrationFactor(ADC1);
+        while(ADC_GetCalibrationStatus(ADC1));
+    
+        // 启动ADC转换
+        ADC_SoftwareStartConv(ADC1);
+    }
+</pre>
+    <h2>10. 同步通信和异步通信⭐⭐⭐⭐</h2>
+
+    
+    <p><strong>同步通信：</strong>在同步通信中，发送方和接收方的时钟是相互关联的，数据的传输和接收是基于一个共同的时钟信号进行同步的。发送方在每个时钟周期内按照时钟的节拍发送数据，接收方也按照同样的时钟节拍接收数据。双方通过时钟信号的同步来保证正确的数据传输。同步通信对时序要求较高，需要在通信双方之间建立稳定的时钟信号。</p>
+    
+    <p><strong>异步通信：</strong>在异步通信中，发送方和接收方没有共同的时钟信号进行同步。数据的传输和接收不依赖于特定的时钟信号，而是通过特定的起始位和停止位来标识数据的传输开始和结束。每个数据帧都有自己的起始和停止位，这样接收方可以通过检测起始和停止位来识别每个数据帧。异步通信相对较为灵活，但需要额外的控制位来标识起始和停止。</p>
+    
+    <h3><strong>区别：</strong></h3>
+    <ul>
+        <li><strong>时钟同步：</strong>同步通信使用共同的时钟信号进行同步，异步通信没有共同的时钟信号。</li>
+        <li><strong>数据帧结构：</strong>同步通信将数据划分为固定的时间片或时钟周期，而异步通信在数据之间插入起始和停止位来界定数据帧的开始和结束。</li>
+        <li><strong>时序要求：</strong>同步通信对时序要求较高，通信双方需要保持严格的同步；而异步通信对时序要求较低，通信双方无需精确同步。</li>
+        <li><strong>灵活性：</strong>同步通信相对刚性，因为通信双方必须始终保持同步；异步通信相对灵活，因为通信不依赖于特定的时钟信号。</li>
+    </ul>
+        
+</body>
