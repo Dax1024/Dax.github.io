@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嵌入式基础(六)单片机基础</title>
+    <style>
+        pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+</style> 
+</head>
+<body>
+    <h1>嵌入式基础(六)单片机基础</h1>
+    
+    <h2>1.单片机基础组成？什么是单片机？</h2>
+    <strong><p>单片机(Microcontroller Unit, MCU)是一种集成电路芯片，它包含了中央处理器(CPU)、存储器(ROM 和 RAM)、输入/输出接口(I/O)等基本功能单元，并集成在同一块硅片上。单片机的基本组成包括：</p></strong>
+    <ol>
+        <li><strong>中央处理器(CPU)</strong>：负责执行程序指令，进行数据运算和逻辑控制。常见的 CPU 架构有 8 位、16 位和 32 位。</li>
+        <li><strong>存储器包括：</strong>
+            <ul>
+                <li>只读存储器(ROM)：用于存储固定的程序和数据。</li>
+                <li>随机存取存储器(RAM)：用于存储运行时的临时数据。</li>
+                <li>有些单片机还集成了可擦除可编程只读存储器(EEPROM)或闪存(Flash)：用于存储可更新的程序和数据。</li>
+            </ul>
+        </li>
+        <li><strong>输入/输出接口(I/O)</strong>：用于与外部设备进行信号交互，如开关、传感器、执行机构等。</li>
+        <li><strong>定时器/计数器</strong>：用于产生定时脉冲或计数外部事件，实现时间控制功能。</li>
+        <li><strong>中断控制器</strong>：用于管理各种中断源，提高系统的实时响应能力。</li>
+        <li><strong>通信接口</strong>：如串行接口(UART)、SPI、I2C 等，用于与外部设备进行数据通信。</li>
+    </ol>
+    <img src="../image/qsr6.png"  style="max-width: 100%; height: auto;">
+
+
+    <h2>2.MCU、SOC、FPGA、DSP，都是什么？</h2>
+    <ol>
+        <li>
+            <strong>MCU (Microcontroller Unit) - 单片机</strong>
+            <p>MCU 就是单片机不多做解释。</p>
+        </li>
+        <li>
+            <strong>SOC (System-on-Chip) - 系统级芯片 SOC</strong>
+            <ol>
+                <li>是一种高度集成的芯片，将多种功能模块集成在一个芯片上，形成一个完整的系统。</li>
+                <li>典型的 SOC 包括 CPU、GPU、内存、通信模块、传感器接口等，可以集成数十到上百个功能模块。</li>
+                <li>SOC 可以为复杂的电子产品提供全面的解决方案，大大简化了系统设计和制造。</li>
+                </ol>            
+                <strong><p>我再来总结下，低端的 SOC 本质是 MCU 内核，只是在 51/ARM 内核基础上增加了特定功能外设模块重新封了一款芯片。如果用 MCU 去完成一些特定功能，比如说蓝牙协议，Zigbee 协议，电量计量等等会比较麻烦，研发周期长，稳定性差，成本也更高。</p></strong>
+        </li>
+        <li>
+            <strong>FPGA (Field Programmable Gate Array) - 现场可编程门阵列</strong>
+            <p>FPGA 的全称为 Field-Programmable Gate Array，即现场可编程门阵列。 FPGA 是在 PAL、GAL、CPLD 等可编程器件的基础上进一步发展的产物，是作为专用集成电路（ASIC）领域中的一种半定制电路而出现的，既解决了定制电路的不足，又克服了原有可编程器件门电路数有限的缺点。简而言之，FPGA 就是一个可以通过编程来改变内部结构的芯片。</p>
+            <ol>
+                <li><strong>FPGA 功能实现：</strong>
+                    <p>需要通过编程即设计硬件描述语言，经过 EDA 工具编译、综合、布局布线成后转换为可烧录的文件，最终加载到 FPGA 器件中去，改变 FPGA 内部的连线，最终完成所实现的功能。</p>
+                </li>
+                <li><strong>FPGA 性能对比：</strong>
+                    <p>FPGA 相比于单片机、CPU 等集成电路芯片拥有效率更高、功耗更低的特点，但是易于开发程度远远不如单片机、CPU；在数字芯片设计领域，FPGA 虽然相比 ASIC 具有更短的开发周期与开发难度，但是其存在着成本过高、性能较差并且在资源的利用率上远不及 ASIC 等问题，不能真正的替代 ASIC。</p>
+                </li>
+            </ol>
+        </li>
+        <li>
+            <strong>DSP (Digital Signal Processor) - 数字信号处理器 DSP</strong>
+            <p>DSP（digital signal processor）是一种独特的微处理器，是以数字信号来处理大量信息的器件。其工作原理是接收模拟信号，转换为 0 或 1 的数字信号。再对数字信号进行修改、删除、强化，并在其他系统芯片中把数字数据解译回模拟数据或实际环境格式。它不仅具有可编程性，而且其实时运行速度可达每秒数以千万条复杂指令程序，远远超过通用微处理器，是数字化电子世界中日益重要的电脑芯片。它的强大数据处理能力和高运行速度，是最值得称道的两大特色。</p>
+            <ul>
+                <li><strong>优点：</strong>
+                    <ol>
+                        <li>高性能计算能力：DSP 采用专门的硬件架构，如乘法累加器、寄存器文件等，高效地执行数学运算密集型的信号处理算法。相比通用 CPU，DSP 在执行滤波、变换、编解码等信号处理任务时显著的性能优势。</li>
+                        <li>低功耗：DSP 的硬件架构针对信号处理进行了优化，在执行相同任务时，功耗通常低于通用 CPU。这使得 DSP 非常适用于电池供电的便携式设备，如手机、MP3 播放器等。</li>
+                        <li>实时性强：DSP 擅长处理连续的实时数据流，能够满足音频、视频等实时信号处理的要求。相比通用 CPU，DSP 具有更好的实时性和确定性。</li>
+                        <li>广泛应用：DSP 广泛应用于音频、视频、通信、雷达等领域，是信号处理领域不可或缺的核心组件。</li>
+                    </ol>
+                </li>
+                <li><strong>缺点：</strong>
+                    <ol>
+                        <li>编程复杂度高：DSP 的硬件架构和指令集与通用 CPU 有较大差异，编程和调试较为复杂，需要专业的知识和经验。</li>
+                        <li>功能专一：DSP 主要针对信号处理任务进行优化，在执行通用计算任务时，性能可能不如通用 CPU。</li>
+                        <li>成本相对较高：由于 DSP 的专用硬件架构和定制化设计，其成本通常高于通用 CPU。</li>
+                    </ol>
+                </li>
+                <li><strong>DSP 与 MCU 的区别</strong>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>芯片</th>
+                                <th>结构</th>
+                                <th>成本</th>
+                                <th>运算能力</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>DSP</td>
+                                <td>哈佛结构</td>
+                                <td>价格昂贵</td>
+                                <td>高</td>
+                            </tr>
+                            <tr>
+                                <td>MCU</td>
+                                <td>冯诺依曼结构</td>
+                                <td>价格低廉</td>
+                                <td>低</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>DSP 采用的是哈佛结构，数据空间和存储空间是分开的，通过独立的数据总线在程序空间和数据空间同时访问。而 MCU 采用的是冯诺依曼结构，数据空间和存储空间共用一个存储器空间，通过一组总线连接到 CPU。在对性能要求不是很高的情况下，MCU 还是很具有优势的。</p>
+                </li>
+                <li><strong>DSP 与 ARM 的区别</strong>
+                    <p>ARM 是 Advanced RISC(精简指令集) Machines 的缩写，是面向低预算市场的 RICS 微处理器。ARM 有比较强的事务管理能力，适合于用来跑跑界面、操作系统，优势体现在控制方面。</p>
+                </li>
+                <li><strong>DSP 与 FPGA 的区别</strong>
+                    <p>FPGA 是 Field Programmable Gate Array(现场可编程门阵列)的缩写，是在 PAL、GAL、PLD 等可编程器件的基础上进一步发展的产物，是专用集成电路中集成度最高的一种。具有静态可重复编程和动态在系统在系统中重构的特性，使得硬件的功能可以像软件一样通过编程修改。</p>
+                </li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>3.单片机的程序在哪里存储？</h2>
+    <p>在描述单片机程序时，需要区分"运行时"和"非运行时"。</p>
+    <p>非运行时的单片机程序在 ROM 内的分布</p>
+    <p>下图就是通过单片机下载工具烧录到单片机 Flash 里面去之后的 Flash 空间区域分布图：</p>
+    <img src="../image/qsr6.1.png"  style="max-width: 100%; height: auto;">
+
+    <p>其中：</p>
+    <ul>
+        <li>Code：为程序代码部分。</li>
+        <li>Ro-data：表示程序定义的常量（const 修饰的常量、#define 宏定义等）。</li>
+        <li>Rw-data：表示已初始化的全局变量。</li>
+        <li>Zi-data：表示未初始化的全局变量（Zi-data 可以表示 RAM 未上电时整个区域的状态，或者上电初始化之后未被使用的区域，上表仅仅描述的是 ROM 区域的空间分布）。</li>
+    </ul>
+    <p>而栈区(stack)、堆区(heap)、全局区（静态区）(static)、文字常量区和程序代码区和上面所介绍的 Code、Ro-data 等的关系。</p>
+    <ol>
+        <li><strong>栈区（stack）</strong>：由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。这些值是可读写的，那么 stack 应该被包含在 RW-data(读写数据存储区)，也就是单片机的 sram 中。</li>
+        <li><strong>堆区（heap）</strong>：一般由程序员分配释放，若程序员不释放，程序结束时可能由 OS 回收。可以理解，这些也是被包含在单片机的 sram 中的。</li>
+        <li><strong>全局区（静态区）（static）</strong>：全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域，程序结束后由系统释放。这些数据也是可读可写的，和 stack、heap 一样，被包含在 RAM 中。</li>
+        <li><strong>文字常量区</strong>：常量字符串就是放在这里的。这些数据是只读的，分配在 Ro-data(只读数据存储区)，则被包含在 flash 中。</li>
+        <li><strong>程序代码区</strong>：存放函数体的二进制代码，可以想象也是被包含在 flash，因为对于 MCU 来说，当其重新上电，代码还会继续运行，并不会消失，所以存储在 flash 中。</li>
+    </ol>
+    <p>下图是初始化之前的 ROM 和 RAM 中的数据分布：</p>
+    <p>1、未初始化之前的 RAM 里面所有区域都是随机的值即：Zi-data。</p>
+    <img src="../image/qsr6.2.png"  style="max-width: 100%; height: auto;">
+
+    <p>运行时的单片机程序在 RAM 内的分布</p>
+    <p>下图是初始化之后的 ROM 和 RAM 中的数据分布：</p>
+    <p>1、初始化的时候会由 Boot 程序（进入 main 函数之前）拷贝 Flash 里面的 Rw-data 区域到 RAM。</p>
+
+    <img src="../image/qsr6.3.png"  style="max-width: 100%; height: auto;">
+
+    <p>下图是初始化之后正常运行时，单片机内 ROM 和 RAM 区域分布图：</p>
+    <ul>
+        <li>上电初始化之后 Flash 的 Rw-data 就不会再使用了，除非重新上电、复位了 boot 才会重新从 ROM（Flash）中拷贝 Rw-data 区域到 RAM 中去。</li>
+        <li>运行时，根据上一节对哈佛模型的描述（51 内核、Cortex-M3、Cortex-M4 是哈佛模型）,程序存储区对应 ROM（Flash）数据存储区对应 RAM，如此这般两个区域就是物理上的分开的–经典的哈佛模型。</li>
+        </ul>
+    <img src="../image/qsr6.4.png"  style="max-width: 100%; height: auto;">
+
+    <h2>4.单片机程序的 BIN 文件和 HEX 文件的区别？</h2>
+    <p>单片机程序的 BIN 文件和 HEX 文件的区别</p>
+    <ul>
+        <li>Bin 文件是存放在 Flash 上的文件。</li>
+        <li>HEX 文件，需要将 Bin 文件转为 Hex 文件是一种文件中有地址的文件，其目的是便于单片机烧录工具按照文件中地址进行烧录。</li>
+    </ul>
+    <strong>
+    <p>运行时：单片机程序运行起来以后，代码是在 ROM（Nor Flash）上面跑的，数据是在 RAM 上面的，描述的就是 ROM 和 RAM 两个层面。</p>
+    <p>非运行时：单片机程序没有运行时（没有上电），针对的描述是单片机程序（bin）文件在 ROM（Flash）上的分布。</p>
+    <p>注意，如果使用 Flash 读取工具从单片机的 Flash 上完整读出来的文件可能是 bin 文件但绝对不是 hex 文件！</p>
+</strong>
+
+    <h2>5.ROM 和 RAM 都有哪些常见的？</h2>
+    <p>ROM 类型:</p>
+    <table border="1">
+        <tr>
+          <th>名称</th>
+          <th>全称</th>
+          <th>描述</th>
+        </tr>
+        <tr>
+          <td>ROM</td>
+          <td>Read-Only Memory</td>
+          <td>只读存储器,内容出厂时固化,不可修改</td>
+        </tr>
+        <tr>
+          <td>PROM</td>
+          <td>Programmable ROM</td>
+          <td>可编程只读存储器,一次性可编程,内容不可擦除</td>
+        </tr>
+        <tr>
+          <td>EPROM</td>
+          <td>Erasable Programmable ROM</td>
+          <td>可擦除可编程只读存储器,可通过紫外线擦除内容后重新编程</td>
+        </tr>
+        <tr>
+          <td>EEPROM</td>
+          <td>Electrically Erasable Programmable ROM</td>
+          <td>电可擦除可编程只读存储器,可电子擦除内容后重新编程</td>
+        </tr>
+        <tr>
+          <td>Flash</td>
+          <td>-</td>
+          <td>闪存,一种可电子擦除和编程的非易失性存储器,既可作为 ROM 使用,也可作为 RAM 使用</td>
+        </tr>
+      </table>
+
+    <p>RAM 类型:</p>
+
+    <table border="1">
+        <tr>
+          <th>名称</th>
+          <th>全称</th>
+          <th>描述</th>
+        </tr>
+        <tr>
+          <td>RAM</td>
+          <td>Random Access Memory</td>
+          <td>随机存取存储器,可读写,断电后内容丢失(易失性)</td>
+        </tr>
+        <tr>
+          <td>SRAM</td>
+          <td>Static RAM</td>
+          <td>静态随机存取存储器,通过锁存电路保持数据,速度快但功耗高</td>
+        </tr>
+        <tr>
+          <td>DRAM</td>
+          <td>Dynamic RAM</td>
+          <td>动态随机存取存储器,通过电容存储数据,速度较慢但功耗低</td>
+        </tr>
+      </table>
+
+    <h2>6.操作系统和单片机的内存分布对比？</h2>
+    <p>由于单片机应用领域是极端成本为导向的，单片机和操作系统的所处环境不同 RAM 和 ROM 的使用方式也不同。</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>类型</th>
+                <th>操作系统应用程序</th>
+                <th>单片机程序</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>代码</td>
+                <td>RAM</td>
+                <td>ROM（支持 XIP 的 Nor Flash）</td>
+            </tr>
+            <tr>
+                <td>数据</td>
+                <td>RAM</td>
+                <td>RAM（SRAM）</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>总结来说就是，单片机的代码是在ROM即支持XIP的Nor Flash上面跑，数据是在RAM上面的，而操作系统应用程序的代码、数据是完全加载到RAM里面运行的（这里不考虑分页、虚拟内存）
+    </strong></p>
+
+    <table border="1">
+        <tr>
+          <th>操作系统应用程序</th>
+          <th>描述</th>
+          <th>对应单片机程序</th>
+        </tr>
+        <tr>
+          <td>BSS 段–.bss</td>
+          <td>未初始化的全局变量、静态变量，一旦初始化就回收，并转存到数据段之中</td>
+          <td>Zi-data</td>
+        </tr>
+        <tr>
+          <td>代码段–.code</td>
+          <td>代码,程序结束的时候系统会自动回收存储在代码段中的数据,内存区域较小</td>
+          <td>Code</td>
+        </tr>
+        <tr>
+          <td>数据段–.data</td>
+          <td>已经初始化的全局变量、静态变量,直到程序结束的时候才会被回收</td>
+          <td>Rw-data (global/static)</td>
+        </tr>
+        <tr>
+          <td>堆–.heap</td>
+          <td>动态分配内存,alloc 出来的对象,需要程序员进行内存管理</td>
+          <td>Rw-data (heap)</td>
+        </tr>
+        <tr>
+          <td>栈–.stack</td>
+          <td>局部变量,自动分配内存,当局部变量的作用域执行完毕之后就会被系统立即回收</td>
+          <td>Rw-data (stack)</td>
+        </tr>
+      </table>
+</body>
+</html>
