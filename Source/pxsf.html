@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常见排序算法总结</title>
+    <style>
+    pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    line-height: 1.5; /* 调整行距，这里设置为1.5倍行距 */
+    font-size: 20px; /* 调整字体大小，这里设置为16px，您可以根据需要修改 */
+    }
+    h1 {
+        color: #007bff;
+    }
+    table {
+        width: 60%; /* 表格宽度 */
+        border-collapse: collapse; /* 合并边框 */
+        font-family: Arial, sans-serif; /* 字体 */
+    }
+    th, td {
+        border: 1px solid #ddd; /* 边框颜色 */
+        padding: 10px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+    }
+    th {
+        background-color: #4CAF50; /* 表头背景颜色 */
+        color: white; /* 表头文字颜色 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行背景颜色 */
+    }
+    tr:hover {
+        background-color: #ddd; /* 鼠标悬停行的背景颜色 */
+    }
+    li {
+    margin-bottom: 10px; /* 列表项之间的行距 */
+    }
+    object {
+            width: auto; /* 宽度自适应 */
+            height: auto; /* 高度自适应 */
+            max-width: 100%; /* 最大宽度为100% */
+            max-height: 100vh; /* 最大高度为视口高度 */
+        }
+</style> 
+</head>
+<h1>常见排序算法总结</h1>
+<h2>1. 冒泡排序 ⭐⭐⭐⭐</h2>
+<p>冒泡排序（Bubble Sort）是一种较简单的排序算法，其思想是重复地走访要排序的元素列，依次比较两个相邻的元素，如果顺序错误就交换它们。这个过程会重复进行，直到没有相邻元素需要交换，也就是说该元素列已经排序完成。算法的名字来源于越小的元素会经由交换慢慢“浮”到数列的顶端，就像碳酸饮料中二氧化碳的气泡最终会上浮到顶端一样，因此得名“冒泡排序”。</p>
+
+<img src="../image/sf.gif"  style="max-width: 100%; height: auto;">
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void bubbleSort(int arr[], int n) {
+    for(int i = 0; i &lt; n - 1; i++){
+        for(int j = 0; j &lt; n - i - 1; j++){
+            if(arr[j] &gt; arr[j+1]){
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+</code></pre>
+
+<h2>2. 选择排序 ⭐⭐⭐⭐</h2>
+<p>选择排序是一种简单直观的排序算法。它的工作原理是：第一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，然后再从剩余的未排序元素中寻找到最小（大）元素，继续放在起始位置直到未排序元素个数为0。</p>
+<p>选择排序的步骤：</p>
+<strong>
+<ol>
+    <li>首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置。</li>
+    <li>再从剩余未排序元素中继续寻找最小（大）元素，然后放到未排序序列的起始位置。</li>
+    <li>重复第二步，直到所有元素均排序完毕。</li>
+</ol>
+</strong>
+<img src="../image/sf1.gif"  style="max-width: 100%; height: auto;">
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i &lt; n-1; i++) {
+        int minIndex = i;
+        for (int j = i+1; j &lt; n; j++) {
+            if (arr[j] &lt; arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        int temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+}
+</code></pre>
+
+<h2>3. 插入排序 ⭐⭐⭐⭐</h2>
+<p>插入排序是一种简单直观的排序算法，它的工作原理是通过对未排序部分的元素逐一进行比较，并按大小顺序逐步“插入”到已排序部分中的适当位置，最终完成整个序列的排序。</p>
+<p>插入排序步骤：</p>
+<strong>
+<ol>
+    <li>从第一个元素开始，该元素可以认为已经被排序。</li>
+    <li>取下一个元素 <code>tem</code>，从已排序的元素序列从后往前扫描。</li>
+    <li>如果该元素大于 <code>tem</code>，则将该元素移到下一位。</li>
+    <li>重复步骤3，直到找到已排序元素中小于等于 <code>tem</code> 的元素。</li>
+    <li>将 <code>tem</code> 插入到该元素的后面。</li>
+    <li>重复步骤2~5，直到待排序序列中所有元素都被插入到已排序序列中。</li>
+</ol>
+</strong>
+<img src="../image/sf2.gif"  style="max-width: 100%; height: auto;">
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void insertionSort(int arr[], int n) {
+    int i, key, j;
+    for (i = 1; i &lt; n; i++) {
+        key = arr[i];
+        j = i - 1;
+        // 默认i之前的元素是排列好的
+        // 将大于key的元素向后移动
+        while (j &gt;= 0 && arr[j] &gt; key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+</code></pre>
+
+<h2>4. 希尔排序 ⭐⭐</h2>
+<strong><p>希尔排序，也被称为缩小增量排序，是插入排序的一种改进算法。它通过将原始序列分割为多个较小的子序列来进行排序，最终将整个序列排序。</p></strong>
+<p>希尔排序的步骤如下：</p>
+<strong>
+<ol>
+    <li>选择一个增量序列，可以是固定的间隔或者动态计算得到。</li>
+    <li>根据增量序列，将整个序列分割成若干个子序列。</li>
+    <li>对每个子序列进行插入排序。</li>
+    <li>不断缩小增量，重复步骤2和3，直到增量为1。</li>
+    <li>最后一次使用增量为1的子序列进行排序，完整的排序过程结束。</li>
+</ol>
+</strong>
+<p><strong>作者自我理解：实际上希尔排序就是插入排序的优化，也就是他的插入排序 plus，所以我们只需要知道他怎么把插入排序用到了里边就可以理解这个算法。</strong></p>
+
+<p>1.首先假如有五个元素 5 3 2 4 6</p>
+<p>2.第一次增量取 n/2，增量就是两个数之间的位置间隔，间隔一样的是一组；比如现在取的是5/2=2，那么 【5 2 6】 是一组，【3,4】是一组。</p>
+<p>以此类推。。。。。。</p>
+
+<img src="../image/sf3.gif"  style="max-width: 100%; height: auto;">
+
+<pre><code>void shellSort(int arr[], int n) {
+    for (int gap = n / 2; gap &gt; 0; gap /= 2) {
+        for (int i = gap; i &lt; n; i++) {
+            int temp = arr[i];
+            int j;
+            // 这里就是插入排序 需要把i插入到前边的组里。
+            for (j = i; j &gt;= gap && arr[j - gap] &gt; temp; j -= gap) {
+                arr[j] = arr[j - gap];
+            }
+            arr[j] = temp;
+        }
+    }
+}
+</code></pre>
+
+<h2>5. 归并排序 ⭐⭐</h2>
+<strong><p>归并排序（Merge sort）是建立在归并操作上的一种有效的排序算法，该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。</p>
+</strong>
+<p>归并排序算法有两个基本的操作：</p>
+<strong>
+<ol>
+    <li>一个是分，也就是把原数组划分成两个子数组的过程。</li>
+    <li>另一个是治，它将两个有序数组合并成一个更大的有序数组。</li>
+</ol>
+</strong>
+<img src="../image/sf4.png"  style="max-width: 100%; height: auto;">
+
+
+<pre><code>void mergeSort(vector&lt;int&gt;& arr, int left, int right) {
+    if (left &lt; right) {
+        int middle = left + (right - left) / 2;
+
+        // 递归拆分左右子数组
+        mergeSort(arr, left, middle);
+        mergeSort(arr, middle + 1, right);
+
+        // 合并排序后的子数组
+        merge(arr, left, middle, right);
+    }
+}
+void merge(vector&lt;int&gt;& arr, int start, int mid, int end) {
+    int n1 = mid - start + 1; // 左半部分数组的长度
+    int n2 = end - mid;       // 右半部分数组的长度
+
+    // 将原数组的左半部分复制到左子数组
+    vector&lt;int&gt; leftArr(n1);
+    for (int i = 0; i &lt; n1; i++) {
+        leftArr[i] = arr[start + i];
+    }
+
+    int i = 0, j = mid + 1;
+    int k = start;
+
+    while (i &lt; n1 && j &lt;= end) {
+        if (leftArr[i] &lt;= arr[j]) {
+            arr[k] = leftArr[i];
+            i++;
+        } else {
+            arr[k] = arr[j];
+            j++;
+        }
+        k++;
+    }
+    
+    // 将剩余的元素复制回原数组
+    while (i &lt; n1) {
+        arr[k] = leftArr[i];
+        i++;
+        k++;
+    }
+}
+</code></pre>
+<h2>6. 快速排序 ⭐⭐⭐</h2>
+<strong><p>快速排序是一种基于分治思想的排序算法。它通过选择一个元素作为"枢轴"（pivot），将数组划分为两个子数组，较小的元素放在枢轴的左侧，较大的元素放在枢轴的右侧，然后对这两个子数组分别递归地进行同样的操作，直到子数组只有一个元素或为空。</p></strong>
+
+<ol>
+    <li>选出一个 <strong>key</strong>，一般是最左边或是最右边的元素。</li>
+    <li>定义两个指针 begin 和 end：
+        <ul>
+            <li>begin 从左向右走，end 从右向左走。</li>
+            <li>注意：若选择最左边的数据作为 key，则需要 end 先走；若选择最右边的数据作为 key，则需要 begin 先走。</li>
+        </ul>
+    </li>
+    <li>在移动的过程中：
+        <ul>
+            <li>如果 end 遇到小于 key 的数，则停下；</li>
+            <li>begin 开始走，直到遇到一个大于 key 的数时，将 begin 和 end 的内容交换。</li>
+            <li>此时 end 再次开始走，如此进行下去，直到 begin 和 end 最终相遇。</li>
+        </ul>
+    </li>
+    <li>将相遇点的内容与 key 交换，此时 key 的左边都是小于 key 的数，右边都是大于 key 的数。</li>
+    <li>对 key 的左序列和右序列再次进行这种单趟排序。</li>
+    <li>重复上述操作，直到左右序列只有一个数据，或是左右序列不存在时，停止操作，此时此部分已有序。</li>
+</ol>
+<img src="../image/sf6.gif"  style="max-width: 100%; height: auto;">
+
+<pre><code>
+// 快速排序
+void quickSort(vector<int>& arr, int begin, int end) {
+    if (begin < end) {
+        int pivotIndex = partition(arr, begin, end); // 将pivot放到合适的位置
+        quickSort(arr, begin, pivotIndex - 1); // 对pivot左边的子数组进行快速排序
+        quickSort(arr, pivotIndex + 1, end); // 对pivot右边的子数组进行快速排序
+    }
+}
+// 将pivot放到合适的位置，并返回其索引
+int partition(vector<int>& arr, int begin, int end) {
+    int pivot = arr[begin]; // 选择最左边的元素作为pivot
+    int left = begin + 1;
+    int right = end;
+
+    while (left <= right) {
+        // end先走
+        while (left <= right && arr[right] >= pivot) {
+            right--;
+        }
+        // begin再走
+        while (left <= right && arr[left] < pivot) {
+            left++;
+        }
+
+        if (left < right) {
+            swap(arr[left], arr[right]);
+        }
+    }
+    swap(arr[begin], arr[right]);
+
+    return right;
+}
+</code></pre>
+
+<h2>7. 各种排序算法的时间空间复杂度、稳定性 ⭐⭐⭐⭐⭐</h2>
+<strong>
+<p>稳定性指的是当有两个元素的键值相等时，排序前后它们的相对位置是否保持不变。</p>
+<p>换句话说，如果在排序后的结果中，原始序列中相等元素的相对顺序仍然保持不变，那么这个排序算法就是稳定的。</p>
+</strong>
+<table>
+    <thead>
+        <tr>
+            <th>算法</th>
+            <th>平均复杂度</th>
+            <th>最坏时间复杂度</th>
+            <th>最好时间复杂度</th>
+            <th>空间复杂度</th>
+            <th>稳定性</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>冒泡排序</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(n)</td>
+            <td>O(1)</td>
+            <td>稳定</td>
+        </tr>
+        <tr>
+            <td>选择排序</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(1)</td>
+            <td>不稳定</td>
+        </tr>
+        <tr>
+            <td>插入排序</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(n)</td>
+            <td>O(1)</td>
+            <td>稳定</td>
+        </tr>
+        <tr>
+            <td>希尔排序</td>
+            <td>O(nlogn)</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(nlogn)</td>
+            <td>O(1)</td>
+            <td>不稳定</td>
+        </tr>
+        <tr>
+            <td>归并排序</td>
+            <td>O(nlogn)</td>
+            <td>O(nlogn)</td>
+            <td>O(nlogn)</td>
+            <td>O(n)</td>
+            <td>稳定</td>
+        </tr>
+        <tr>
+            <td>快速排序</td>
+            <td>O(nlogn)</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(nlogn)</td>
+            <td>O(logn)</td>
+            <td>不稳定</td>
+        </tr>
+        <tr>
+            <td>堆排序</td>
+            <td>O(nlogn)</td>
+            <td>O(nlogn)</td>
+            <td>O(nlogn)</td>
+            <td>O(1)</td>
+            <td>不稳定</td>
+        </tr>
+        <tr>
+            <td>计数排序</td>
+            <td>O(n+k)</td>
+            <td>O(n+k)</td>
+            <td>O(n+k)</td>
+            <td>O(n+k)</td>
+            <td>稳定</td>
+        </tr>
+        <tr>
+            <td>桶排序</td>
+            <td>O(n+k)</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>O(n)</td>
+            <td>O(n+k)</td>
+            <td>稳定</td>
+        </tr>
+        <tr>
+            <td>基数排序</td>
+            <td>O(nk)</td>
+            <td>O(nk)</td>
+            <td>O(nk)</td>
+            <td>O(n+k)</td>
+            <td>稳定</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>8. 各种排序算法什么时候有最好情况、最坏情况（尤其是快排） ⭐⭐⭐⭐</h2>
+<table>
+    <thead>
+        <tr>
+            <th>排序算法</th>
+            <th>最好情况</th>
+            <th>最坏情况</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>冒泡排序</td>
+            <td>输入数据已经完全排序，时间复杂度为O(n)</td>
+            <td>输入数据完全逆序，时间复杂度为O(n<sup>2</sup>)</td>
+        </tr>
+        <tr>
+            <td>插入排序</td>
+            <td>输入数据已经完全排序，时间复杂度为O(n)</td>
+            <td>输入数据完全逆序，时间复杂度为O(n<sup>2</sup>)</td>
+        </tr>
+        <tr>
+            <td>选择排序</td>
+            <td>无论输入数据的顺序如何，时间复杂度始终为O(n<sup>2</sup>)</td>
+            <td>无论输入数据的顺序如何，时间复杂度始终为O(n<sup>2</sup>)</td>
+        </tr>
+        <tr>
+            <td>快速排序</td>
+            <td>每次划分都正好将数组均匀划分为两部分，时间复杂度为O(nlogn)</td>
+            <td>每次划分都选择了数组中的最大/最小值作为基准元素，时间复杂度为O(n<sup>2</sup>)</td>
+        </tr>
+        <tr>
+            <td>归并排序</td>
+            <td>无论输入数据的顺序如何，时间复杂度始终为O(nlogn)</td>
+            <td>无论输入数据的顺序如何，时间复杂度始终为O(nlogn)</td>
+        </tr>
+        <tr>
+            <td>堆排序</td>
+            <td>无论输入数据的顺序如何，时间复杂度始终为O(nlogn)</td>
+            <td>无论输入数据的顺序如何，时间复杂度始终为O(nlogn)</td>
+        </tr>
+        <tr>
+            <td>计数排序</td>
+            <td>输入数据的范围相对较小且分布均匀，时间复杂度为O(n+k)</td>
+            <td>输入数据取值范围较大，时间复杂度为O(n+k)</td>
+        </tr>
+        <tr>
+            <td>桶排序</td>
+            <td>桶的数量恰好等于输入数据的数量，时间复杂度为O(n)</td>
+            <td>所有元素分布在一个桶中，时间复杂度为O(n<sup>2</sup>)</td>
+        </tr>
+        <tr>
+            <td>基数排序</td>
+            <td>元素各个位上的值分布均匀，时间复杂度为O(d(n+r))</td>
+            <td>元素各个位上的值分布不均匀，时间复杂度为O(d(n+r))</td>
+        </tr>
+    </tbody>
+</table>
+</html>
