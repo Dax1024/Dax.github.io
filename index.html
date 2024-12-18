@@ -254,7 +254,7 @@
         <iframe id="contentArea" style="flex: 1; border: none; margin-top: 0px;" src="" frameborder="0"></iframe>
     </div>
     <script>
-        let sidebarVisible = true; // 侧边栏初始为可见状态
+        let sidebarVisible = false; // 侧边栏初始为可见状态
         let PCStatus = true; // 默认是true pc
 
         function toggleSidebar() {
@@ -557,8 +557,6 @@
             else
             {
                 loadSoftEmbeddedContentAd();//安卓布局
-                const sidebar = document.getElementById('sidebar');
-                sidebar.style.display = 'block'; // 确保侧边栏在加载时可见
             }
         };
     </script>
