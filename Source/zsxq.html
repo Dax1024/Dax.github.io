@@ -8,130 +8,123 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            margin: 0; /* 去掉外边距 */
-            background-color: #ffffff;
-            position: relative; /* 为了定位更新时间 */
+            margin: 0;
+            background-color: #f9f9f9; /* 更柔和的背景色 */
         }
         h1 {
             color: #333;
+            font-size: 28px; /* 增加标题字体大小 */
+            margin-bottom: 10px; /* 增加标题底部间距 */
         }
-        t {
+        h2, h4 {
             color: #555;
-            font-size: 40px; /* 设置字体大小 */
-            margin-right: 40%; /* 设置左边距 */
+            margin: 20px 0 10px; /* 增加上下间距 */
         }
         p {
-            color: #555;
-            margin: 0; /* 去掉段落外边距 */
-            max-width: 5100px; /* 设置段落最大宽度 */
-            font-size: 20px; /* 设置字体大小 */
-            line-height: 2; /* 行间距 */
+            color: #666; /* 更柔和的文字颜色 */
+            margin: 0 0 15px; /* 增加段落底部间距 */
+            font-size: 18px; /* 调整段落字体大小 */
+            line-height: 1.8; /* 增加行间距 */
         }
         .container {
             background: white;
-            box-shadow: none; /* 去掉阴影 */
-            padding: 10px;
-            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+            padding: 20px; /* 增加内边距 */
+            border-radius: 8px; /* 圆角 */
         }
         .code-block {
-            background-color: #f4f4f4; /* 代码块背景色 */
-            padding: 10px; /* 内边距 */
-            border: 1px solid #ccc; /* 边框 */
-            overflow: auto; /* 超出部分滚动 */
-            margin: 10px 0; /* 上下间距 */
-            font-size: 16px; /* 设置字体大小 */
+            background-color: #f4f4f4;
+            padding: 15px;
+            border: 1px solid #ccc;
+            overflow: auto;
+            margin: 15px 0; /* 上下间距 */
+            font-size: 16px;
+            border-radius: 5px; /* 圆角 */
         }
         cite {
             display: block;
             font-style: normal;
             font-weight: bold;
-            color: #ccc; /* 设置引用来源的颜色 */
-        }
-        .quote {
-            color: rgb(14, 2, 2);
-            margin: 0; /* 去掉段落外边距 */
-            max-width: 5100px; /* 设置段落最大宽度 */
-            font-size: 20px; /* 设置字体大小 */
-            line-height: 2; /* 行间距 */
-            text-align: left;
+            color: #999; /* 设置引用来源的颜色 */
         }
         a {
             color: #32CD32; /* 淡绿色 */
-            text-decoration: none; /* 去掉下划线 */
-        }
-        /* 调整符号的样式 */
-        .bullet {
-            font-size: 15px; /* 设置符号的字体大小 */
-            vertical-align: middle; /* 使符号与文本垂直居中对齐 */
-        }
-        /* 更新时间样式 */
-        .update-time {
-            position: absolute; /* 绝对定位 */
-            bottom: 10px; /* 距离底部10px */
-            right: 10px; /* 距离右边10px */
-            font-size: 14px; /* 字体大小 */
-            color: #999; /* 字体颜色 */
-        }
-        h2, h4 {
-            margin: 0; /* 去掉标题的默认边距 */
-            margin-left: 10px;
+            text-decoration: none;
         }
         ul {
-            margin: 0; /* 去掉列表的默认边距 */
+            margin: 10px 0; /* 增加列表上下间距 */
+            padding-left: 20px; /* 添加左侧内边距 */
+            color: #666; /* 更柔和的文字颜色 */
+        }
+        li {
+            margin-bottom: 10px; /* 列表项之间的间距 */
+        }
+        .update-time {
+            font-size: 14px;
+            color: #999;
+            text-align: right; /* 右对齐 */
+        }
+        img {
+            height: auto; /* 保持高度比例 */
+            display: block; /* 使图片块级显示 */
+            margin: 10px 0; /* 增加上下间距 */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="container" style="text-align: left;">
-            <h1 style="color: #555; margin-left:0;margin-bottom: 0;">软嵌物联集知识星球</h1>
+        <h1>软嵌物联集知识星球</h1>
+        <h2>作者背景:</h2>
+        <div class="code-block">
+            <strong>BG:</strong> 山东大学(985）硕士研究生（1%保研）<br>
+            <strong>在校:</strong> 国家奖学金、省优秀研究生称号获得者<br>
+            <strong>工作履历:</strong> 华为、紫光、Intel<br>
         </div>
-        <div class="container" style="text-align: left;margin-bottom: 0; margin-bottom: 0; "> <!-- 将 text-align 改为 left -->
-            <h2 style="color: #555; margin-left: 0; margin-bottom: 0; margin-top: 0px;">作者背景:</h2> <!-- margin-right 调整为 0 -->
-            <div class="code-block">
-                        <strong>BG:</strong> 山东大学(985）硕士研究生（1%保研）<br>
-                        <strong>在校:</strong>国家奖学金、省优秀研究生称号获得者<br>
-                        <strong>工作履历:</strong> 华为、紫光、Intel<br>
-            </div>
-            <h2 style="color: #555; margin-left: 0; margin-bottom: 0; margin-top: 0px;">星球现状:</h2> <!-- margin-right 调整为 0 -->
-            <p>
-                大家好我是软嵌物联集的作者，我是Dax,现在星球处于试运营阶段，大家可以免费加入，后期可能会设置门槛，早加早享受，希望大家多多支持
-            </p>
+        <h2>星球现状:</h2>
+        <p>
+            大家好我是软嵌物联集的作者，我是Dax，现在星球处于试运营阶段，大家可以免费加入，后期可能会设置门槛，早加早享受，希望大家多多支持。
+        </p>
         
-            <h2 style="color: #555; margin-left: 0; margin-bottom: 0; margin-top: 0px;">星球意义</h2>
-            <h4>扫清盲点</h4>
-            <ul>
-                <li>作者5年时间面试过上百家公司，方向包括：电力/安全/芯片/AI/物联网/Camera/Windows驱动/汽车等等多个行业，面试经验丰富</li>
-                <li>为每个人解答自己的学习路线和学习方向</li>
-            </ul>
+        <h2>星球亮点:</h2>
+        <h4>扫清盲点</h4>
+        <ul>
+            <li>作者5年时间面试过上百家公司，方向包括：电力/安全/芯片/AI/物联网/Camera/Windows驱动/汽车等等多个行业，面试经验丰富。</li>
+            <li>为每个人解答自己的学习路线和学习方向。</li>
+        </ul>
+        <h4>减少踩坑</h4>
+        <ul>
+            <li>星球会</li>
+            <li>为每个人解答自己的学习路线和学习方向。</li>
+        </ul>
 
-            <h2 style="color: #555; margin-left: 0; margin-bottom: 0; margin-top: 0px;">星球期望:持续更新中....</h2> <!-- margin-right 调整为 0 -->
-            <p>
-                <li>星球开设专栏，主要从以下几个模块来补充基础知识</li>
-                <li>Linux合集：linux基础命令/Linux基础知识面经/linux内核/Linux驱动，以Linux驱动层为主导 (适合同学们想往Linux驱动方向发展)</li>
-                <li>嵌软项目：这地方暂时分为两个部分 基础项目(入门）提升项目(找工作）适合不同同学需求</li>
-                <li>嵌软场景题(这个地方就是所有同学都得会的）。</li>
-                <li>嵌软八股:这个也不用多说找工作必须要</li>
-                <li>当然也会根据实际情况进行裁剪和添加</li>
-                <img src="../image/zsxq1.jpg" style="max-width: 20%; height: auto;">
-            </p>
-            <h2 style="color: #555; margin-left: 0; margin-bottom: 0; margin-top: 0px;">星球功能:</h2> <!-- margin-right 调整为 0 -->
-            <p>
-                <li>开设星球:第一是面试，第二是想做一个大家交流的平台，所以我觉得星球是可以让大家一起学习提升学习效率和交流学习方法的一种方式</li>
-                <li>开设嵌入式/c++学习录，可以更新嵌入式/C++学习内容便于大家扫清盲区</li>
-                <li>开设内推/公司避雷 给找工作的同学们保驾护航</li>
-                <li>每日学习打卡:这个就是利用大家的反馈机制，促进学习动力。</li>
-                <li>星球反馈箱:每天的星球的功能和内容反馈</li>
-                <img src="../image/zsxq2.png" style="max-width: 100%; height: auto;">
-            </p>
-            <p>
-                大家想加入星球可以加群:922657508
-                或者扫码加群，前50人免费加入星球！！！！
-            </p>
-            <img src="../image/zsxq4.jpg" style="max-width: 20%; height: auto;">
-        </div>
-        <!-- 更新时间 -->
-        <div class="update-time">更新时间：2024年11月24日</div>
+        <h2>星球期望:</h2>
+        <p>持续更新中....</p>
+        <ul>
+            <li>星球开设专栏，主要从以下几个模块来补充基础知识。</li>
+            <li>Linux合集：linux基础命令/Linux基础知识面经/linux内核/Linux驱动，以Linux驱动层为主导 (适合同学们想往Linux驱动方向发展)。</li>
+            <li>嵌软项目：这地方暂时分为两个部分 基础项目(入门）提升项目(找工作）适合不同同学需求。</li>
+            <li>嵌软场景题(这个地方就是所有同学都得会的)。</li>
+            <li>嵌软八股:这个也不用多说找工作必须要。</li>
+            <li>当然也会根据实际情况进行裁剪和添加。</li>
+        </ul>
+        <img src="../image/zsxq1.jpg" alt="星球图片">
+
+        <h2>星球功能:</h2>
+        <ul>
+            <li>开设星球:第一是面试，第二是想做一个大家交流的平台，所以我觉得星球是可以让大家一起学习提升学习效率和交流学习方法的一种方式。</li>
+            <li>开设嵌入式/C++学习录，可以更新嵌入式/C++学习内容便于大家扫清盲区。</li>
+            <li>开设内推/公司避雷 给找工作的同学们保驾护航。</li>
+            <li>每日学习打卡:这个就是利用大家的反馈机制，促进学习动力。</li>
+            <li>星球反馈箱:每天的星球的功能和内容反馈。</li>
+        </ul>
+        <img src="../image/zsxq2.png" alt="星球功能图片">
+
+        <p>
+            添加我微信可以进我的知识星球吐槽群
+            只要进群，前50人免费加入星球！！！！
+        </p>
+        <img src="../image/wx.jpg" alt="加入星球图片">
     </div>
+    <div class="update-time">更新时间：2024年11月24日</div>
 </body>
 </html>

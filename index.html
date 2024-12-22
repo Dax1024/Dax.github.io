@@ -241,7 +241,11 @@
         }
         }
 
-    
+        .selected {
+            background-color:#d3d3d3; /* 选中时的背景颜色 */
+            color: #fff; /* 选中时的字体颜色 */
+            transition: background 0.3s, color 0.3s; /* 添加过渡效果 */
+        }
     </style>
 </head>
 
@@ -274,11 +278,24 @@
                 toggleIcon.classList.add('rotate');
             }
         }
+        function loadContent(file, button) {
 
-        function loadContent(file) {
             const iframe = document.getElementById('contentArea');
-            iframe.src = file;  // 设置 iframe 的 src 属性为要加载的文件
+            iframe.src = file; // 设置 iframe 的 src 属性为要加载的文件
+
+            // 移除所有按钮的选中状态
+            const buttons = document.querySelectorAll('.sub-menu a');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('selected');
+            });
+
+            // 为当前按钮添加选中状态
+            if (button) {
+                button.classList.add('selected');
+            }
         }
+
 
         function loadToolbarmain()
         {
@@ -332,12 +349,28 @@
                 </button>
             </div>
             <div class="divider"></div> <!-- 添加分割线 -->
-
-                <button class="toggle-button" onclick="loadContent('Source/zsxq.html')">
-                    知识星球
+            <button class="toggle-button" onclick="loadContent('Source/zsxq.html')">
+                知识星球(必读)
                 </button>
             `;
-            loadContent('Source/zsxq.html'); // 加载面试集训的内容
+        //   <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
+        //             知识星球
+        //             <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
+        //         </button>
+        //         <div class="sub-menu" id="embeddedSubMenu">
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">快速入门</a>
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/zsxq.html', this)">简历指导</a>
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html', this)">资源共享</a>
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html', this)">工作问题指导</a>
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html', this)">offer帮选</a>
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">每日打卡</a>
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">项目开源</a>
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">面试真题分享</a>
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">职业规划</a>
+        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">公司汇总</a>
+        //         </div>
+            
+            loadContent('Source/zsxq.html',this); // 加载面试集训的内容
         }
 
         function loadSoftEmbeddedContentAd() {
@@ -354,7 +387,7 @@
             </div>
             <div class="divider"></div> <!-- 添加分割线 -->
 
-                <button class="toggle-button" onclick="loadContent('Source/introduction.html')">
+            <button class="toggle-button" onclick="loadContent('Source/introduction.html')">
                     前言
                 </button>
                 <button class="toggle-button" onclick="loadContent('Source/Interview_Guide.html')">
@@ -365,74 +398,73 @@
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon1">
                 </button>
                 <div class="sub-menu" id="cLangSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_1.html')">C语言高频面经(一）</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_2.html')">C语言高频面经(二）</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_3.html')">C语言高频面经(三）内存管理</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C_1.html', this)">C语言高频面经(一）</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C_2.html', this)">C语言高频面经(二）</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C_3.html', this)">C语言高频面经(三）内存管理</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
                     C++面经
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon2">
                 </button>
                 <div class="sub-menu" id="cppSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_1.html')">C++高频面经(一)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_2.html')">C++高频面经(二)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_3.html')">C++高频面经(三)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_4.html')">C++高频面经(四)新特性</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_5.html')">C++高频面经(五)虚函数</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_6.html')">C++高频面经(六)STL容器</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_1.html', this)">C++高频面经(一)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_2.html', this)">C++高频面经(二)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_3.html', this)">C++高频面经(三)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_4.html', this)">C++高频面经(四)新特性</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_5.html', this)">C++高频面经(五)虚函数</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_6.html', this)">C++高频面经(六)STL容器</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('osSubMenu', 'toggleIcon3')">
                     操作系统面经
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon3">
                 </button>
                 <div class="sub-menu" id="osSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS1.html')">操作系统(一)线程和进程</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS2.html')">操作系统(二)线程和进程续</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS3.html')">操作系统(三)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS4.html')">操作系统(四)linux基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS5.html')">操作系统(五)linux命令</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS6.html')">操作系统(六)虚拟地址/页表</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS7.html')">操作系统(七)linux内核</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS1.html', this)">操作系统(一)线程和进程</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS2.html', this)">操作系统(二)线程和进程续</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS3.html', this)">操作系统(三)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS4.html', this)">操作系统(四)linux基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS5.html', this)">操作系统(五)linux命令</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS6.html', this)">操作系统(六)虚拟地址/页表</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS7.html', this)">操作系统(七)linux内核</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('networkSubMenu', 'toggleIcon4')">
                     计算机网络面经
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon4">
                 </button>
                 <div class="sub-menu" id="networkSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network1.html')">计算机网络(一)网络基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network2.html')">计算机网络(二)TCP/IP</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network3.html')">计算机网络(三)UDP</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network4.html')">计算机网络(四)网络编程</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network5.html')">计算机网络(五)HTTP/HTTPS</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network6.html')">计算机网络(六)HTTP/HTTPS续</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network1.html', this)">计算机网络(一)网络基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network2.html', this)">计算机网络(二)TCP/IP</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network3.html', this)">计算机网络(三)UDP</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network4.html', this)">计算机网络(四)网络编程</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network5.html', this)">计算机网络(五)HTTP/HTTPS</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network6.html', this)">计算机网络(六)HTTP/HTTPS续</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
                     嵌入式基础知识
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
                 </button>
                 <div class="sub-menu" id="embeddedSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs1.html')">嵌入式基础(一)基本概念</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html')">嵌入式基础(二)ARM基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html')">嵌入式基础(三)基础外设</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html')">嵌入式基础(四)Bootloader</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html')">嵌入式基础(五)ARM架构</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html')">嵌入式基础(六)单片机基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs1.html', this)">嵌入式基础(一)基本概念</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html', this)">嵌入式基础(二)ARM基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html', this)">嵌入式基础(三)基础外设</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html', this)">嵌入式基础(四)Bootloader</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">嵌入式基础(五)ARM架构</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">嵌入式基础(六)单片机基础</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('rtosSubMenu', 'toggleIcon6')">
                     算法
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon6">
                 </button>
                 <div class="sub-menu" id="rtosSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/pxsf.html')">常见排序算法总结</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/pxsf.html', this)">常见排序算法总结</a>
                 </div>
 
-                
                 <button class="toggle-button" onclick="toggleSubMenu('dataStructureSubMenu', 'toggleIcon7')">
                     嵌入式实战
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon7">
                 </button>
                 <div class="sub-menu" id="dataStructureSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrssz.html')">实战问题总结</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrssz.html', this)">实战问题总结</a>
                 </div>
             `;
             loadContent('Source/introduction.html'); // 加载软嵌物联集的内容
@@ -443,13 +475,28 @@
             const sidebar = document.getElementById('sidebar');
             // 清空侧边栏内容并加载面试集训的内容
             sidebar.innerHTML = `
-                <button class="toggle-button" onclick="loadContent('Source/zsxq.html')">
-                    知识星球
+            <button class="toggle-button" onclick="loadContent('Source/zsxq.html')">
+                知识星球(必读)
                 </button>
-            `;
+            `;;
             loadContent('Source/zsxq.html'); // 加载面试集训的内容
         }
-
+        // <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
+        //             知识星球
+        //             <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
+        //         </button>
+                // <div class="sub-menu" id="embeddedSubMenu">
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">快速入门</a>
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/zsxq.html', this)">简历指导</a>
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html', this)">资源共享</a>
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html', this)">工作问题指导</a>
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html', this)">offer帮选</a>
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">每日打卡</a>
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">项目开源</a>
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">面试真题分享</a>
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">职业规划</a>
+                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">公司汇总</a>
+                // </div>
         function loadSoftEmbeddedContent() {
             const sidebar = document.getElementById('sidebar');
             // 清空侧边栏内容并加载软嵌物联集的内容
@@ -465,65 +512,65 @@
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon1">
                 </button>
                 <div class="sub-menu" id="cLangSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_1.html')">C语言高频面经(一）</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_2.html')">C语言高频面经(二）</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_3.html')">C语言高频面经(三）内存管理</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C_1.html', this)">C语言高频面经(一）</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C_2.html', this)">C语言高频面经(二）</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C_3.html', this)">C语言高频面经(三）内存管理</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
                     C++面经
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon2">
                 </button>
                 <div class="sub-menu" id="cppSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_1.html')">C++高频面经(一)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_2.html')">C++高频面经(二)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_3.html')">C++高频面经(三)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_4.html')">C++高频面经(四)新特性</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_5.html')">C++高频面经(五)虚函数</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_6.html')">C++高频面经(六)STL容器</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_1.html', this)">C++高频面经(一)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_2.html', this)">C++高频面经(二)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_3.html', this)">C++高频面经(三)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_4.html', this)">C++高频面经(四)新特性</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_5.html', this)">C++高频面经(五)虚函数</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_6.html', this)">C++高频面经(六)STL容器</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('osSubMenu', 'toggleIcon3')">
                     操作系统面经
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon3">
                 </button>
                 <div class="sub-menu" id="osSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS1.html')">操作系统(一)线程和进程</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS2.html')">操作系统(二)线程和进程续</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS3.html')">操作系统(三)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS4.html')">操作系统(四)linux基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS5.html')">操作系统(五)linux命令</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS6.html')">操作系统(六)虚拟地址/页表</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS7.html')">操作系统(七)linux内核</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS1.html', this)">操作系统(一)线程和进程</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS2.html', this)">操作系统(二)线程和进程续</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS3.html', this)">操作系统(三)</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS4.html', this)">操作系统(四)linux基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS5.html', this)">操作系统(五)linux命令</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS6.html', this)">操作系统(六)虚拟地址/页表</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/OS7.html', this)">操作系统(七)linux内核</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('networkSubMenu', 'toggleIcon4')">
                     计算机网络面经
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon4">
                 </button>
                 <div class="sub-menu" id="networkSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network1.html')">计算机网络(一)网络基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network2.html')">计算机网络(二)TCP/IP</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network3.html')">计算机网络(三)UDP</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network4.html')">计算机网络(四)网络编程</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network5.html')">计算机网络(五)HTTP/HTTPS</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network6.html')">计算机网络(六)HTTP/HTTPS续</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network1.html', this)">计算机网络(一)网络基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network2.html', this)">计算机网络(二)TCP/IP</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network3.html', this)">计算机网络(三)UDP</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network4.html', this)">计算机网络(四)网络编程</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network5.html', this)">计算机网络(五)HTTP/HTTPS</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/network6.html', this)">计算机网络(六)HTTP/HTTPS续</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
                     嵌入式基础知识
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
                 </button>
                 <div class="sub-menu" id="embeddedSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs1.html')">嵌入式基础(一)基本概念</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html')">嵌入式基础(二)ARM基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html')">嵌入式基础(三)基础外设</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html')">嵌入式基础(四)Bootloader</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html')">嵌入式基础(五)ARM架构</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html')">嵌入式基础(六)单片机基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs1.html', this)">嵌入式基础(一)基本概念</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html', this)">嵌入式基础(二)ARM基础</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html', this)">嵌入式基础(三)基础外设</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html', this)">嵌入式基础(四)Bootloader</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">嵌入式基础(五)ARM架构</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">嵌入式基础(六)单片机基础</a>
                 </div>
                 <button class="toggle-button" onclick="toggleSubMenu('rtosSubMenu', 'toggleIcon6')">
                     算法
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon6">
                 </button>
                 <div class="sub-menu" id="rtosSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/pxsf.html')">常见排序算法总结</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/pxsf.html', this)">常见排序算法总结</a>
                 </div>
 
                 <button class="toggle-button" onclick="toggleSubMenu('dataStructureSubMenu', 'toggleIcon7')">
@@ -531,9 +578,8 @@
                     <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon7">
                 </button>
                 <div class="sub-menu" id="dataStructureSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrssz.html')">实战问题总结</a>
+                    <a href="javascript:void(0);" onclick="loadContent('Source/qrssz.html', this)">实战问题总结</a>
                 </div>
-                
             `;
             loadContent('Source/introduction.html'); // 加载软嵌物联集的内容
         }
