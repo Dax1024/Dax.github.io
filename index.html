@@ -118,6 +118,30 @@
             font-size: 0.9em;
             padding-left: 20px;
         }
+        nav {
+                text-align: left; /* 左对齐 */
+                margin-bottom: 5px; /* 底部间距 */
+                margin-left: 15px; /* 左侧间距 */
+            }
+
+            nav ul {
+                list-style-type: none; /* 去掉默认列表样式 */
+                padding: 0; /* 去掉内边距 */
+            }
+
+            nav a {
+                text-decoration: none; /* 去掉下划线 */
+                color: #007bff; /* 链接颜色 */
+                padding: 10px 15px; /* 内边距 */
+                border-radius: 5px; /* 圆角 */
+                transition: background-color 0.3s, color 0.3s; /* 动效 */
+            }
+
+            /* 悬停效果 */
+            nav a:hover {
+                background-color: #0056b3; /* 悬停时背景色 */
+                color: #0056b3; /* 悬停时文字颜色 */
+            }
 
         }
 
@@ -279,13 +303,51 @@
             }
         }
         function loadContent(file, button) {
-
             const iframe = document.getElementById('contentArea');
             iframe.src = file; // 设置 iframe 的 src 属性为要加载的文件
 
+            // 清空锚点
+            iframe.onload = function() {
+                // 确保在加载新内容时清除锚点
+                iframe.contentWindow.location.hash = '';
+            };
+
+            // 获取所有的锚点链接
+            const allLinks = document.querySelectorAll('a[href^="#"]');
+
+            // 清空每个链接的 href 属性
+            allLinks.forEach(link => {
+                link.setAttribute('href', 'javascript:void(0);');
+            });
+
             // 移除所有按钮的选中状态
             const buttons = document.querySelectorAll('.sub-menu a');
+            buttons.forEach(btn => {
+                btn.classList.remove('selected');
+            });
 
+            // 为当前按钮添加选中状态
+            if (button) {
+                button.classList.add('selected');
+            }
+        }
+
+    
+        function loadContentjump(url, button) {
+            const iframe = document.getElementById('contentArea');
+            iframe.src = url; // 设置 iframe 的 src 属性为要加载的文件
+
+            // 确保在 iframe 加载完成后再发送消息
+            iframe.onload = function() {
+                const anchor = url.split('#')[1]; // 获取锚点部分
+                if (anchor) {
+                    // 发送消息给 iframe
+                    iframe.contentWindow.postMessage(anchor, '*'); // 使用 '*' 发送到任何来源
+                }
+            };
+
+            // 移除所有按钮的选中状态
+            const buttons = document.querySelectorAll('.sub-menu a');
             buttons.forEach(btn => {
                 btn.classList.remove('selected');
             });
@@ -340,37 +402,21 @@
             const sidebar = document.getElementById('sidebar');
             // 清空侧边栏内容并加载面试集训的内容
             sidebar.innerHTML = `
-            <div class="toggle-button">
-                <button class="toggle-button" onclick="loadTrainingContentAd()">
-                ❤️嵌入式面试突击
+            <button class="toggle-button" onclick="loadContent('Source/zsxqjj.html')">
+                    星球公告
                 </button>
-                <button class="toggle-button" onclick="loadSoftEmbeddedContentAd()">
-                ❤️软嵌物联集
+                <button class="toggle-button" onclick="loadContent('Source/jlzd.html')">
+                    了解我的知识星球
                 </button>
-            </div>
-            <div class="divider"></div> <!-- 添加分割线 -->
-            <button class="toggle-button" onclick="loadContent('Source/zsxq.html')">
-                知识星球(必读)
-                </button>
+                <nav>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#embedded-learning')">学习路线</a>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#resume-guidance')">简历指导</a>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#offer-selection')">Offer 选择</a>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#embedded-resources')">嵌入式最全面经</a>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#jrfs')">加入方式</a>
+                </nav>
             `;
-        //   <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
-        //             知识星球
-        //             <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
-        //         </button>
-        //         <div class="sub-menu" id="embeddedSubMenu">
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">快速入门</a>
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/zsxq.html', this)">简历指导</a>
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html', this)">资源共享</a>
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html', this)">工作问题指导</a>
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html', this)">offer帮选</a>
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">每日打卡</a>
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">项目开源</a>
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">面试真题分享</a>
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">职业规划</a>
-        //             <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">公司汇总</a>
-        //         </div>
-            
-            loadContent('Source/zsxq.html',this); // 加载面试集训的内容
+            loadContent('Source/zsxqjj.html'); // 加载面试集训的内容
         }
 
         function loadSoftEmbeddedContentAd() {
@@ -470,33 +516,27 @@
             loadContent('Source/introduction.html'); // 加载软嵌物联集的内容
         }
         // =====================PC布局
-
         function loadTrainingContent() {
             const sidebar = document.getElementById('sidebar');
             // 清空侧边栏内容并加载面试集训的内容
             sidebar.innerHTML = `
-            <button class="toggle-button" onclick="loadContent('Source/zsxq.html')">
-                知识星球(必读)
+                <button class="toggle-button" onclick="loadContent('Source/zsxqjj.html')">
+                    星球公告
                 </button>
-            `;;
-            loadContent('Source/zsxq.html'); // 加载面试集训的内容
+                <button class="toggle-button" onclick="loadContent('Source/jlzd.html')">
+                    了解我的知识星球
+                </button>
+                <nav>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#embedded-learning')">学习路线</a>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#resume-guidance')">简历指导</a>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#offer-selection')">Offer 选择</a>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#embedded-resources')">嵌入式最全面经</a>
+                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#jrfs')">加入方式</a>
+                </nav>
+            `;
+            loadContent('Source/zsxqjj.html'); // 加载面试集训的内容
         }
-        // <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
-        //             知识星球
-        //             <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
-        //         </button>
-                // <div class="sub-menu" id="embeddedSubMenu">
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">快速入门</a>
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/zsxq.html', this)">简历指导</a>
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html', this)">资源共享</a>
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html', this)">工作问题指导</a>
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html', this)">offer帮选</a>
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">每日打卡</a>
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">项目开源</a>
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">面试真题分享</a>
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">职业规划</a>
-                //     <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">公司汇总</a>
-                // </div>
+      
         function loadSoftEmbeddedContent() {
             const sidebar = document.getElementById('sidebar');
             // 清空侧边栏内容并加载软嵌物联集的内容

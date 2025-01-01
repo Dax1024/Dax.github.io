@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前言</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background-color: #f9f9f9; /* 更柔和的背景色 */
+        }
+        h1 {
+            margin-top: 1px; /* 增加标题底部间距 */
+            color: #333;
+            font-size: 30px; /* 增加标题字体大小 */
+            margin-bottom: 20px; /* 增加标题底部间距 */
+            margin-left: 10%;
+        }
+        h2 {
+            color: #333;
+            font-size: 30px; /* 增加标题字体大小 */
+            margin: 20px 0 10px; /* 增加上下间距 */
+            margin-left: 10%;
+        }
+
+        p {
+            color: #2c3e50;; /* 更柔和的文字颜色 */
+            margin: 0 0 15px; /* 增加段落底部间距 */
+            font-size: 15px; /* 调整段落字体大小 */
+            line-height: 1.5; /* 增加行间距 */
+            margin-left: 10%;
+        }
+        .container {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+            padding: 20px; /* 增加内边距 */
+            border-radius: 8px; /* 圆角 */
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border: 1px solid #ccc;
+            overflow: auto;
+            margin: 15px 0; /* 上下间距 */
+            font-size: 16px;
+            border-radius: 5px; /* 圆角 */
+        }
+        cite {
+            display: block;
+            font-style: normal;
+            font-weight: bold;
+            color: #999; /* 设置引用来源的颜色 */
+        }
+        a {
+            color: #32CD32; /* 淡绿色 */
+            text-decoration: none;
+        }
+        ul {
+            margin: 10px 0; /* 增加列表上下间距 */
+            padding-left: 20px; /* 添加左侧内边距 */
+            color: #666; /* 更柔和的文字颜色 */
+            font-size: 15px; /* 调整段落字体大小 */
+            margin-left: 13%;
+        }
+        li {
+            margin-bottom: 10px; /* 列表项之间的间距 */
+        }
+        .update-time {
+            font-size: 14px;
+            color: #999;
+            text-align: right; /* 右对齐 */
+            background: white;
+        }
+        img {
+            height: auto; /* 保持高度比例 */
+            display: block; /* 使图片块级显示 */
+            margin: 10px 0; /* 增加上下间距 */
+            margin-left: 17%;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        // 捕捉所有锚点链接
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // 阻止默认行为
+    
+                // 使用 scrollIntoView 方法平滑滚动到目标元素
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+
+    <div class="container">
+        <h1>软嵌物联集星球概述</h1> <!-- 大标题 -->
+        <p>随着情投意合的小伙伴的加入,软嵌物联集的团队也渐渐大了起来。非常感谢小伙伴们的认可和帮助。</p>
+        <p>接下来我来介绍一下星球的概况</p>
+        <p>PC端界面</p>
+        <img src="../image/zsxq/zsxqpc.png" alt="星球图片">
+        <p>APP端界面</p>
+        <img src="../image/zsxq/zsxqIos.png" alt="星球图片">
+        <p>建议同学们用PC端访问，这样的阅读效果最好。建立星球的初衷是消除专业壁垒，扫清知识盲区<strong>毕竟方向不对，努力白费。</strong></p>
+        <p>现在星球处于试运行阶段，尽可能给大家提供最完善的学习环境，让你只在学习中花时间不浪费其他时间</p>
+        <p>***<strong>现在星球试运行阶段免费加入</strong>***</p>
+        <p>我觉得大部分人智商都差不多,别人能学会的你也能学会,只要肯投入时间</p>
+        <p><strong>但是往往一个人自学是枯燥的,我也希望大家可以在星球浓厚的学习氛围中坚持学习,各自顶峰相见</strong></p>
+        <p><strong>现在介绍一下星球的几大模块组成</strong></p>
+
+        <h2 id="embedded-learning">学习路线</h2>
+        <p>学习路线模块旨在为同学们指明学习方向。我们都知道不同的岗位方向不同路线肯定也会存在区别，真想只搞单片机你就不必要深学C++，想搞QT就不必学到驱动，<br>一千个人有一千条路</p>
+        <p>具体学习路线会放在置顶链接</p>
+        <img src="../image/zsxq/xxmk.png" alt="星球图片">
+        <p><strong>所以这里作者给出的路线可能是通用技能学习路线，比如C/计网/硬件基础之类的,同学们有其他的需求可以直接提问我</strong></p>    
+        <img src="../image/zsxq/tw.png" alt="星球图片">
+
+
+        <h2 id="resume-guidance">简历指导</h2>
+        <p>对于简历，我在牛客上已经帮很多牛友改过形形色色的简历，不论是技术的还是非技术的，阅历无数</p>
+        <p>在这呢我也给读者们总结了一份通用简历模板和注意事项。</p>
+        <img src="../image/zsxq/jl.png" alt="星球图片">
+        <p>当然千人千面，每个同学都可以在简历模块提问，每一个同学的提问我都会回答。</p>
+        <img src="../image/zsxq/jlmk.png" alt="星球图片">
+
+        <h2 id="offer-selection">Offer 选择</h2>
+        <p>在拿到多个Offer时，很多喜欢集邮的同学选Offer犯了难，毕竟拿N个offer但你也只能去一家公司。这家给的N多，那家背书大title高<br>
+        另一个岗位前景好，到底选择那个？别担心我们来给你建议。</p>
+        <p><strong>我单独设立一个Offer选择的模块专区给同学们解答问题</strong>。</p>
+        <img src="../image/zsxq/Offer.png" alt="星球图片">
+        <P><strong>后续我会把简历的模板会单独给不同的同学出不同的简历书写注意事项。</strong></P>
+        <p><strong>*****待补充*****</strong></p>
+
+                    
+        <h2 id="embedded-resources">嵌入式最全面经</h2>
+        <p>面经打造也是我们星球的重中之重，旨在让同学们在面试的时候不会因为基础面经而挂掉，面经这块也是我一直在完善</p>
+        <p>星球面经专栏模块</p>
+        <img src="../image/zsxq/zl.png" alt="星球图片">
+        <strong><p>包含以下几个面经</p></strong>
+        <ul>
+            <li>嵌入式专栏面经</li>
+            <li>C++专栏面经</li>
+            <li>Linux驱动面经</li>
+            <li>嵌入式软件场景实战题专栏</li>
+            <li>算法基础专栏</li>
+        </ul>
+
+        <h2 id="jrfs">加入方式</h2>
+        <strong><p>加我微信可以免费加入知识星球</p></strong>
+        <img src="../image/zsxq/wx.jpg" alt="星球图片">
+
+
+
+
+        <!-- <div class="content">
+            
+            
+            <h2 id="student-planning">5. 学生规划</h2>
+            <p>对于在校学生，合理的学习规划至关重要。我们提供一些建议，帮助您制定自己的学习计划。</p>
+            
+            <h2 id="company-referral">6. 公司内推和汇总</h2>
+            <p>通过公司内推可以提升您的面试机会，我们将分享一些有效的内推渠道和资源。</p>
+            
+            <h2 id="resource-sharing">7. 资源分享</h2>
+            <p>在这里您可以找到各种学习资源的分享，包括学习资料、项目经验等，欢迎大家积极参与。</p>
+            
+            <h2 id="company-avoid">8. 公司避雷</h2>
+            <p>在求职过程中，了解哪些公司需要避开是非常重要的。我们将提供一些避雷的经验和建议。</p>
+        </div> -->
+
+    </div>
+    <div class="update-time">更新时间：2025年1月2日</div>
+</body>
+</html>
