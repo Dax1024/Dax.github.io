@@ -1,660 +1,617 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>软嵌物联集</title>
-    <link rel="icon" href="image/RQWLJ.jpg" type="image/png">
-    <style>
-
-        /* PC端样式 */
-        @media (min-width: 769px) {
-            body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #ffffff;
-            color: #333;
-        }
-        .small-font {
-            font-size: 0.6em;
-        }
-        .toolbar {
-            background-color: #ffffff;
-            color: #333;
-            padding: 10px 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #d3d3d3;
-        }
-        .toolbar h1 {
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-        .toolbar img {
-            max-width: 40px;
-            height: auto;
-            margin-right: 10px;
-        }
-        .button-group {
-            margin-left: 200px;
-            display: flex;
-            gap: 30px;
-        } 
-        .toolbar .button {
-            font-size: 1.2em;
-            padding: 3px 10px;
-            background-color: #ffffff;
-            color: #000;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            transition: background 0.3s, border-color 0.3s;
-        }
-        .toolbar .button:hover {
-            border-color: #007bff;
-        }
-        .main {
-            display: flex;
-            flex: 1;
-            margin: 0px;
-            overflow: hidden;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #ffffff;
-            padding: 15px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            overflow-y: auto;
-            border-right: 1px solid #d3d3d3;
-        }
-        .sidebar h2 {
-            margin-top: 0;
-        }
-        .sidebar a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #333;
-            border-radius: 4px;
-            transition: background 0.3s;
-        }
-        .sidebar a:hover {
-            background: #f0f0f0;
-        }
-        .bold-link {
-            font-weight: bold;
-        }
-        .sub-menu {
-            padding-left: 15px;
-            display: none;
-        }
-        .toggle-button {
-            cursor: pointer;
-            padding: 10px;
-            text-align: left;
-            background: none;
-            border: none;
-            color: #333;
-            width: 100%;
-            font-weight: bold;
-            font-size: 1em;
-        }
-        .toggle-icon {
-            width: 12px;
-            height: 12px;
-            margin-left: 5px;
-            transition: transform 0.3s;
-        }
-        .rotate {
-            transform: rotate(90deg);
-        }
-        .sub-menu a {
-            font-weight: normal;
-            font-size: 0.9em;
-            padding-left: 20px;
-        }
-        nav {
-                text-align: left; /* 左对齐 */
-                margin-bottom: 5px; /* 底部间距 */
-                margin-left: 15px; /* 左侧间距 */
-            }
-
-            nav ul {
-                list-style-type: none; /* 去掉默认列表样式 */
-                padding: 0; /* 去掉内边距 */
-            }
-
-            nav a {
-                text-decoration: none; /* 去掉下划线 */
-                color: #007bff; /* 链接颜色 */
-                padding: 10px 15px; /* 内边距 */
-                border-radius: 5px; /* 圆角 */
-                transition: background-color 0.3s, color 0.3s; /* 动效 */
-            }
-
-            /* 悬停效果 */
-            nav a:hover {
-                background-color: #0056b3; /* 悬停时背景色 */
-                color: #0056b3; /* 悬停时文字颜色 */
-            }
-
-        }
-
-        /* 手机端样式 */
-        @media (max-width: 768px) {
-            body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #ffffff;
-            color: #333;
-        }
-
-        .toolbar {
-            background-color: #ffffff;
-            color: #333;
-            padding: 10px 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            height: 40px;
-            align-items: center;
-            border-bottom: 1px solid #d3d3d3;
-        }
-
-        .toolbar h1 {
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .toolbar img {
-            max-width: 40px;
-            height: auto;
-            margin-right: 10px;
-            border-bottom: 0px;
-        }
-
-        .main {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-            position: relative; /* 使主内容区域相对定位 */
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #ffffff;
-            padding: 15px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            overflow-y: auto;
-            border-right: 1px solid #d3d3d3;
-            position: absolute; /* 绝对定位 */
-            top: 0px; /* 调整位置以适应工具栏 */
-            left: 0;
-            z-index: 1000; /* 确保侧边栏在主内容之上 */
-            height: calc(100vh - 40px); /* 高度为视口高度减去工具栏高度 */
-            display: none; /* 默认隐藏 */
-        }
-
-        .sidebar h2 {
-            margin-top: 0;
-        }
-
-        .sidebar a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #333;
-            border-radius: 4px;
-            transition: background 0.3s;
-        }
-
-        .sidebar a:hover {
-            background: #f0f0f0;
-        }
-
-        .bold-link {
-            font-weight: bold;
-        }
-
-        .sub-menu {
-            padding-left: 15px;
-            display: none;
-        }
-
-        .toggle-button {
-            cursor: pointer;
-            padding: 10px;
-            text-align: left;
-            background: none;
-            border: none;
-            color: #333;
-            width: 100%;
-            font-weight: bold;
-            font-size: 1em;
-        }
-
-        .toggle-icon {
-            width: 12px;
-            height: 12px;
-            margin-left: 5px;
-            transition: transform 0.3s;
-        }
-
-        .rotate {
-            transform: rotate(90deg);
-        }
-
-        .sub-menu a {
-            font-weight: normal;
-            font-size: 0.9em;
-            padding-left: 20px;
-        }
-
-        .divider {
-            height: 1px; /* 分割线的高度 */
-            background-color: #d3d3d3; /* 分割线的颜色 */
-            margin: 0; /* 去掉上下边距 */
-        }
-        }
-
-        .selected {
-            background-color:#d3d3d3; /* 选中时的背景颜色 */
-            color: #fff; /* 选中时的字体颜色 */
-            transition: background 0.3s, color 0.3s; /* 添加过渡效果 */
-        }
-    </style>
-       <script>
-        var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?cf38181d0a19e4b8ef32a4391cb7e2aa";
-          var s = document.getElementsByTagName("script")[0]; 
-          s.parentNode.insertBefore(hm, s);
-        })();
-        </script>   
-</head>
-
-<body>
-    <div id="toolbar"></div> <!-- 添加这个元素 -->
-    <div class="main" id="main">
-        <div class="sidebar" id="sidebar">
-            <!-- 默认加载内容 -->
-        </div>
-        <iframe id="contentArea" style="flex: 1; border: none; margin-top: 0px;" src="" frameborder="0"></iframe>
-    </div>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="assets/img/logo.jpg"
+      type="image/x-icon"
+    />
+    <!-- Fonts and icons -->
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
-        let sidebarVisible = false; // 侧边栏初始为可见状态
-        let PCStatus = true; // 默认是true pc
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebarVisible = !sidebarVisible; // 切换状态
-            sidebar.style.display = sidebarVisible ? 'block' : 'none'; // 显示或隐藏侧边栏
-        }
-
-        function toggleSubMenu(subMenuId, iconId) {
-            const subMenu = document.getElementById(subMenuId);
-            const toggleIcon = document.getElementById(iconId);
-            if (subMenu.style.display === 'block') {
-                subMenu.style.display = 'none';
-                toggleIcon.classList.remove('rotate');
-            } else {
-                subMenu.style.display = 'block';
-                toggleIcon.classList.add('rotate');
-            }
-        }
-        function loadContent(file, button) {
-            const iframe = document.getElementById('contentArea');
-            iframe.src = file; // 设置 iframe 的 src 属性为要加载的文件
-
-            // 清空锚点
-            iframe.onload = function() {
-                // 确保在加载新内容时清除锚点
-                iframe.contentWindow.location.hash = '';
-            };
-
-            // 获取所有的锚点链接
-            const allLinks = document.querySelectorAll('a[href^="#"]');
-
-            // 清空每个链接的 href 属性
-            allLinks.forEach(link => {
-                link.setAttribute('href', 'javascript:void(0);');
-            });
-
-            // 移除所有按钮的选中状态
-            const buttons = document.querySelectorAll('.sub-menu a');
-            buttons.forEach(btn => {
-                btn.classList.remove('selected');
-            });
-
-            // 为当前按钮添加选中状态
-            if (button) {
-                button.classList.add('selected');
-            }
-        }
-
-    
-        function loadContentjump(url, button) {
-            const iframe = document.getElementById('contentArea');
-            iframe.src = url; // 设置 iframe 的 src 属性为要加载的文件
-
-            // 确保在 iframe 加载完成后再发送消息
-            iframe.onload = function() {
-                const anchor = url.split('#')[1]; // 获取锚点部分
-                if (anchor) {
-                    // 发送消息给 iframe
-                    iframe.contentWindow.postMessage(anchor, '*'); // 使用 '*' 发送到任何来源
-                }
-            };
-
-            // 移除所有按钮的选中状态
-            const buttons = document.querySelectorAll('.sub-menu a');
-            buttons.forEach(btn => {
-                btn.classList.remove('selected');
-            });
-
-            // 为当前按钮添加选中状态
-            if (button) {
-                button.classList.add('selected');
-            }
-        }
-
-
-        function loadToolbarmain()
-        {
-            if(PCStatus)
-            {
-                const toolbar = document.getElementById('toolbar');
-                toolbar.innerHTML = `
-                    <div class="toolbar">
-                        <h1>
-                            <img src="image/RQWLJ-white.jpg" alt="Logo">
-                            <span class="small-font">软嵌物联集</span>
-                        </h1>
-                        <div class="button-group">
-                            <button class="button" onclick="loadTrainingContent()">
-                                ❤️嵌入式面试突击
-                            </button>
-                            <button class="button" onclick="loadSoftEmbeddedContent()">
-                                ❤️软嵌物联集
-                            </button>
-                        </div>
-                    </div>
-                `;  
-            }
-            else
-            {
-                const toolbar = document.getElementById('toolbar');
-                toolbar.innerHTML = `
-                <div class="toolbar">
-                    <h1>
-                        <button class="toggle-button" onclick="toggleSidebar()">
-                            <img src="image/Android.png" alt="Android" style="max-width: 20px; vertical-align: middle; margin-right: 5px;">
-                        </button>
-                        <img src="image/RQWLJ-white.jpg" alt="Logo" >
-                    </h1>
-                </div>
-                `;   
-
-            }
-        }
-//Android 布局
-            function loadTrainingContentAd() {
-            const sidebar = document.getElementById('sidebar');
-            // 清空侧边栏内容并加载面试集训的内容
-            sidebar.innerHTML = `
-            <button class="toggle-button" onclick="loadContent('Source/zsxqjj.html')">
-                    星球公告
-                </button>
-                <button class="toggle-button" onclick="loadContent('Source/jlzd.html')">
-                    了解我的知识星球
-                </button>
-                <nav>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#embedded-learning')">学习路线</a>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#resume-guidance')">简历指导</a>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#offer-selection')">Offer 选择</a>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#embedded-resources')">嵌入式最全面经</a>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#jrfs')">加入方式</a>
-                </nav>
-            `;
-            loadContent('Source/zsxqjj.html'); // 加载面试集训的内容
-        }
-
-        function loadSoftEmbeddedContentAd() {
-            const sidebar = document.getElementById('sidebar');
-            // 清空侧边栏内容并加载软嵌物联集的内容
-            sidebar.innerHTML = `
-                    <div class="toggle-button">
-                <button class="toggle-button" onclick="loadTrainingContentAd()">
-                    ❤️嵌入式面试突击
-                </button>
-                <button class="toggle-button" onclick="loadSoftEmbeddedContentAd()">
-                    ❤️软嵌物联集
-                </button>
-            </div>
-            <div class="divider"></div> <!-- 添加分割线 -->
-
-            <button class="toggle-button" onclick="loadContent('Source/introduction.html')">
-                    前言
-                </button>
-                <button class="toggle-button" onclick="loadContent('Source/Interview_Guide.html')">
-                    面经大纲
-                </button>
-                <button class="toggle-button" onclick="toggleSubMenu('cLangSubMenu', 'toggleIcon1')">
-                    C语言面经
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon1">
-                </button>
-                <div class="sub-menu" id="cLangSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_1.html', this)">C语言高频面经(一）</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_2.html', this)">C语言高频面经(二）</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_3.html', this)">C语言高频面经(三）内存管理</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
-                    C++面经
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon2">
-                </button>
-                <div class="sub-menu" id="cppSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_1.html', this)">C++高频面经(一)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_2.html', this)">C++高频面经(二)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_3.html', this)">C++高频面经(三)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_4.html', this)">C++高频面经(四)新特性</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_5.html', this)">C++高频面经(五)虚函数</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_6.html', this)">C++高频面经(六)STL容器</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('osSubMenu', 'toggleIcon3')">
-                    操作系统面经
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon3">
-                </button>
-                <div class="sub-menu" id="osSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS1.html', this)">操作系统(一)线程和进程</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS2.html', this)">操作系统(二)线程和进程续</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS3.html', this)">操作系统(三)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS4.html', this)">操作系统(四)linux基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS5.html', this)">操作系统(五)linux命令</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS6.html', this)">操作系统(六)虚拟地址/页表</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS7.html', this)">操作系统(七)linux内核</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('networkSubMenu', 'toggleIcon4')">
-                    计算机网络面经
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon4">
-                </button>
-                <div class="sub-menu" id="networkSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network1.html', this)">计算机网络(一)网络基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network2.html', this)">计算机网络(二)TCP/IP</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network3.html', this)">计算机网络(三)UDP</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network4.html', this)">计算机网络(四)网络编程</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network5.html', this)">计算机网络(五)HTTP/HTTPS</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network6.html', this)">计算机网络(六)HTTP/HTTPS续</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
-                    嵌入式基础知识
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
-                </button>
-                <div class="sub-menu" id="embeddedSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs1.html', this)">嵌入式基础(一)基本概念</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html', this)">嵌入式基础(二)ARM基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html', this)">嵌入式基础(三)基础外设</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html', this)">嵌入式基础(四)Bootloader</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">嵌入式基础(五)ARM架构</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">嵌入式基础(六)单片机基础</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('rtosSubMenu', 'toggleIcon6')">
-                    算法
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon6">
-                </button>
-                <div class="sub-menu" id="rtosSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/pxsf.html', this)">常见排序算法总结</a>
-                </div>
-
-                <button class="toggle-button" onclick="toggleSubMenu('dataStructureSubMenu', 'toggleIcon7')">
-                    嵌入式实战
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon7">
-                </button>
-                <div class="sub-menu" id="dataStructureSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrssz.html', this)">实战问题总结</a>
-                </div>
-            `;
-            loadContent('Source/introduction.html'); // 加载软嵌物联集的内容
-        }
-        // =====================PC布局
-        function loadTrainingContent() {
-            const sidebar = document.getElementById('sidebar');
-            // 清空侧边栏内容并加载面试集训的内容
-            sidebar.innerHTML = `
-                <button class="toggle-button" onclick="loadContent('Source/zsxqjj.html')">
-                    星球公告
-                </button>
-                <button class="toggle-button" onclick="loadContent('Source/jlzd.html')">
-                    了解我的知识星球
-                </button>
-                <nav>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#embedded-learning')">学习路线</a>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#resume-guidance')">简历指导</a>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#offer-selection')">Offer 选择</a>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#embedded-resources')">嵌入式最全面经</a>
-                 <a href="javascript:void(0);" onclick="loadContentjump('Source/jlzd.html#jrfs')">加入方式</a>
-                </nav>
-            `;
-            loadContent('Source/zsxqjj.html'); // 加载面试集训的内容
-        }
-      
-        function loadSoftEmbeddedContent() {
-            const sidebar = document.getElementById('sidebar');
-            // 清空侧边栏内容并加载软嵌物联集的内容
-            sidebar.innerHTML = `
-                <button class="toggle-button" onclick="loadContent('Source/introduction.html')">
-                    前言
-                </button>
-                <button class="toggle-button" onclick="loadContent('Source/Interview_Guide.html')">
-                    面经大纲
-                </button>
-                <button class="toggle-button" onclick="toggleSubMenu('cLangSubMenu', 'toggleIcon1')">
-                    C语言面经
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon1">
-                </button>
-                <div class="sub-menu" id="cLangSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_1.html', this)">C语言高频面经(一）</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_2.html', this)">C语言高频面经(二）</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C_3.html', this)">C语言高频面经(三）内存管理</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('cppSubMenu', 'toggleIcon2')">
-                    C++面经
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon2">
-                </button>
-                <div class="sub-menu" id="cppSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_1.html', this)">C++高频面经(一)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_2.html', this)">C++高频面经(二)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_3.html', this)">C++高频面经(三)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_4.html', this)">C++高频面经(四)新特性</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_5.html', this)">C++高频面经(五)虚函数</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/C++_6.html', this)">C++高频面经(六)STL容器</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('osSubMenu', 'toggleIcon3')">
-                    操作系统面经
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon3">
-                </button>
-                <div class="sub-menu" id="osSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS1.html', this)">操作系统(一)线程和进程</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS2.html', this)">操作系统(二)线程和进程续</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS3.html', this)">操作系统(三)</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS4.html', this)">操作系统(四)linux基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS5.html', this)">操作系统(五)linux命令</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS6.html', this)">操作系统(六)虚拟地址/页表</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/OS7.html', this)">操作系统(七)linux内核</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('networkSubMenu', 'toggleIcon4')">
-                    计算机网络面经
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon4">
-                </button>
-                <div class="sub-menu" id="networkSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network1.html', this)">计算机网络(一)网络基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network2.html', this)">计算机网络(二)TCP/IP</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network3.html', this)">计算机网络(三)UDP</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network4.html', this)">计算机网络(四)网络编程</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network5.html', this)">计算机网络(五)HTTP/HTTPS</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/network6.html', this)">计算机网络(六)HTTP/HTTPS续</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('embeddedSubMenu', 'toggleIcon5')">
-                    嵌入式基础知识
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon5">
-                </button>
-                <div class="sub-menu" id="embeddedSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs1.html', this)">嵌入式基础(一)基本概念</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs2.html', this)">嵌入式基础(二)ARM基础</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs3.html', this)">嵌入式基础(三)基础外设</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs4.html', this)">嵌入式基础(四)Bootloader</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs5.html', this)">嵌入式基础(五)ARM架构</a>
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrs6.html', this)">嵌入式基础(六)单片机基础</a>
-                </div>
-                <button class="toggle-button" onclick="toggleSubMenu('rtosSubMenu', 'toggleIcon6')">
-                    算法
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon6">
-                </button>
-                <div class="sub-menu" id="rtosSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/pxsf.html', this)">常见排序算法总结</a>
-                </div>
-
-                <button class="toggle-button" onclick="toggleSubMenu('dataStructureSubMenu', 'toggleIcon7')">
-                    嵌入式实战
-                    <img src="image/arrow.png" alt="Arrow" class="toggle-icon" id="toggleIcon7">
-                </button>
-                <div class="sub-menu" id="dataStructureSubMenu">
-                    <a href="javascript:void(0);" onclick="loadContent('Source/qrssz.html', this)">实战问题总结</a>
-                </div>
-            `;
-            loadContent('Source/introduction.html'); // 加载软嵌物联集的内容
-        }
-
-        // 根据屏幕宽度重定向到不同的 HTML 文件
-        function redirectBasedOnScreenSize() {
-            if (window.innerWidth <= 768) {
-                PCStatus = !PCStatus;
-            } else {
-                PCStatus = true; // 针对 PC 设备
-            }
-        }
-
-        window.onload = function() {
-            redirectBasedOnScreenSize();  // 根据屏幕宽度重定向
-            loadToolbarmain();//显示布局
-            if(PCStatus)
-            {
-                loadSoftEmbeddedContent();  // 默认加载软嵌物联集的内容
-            }
-            else
-            {
-                loadSoftEmbeddedContentAd();//安卓布局
-            }
-        };
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
     </script>
-</body>
 
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="assets/css/demo.css" />
+  </head>
+  <style>
+    .wrapper {
+        position: relative; /* 使其成为定位上下文 */
+        height: 100vh; /* 适应视口高度 */
+        overflow-y: hidden; /* 允许外部容器滚动 */
+    }
+    #contentArea {
+      position: absolute;
+      top: 60px; /* 加上单位px */
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    </style>
+
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="dark">
+            <a class="logo">
+              <img
+                src="assets/img/RQWLJ-removebg-preview.png"
+                alt="navbar brand"
+                class="navbar-brand"
+                height="45"
+              />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary" style="margin-top: 5px;">
+              <li class="nav-item">
+                <a href="#" onclick="loadIntroductionContent('Source/introduction.html',this)">
+                    <i class="fas fa-comments"></i>
+                    <p>前言</p>
+                </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" onclick="loadIntroductionContent('Source/introduction.html',this)">
+                  <i class="fas fa-comments"></i>
+                  <p>面经大纲</p>
+              </a>
+          </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#base">
+                  <i class="fas fa-laptop-code"></i>
+                  <p>C语言面经</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="0." id="base">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="components/avatars.html">
+                        <span class="sub-item">Avatars</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="components/buttons.html">
+                        <span class="sub-item">Buttons</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="components/gridsystem.html">
+                        <span class="sub-item">Grid System</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="components/panels.html">
+                        <span class="sub-item">Panels</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="components/notifications.html">
+                        <span class="sub-item">Notifications</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="components/sweetalert.html">
+                        <span class="sub-item">Sweet Alert</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="components/font-awesome-icons.html">
+                        <span class="sub-item">Font Awesome Icons</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="components/simple-line-icons.html">
+                        <span class="sub-item">Simple Line Icons</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="components/typography.html">
+                        <span class="sub-item">Typography</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a class="logo">
+                <img
+                  src="assets/img/RQWLJ-removebg-preview.png"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="45"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+          >
+            <div class="container-fluid">
+              <nav
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+              >
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button type="submit" class="btn btn-search pe-1" id="searchButton">
+                      <i class="fa fa-search search-icon"></i>
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search ..."
+                    class="form-control"
+                    id="searchButton" 
+                  />
+                </div>
+              </nav>
+
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li
+                  class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
+                >
+                  <a
+                    class="nav-link dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    role="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="fa fa-search"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-search animated fadeIn">
+                    <form class="navbar-left navbar-form nav-search">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          placeholder="Search ..."
+                          class="form-control"
+                          id="dropdownSearchButton"
+                        />
+                        <button type="button" class="btn btn-search" id="dropdownSearchButton"> <!-- ���� id -->
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+        </div>
+    <!-- 新增内容容器 -->
+      <iframe id="contentArea"></iframe>
+      <!-- Custom template | don't include it in your project! ��ɫ -->
+      <div class="custom-template">
+        <div class="title">Settings</div>
+        <div class="custom-content">
+          <div class="switcher">
+            <div class="switch-block">
+              <h4>Logo Header</h4>
+              <div class="btnSwitch">
+                <button
+                  type="button"
+                  class="selected changeLogoHeaderColor"
+                  data-color="dark"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="blue"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="purple"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="light-blue"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="green"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="orange"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="red"
+                ></button>
+                <br />
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="dark2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="blue2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="purple2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="light-blue2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="green2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="orange2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="red2"
+                ></button>
+              </div>
+            </div>
+            <div class="switch-block">
+              <h4>Navbar Header</h4>
+              <div class="btnSwitch">
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="dark"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="blue"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="purple"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="light-blue"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="green"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="orange"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="red"
+                ></button>
+                <button
+                  type="button"
+                  class="selected changeTopBarColor"
+                  data-color="white"
+                ></button>
+                <br />
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="dark2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="blue2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="purple2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="light-blue2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="green2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="orange2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="red2"
+                ></button>
+              </div>
+            </div>
+            <div class="switch-block">
+              <h4>Sidebar</h4>
+              <div class="btnSwitch">
+                <button
+                  type="button"
+                  class="changeSideBarColor"
+                  data-color="white"
+                ></button>
+                <button
+                  type="button"
+                  class="selected changeSideBarColor"
+                  data-color="dark"
+                ></button>
+                <button
+                  type="button"
+                  class="changeSideBarColor"
+                  data-color="dark2"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="custom-toggle">
+          <i class="icon-settings"></i>
+        </div>
+      </div>
+    
+    </div>
+    </div>
+
+    <!--   Core JS Files   -->
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="assets/js/kaiadmin.min.js"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="assets/js/setting-demo.js"></script>
+    <script src="assets/js/demo.js"></script>
+    <script>
+      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#177dff",
+        fillColor: "rgba(23, 125, 255, 0.14)",
+      });
+
+      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#f3545d",
+        fillColor: "rgba(243, 84, 93, .14)",
+      });
+
+      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#ffa534",
+        fillColor: "rgba(255, 165, 52, .14)",
+      });
+
+  // ���������ĺ���
+  document.getElementById('searchButton').addEventListener('click', function () {
+    const query = document.getElementById('searchInput').value;
+    if (query) {
+      // ������ʵ�������߼��������ض����������ҳ�棬���� AJAX ����
+      console.log(`Searching for: ${query}`);
+      // ʾ���������ض����������ҳ��
+      // window.location.href = `/search?q=${query}`;
+    }
+  });
+
+  document.getElementById('dropdownSearchButton').addEventListener('click', function () {
+    const query = document.getElementById('dropdownSearchInput').value;
+    if (query) {
+      console.log(`Searching for: ${query}`);
+      // window.location.href = `/search?q=${query}`;
+    }
+  });
+function handleSearch(query) {
+  if (!query) {
+    showAlert('Please enter a search term', 'warning');
+    return;
+  }
+
+  removeHighlights();
+
+  const elements = document.querySelectorAll('p, span, h1, h2, h3, h4, h5, h6, td, li'); // 
+  let found = false;
+
+  elements.forEach(element => {
+    const content = element.textContent || element.innerText;
+    if (content.toLowerCase().includes(query.toLowerCase())) {
+      found = true;
+      highlightText(element, query); // 
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' }); // 
+    }
+  });
+
+  if (!found) {
+    showAlert('No results found', 'warning');
+  } else {
+    showAlert(`Found results for: ${query}`, 'success');
+  }
+}
+
+function highlightText(element, query) {
+  const regex = new RegExp(`(${query})`, 'gi');
+  const content = element.innerHTML;
+  const highlightedContent = content.replace(regex, '<span class="highlight">$1</span>');
+  element.innerHTML = highlightedContent;
+}
+
+function removeHighlights() {
+  const highlights = document.querySelectorAll('.highlight');
+  highlights.forEach(highlight => {
+    const parent = highlight.parentNode;
+    parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+    parent.normalize(); // 
+  });
+}
+
+// 
+function showAlert(message, type = 'success') {
+  const alert = document.createElement('div');
+  alert.className = `alert alert-${type} alert-dismissible fade show`;
+  alert.role = 'alert';
+  alert.innerHTML = `
+    ${message}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  `;
+  document.querySelector('.container').prepend(alert);
+}
+
+// 
+document.getElementById('searchButton').addEventListener('click', function (e) {
+  e.preventDefault();
+  const query = document.getElementById('searchInput').value;
+  handleSearch(query);
+});
+
+// 
+document.getElementById('dropdownSearchButton').addEventListener('click', function (e) {
+  e.preventDefault();
+  const query = document.getElementById('dropdownSearchInput').value;
+  handleSearch(query);
+});
+
+// 
+document.querySelectorAll('.form-control').forEach(input => {
+  input.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const closestButton = this.closest('.input-group').querySelector('button');
+      closestButton.click();
+    }
+  });
+});
+
+
+function loadIntroductionContent(file, button) {
+    const iframe = document.getElementById('contentArea');
+    iframe.src = file; // 加载指定文件
+    iframe.onload = function() {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        iframe.style.height = `${iframeDoc.body.scrollHeight}px`; // 根据内容调整高度
+    };
+}
+    </script>
+  </body>
 </html>
